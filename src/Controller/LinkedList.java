@@ -99,18 +99,12 @@ public class LinkedList {
      * @param module
      * @return
      */
-<<<<<<< HEAD
+
     public boolean removeModule(SmartModule module) {
-        if (head.module == module) {
-            head = head.next;
-            head.prev = null;
-=======
-    public boolean removeModule(SmartModule module){
         if (head.module==module){
             head=head.next;
             head.prev=null;
             return true;
->>>>>>> 0c48797199c80fdd2d5a9e3e95c8c5858abe0c16
         }
         whereAmI = head;
         while (whereAmI.next.module != module) {
@@ -120,6 +114,5 @@ public class LinkedList {
         whereAmI.next.prev = whereAmI;
         return true;
     }
-
 
 }
