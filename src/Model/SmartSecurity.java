@@ -25,4 +25,14 @@ public class SmartSecurity extends SmartModule {
     public void setSomeoneThere(boolean someoneThere) {
         isSomeoneThere = someoneThere;
     }
+
+    @Override
+    public String toString() {
+        return "SmartSecurity{" +
+                "inAwayMode=" + inAwayMode +
+                ", isSomeoneThere=" + isSomeoneThere +
+                ", whereIsModule=" + whereIsModule +
+                ", name='" + name + '\'' +
+                '}';
+    }
 }

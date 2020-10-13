@@ -35,4 +35,14 @@ public class SmartThermostat extends SmartModule {
     public void setOn(boolean on) {
         isOn = on;
     }
+
+    @Override
+    public String toString() {
+        return "SmartThermostat{" +
+                "current_temp_heater=" + current_temp_heater +
+                ", isOn=" + isOn +
+                ", whereIsModule=" + whereIsModule +
+                ", name='" + name + '\'' +
+                '}';
+    }
 }

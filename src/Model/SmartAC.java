@@ -35,4 +35,14 @@ public class SmartAC extends SmartModule {
     public void setOn(boolean on) {
         isOn = on;
     }
+
+    @Override
+    public String toString() {
+        return "SmartAC{" +
+                "current_temp_AC=" + current_temp_AC +
+                ", isOn=" + isOn +
+                ", whereIsModule=" + whereIsModule +
+                ", name='" + name + '\'' +
+                '}';
+    }
 }

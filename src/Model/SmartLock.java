@@ -16,4 +16,13 @@ public class SmartLock extends SmartModule{
     public void setLocked(boolean locked) {
         isLocked = locked;
     }
+
+    @Override
+    public String toString() {
+        return "SmartLock{" +
+                "isLocked=" + isLocked +
+                ", whereIsModule=" + whereIsModule +
+                ", name='" + name + '\'' +
+                '}';
+    }
 }

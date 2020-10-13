@@ -1,9 +1,9 @@
 package Model;
 
-public class SmartModule {
+public abstract class SmartModule {
 
 
-    protected enum location {kitchen, master, living_room, deck, hallway, laundry, bathroom, bedroom_1, bedroom_2, garage}
+    public static enum location {kitchen, master, living_room, deck, hallway, laundry, bathroom, bedroom_1, bedroom_2, garage}
 
     protected location whereIsModule = null;
     protected String name;
@@ -19,4 +19,5 @@ public class SmartModule {
     public void setWhereIsModule(location whereIsModule) {
         this.whereIsModule = whereIsModule;
     }
+
 }

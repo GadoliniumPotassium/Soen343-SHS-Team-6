@@ -32,4 +32,15 @@ public class SmartLight extends SmartModule {
     public void setOn(boolean on) {
         isOn = on;
     }
+
+    @Override
+    public String toString() {
+        return "SmartLight{" +
+                "isDimmable=" + isDimmable +
+                ", lightPercentage=" + lightPercentage +
+                ", isOn=" + isOn +
+                ", whereIsModule=" + whereIsModule +
+                ", name='" + name + '\'' +
+                '}';
+    }
 }

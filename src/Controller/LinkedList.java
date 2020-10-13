@@ -21,9 +21,9 @@ public class LinkedList {
     private Node head = null;
     private Node whereAmI;
 
-    public LinkedList(Node head) {
-        this.head = head;
-        this.whereAmI = this.head;
+    public LinkedList() {
+        this.head = null;
+        this.whereAmI = null;
     }
 
     public Node getHead() {
@@ -72,35 +72,44 @@ public class LinkedList {
             whereAmI.next = new Node(module, null, whereAmI);
         else {
             whereAmI.next = new Node(module, whereAmI.next, whereAmI);
-            whereAmI.next.next.prev=whereAmI.next;
+            whereAmI.next.next.prev = whereAmI.next;
         }
         return true;
     }
 
     /**
      * The purpose of this method is to retrieve all the smart modules that are found in a particular room in the house.
+     *
      * @param location
      */
-    public void printAllElementsInRoom(String location){
-
+    public void printAllElementsInRoom(SmartModule.location location) {
+        whereAmI = head;
+        while (whereAmI != null) {
+            if (whereAmI.module.getWhereIsModule() == location) {
+                //I'll add a toString method later
+                System.out.println(whereAmI.module.toString());
+            }
+        }
+        whereAmI = head;
     }
 
     /**
      * If a module needs to be removed then this method will remove it from the list.
+     *
      * @param module
      * @return
      */
-    public boolean removeModule(SmartModule module){
-        if (head.module==module){
-            head=head.next;
-            head.prev=null;
+    public boolean removeModule(SmartModule module) {
+        if (head.module == module) {
+            head = head.next;
+            head.prev = null;
         }
-        whereAmI=head;
-        while(whereAmI.next.module !=module){
-            whereAmI=whereAmI.next;
+        whereAmI = head;
+        while (whereAmI.next.module != module) {
+            whereAmI = whereAmI.next;
         }
-        whereAmI.next=whereAmI.next.next;
-        whereAmI.next.prev=whereAmI;
+        whereAmI.next = whereAmI.next.next;
+        whereAmI.next.prev = whereAmI;
         return true;
     }
 
