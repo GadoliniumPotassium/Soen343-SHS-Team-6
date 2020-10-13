@@ -1,0 +1,108 @@
+package Controller;
+
+import Model.SmartModule;
+
+//We are going to store each rooms Modules inside a linked list as they are efficient, easy to access and easy to modify.
+public class LinkedList {
+
+
+    private class Node {
+        private SmartModule module;
+        private Node next;
+        private Node prev;
+
+        public Node(SmartModule module, Node next, Node prev) {
+            this.module = module;
+            this.next = next;
+            this.prev = prev;
+        }
+    }
+
+    private Node head = null;
+    private Node whereAmI;
+
+    public LinkedList(Node head) {
+        this.head = head;
+        this.whereAmI = this.head;
+    }
+
+    public Node getHead() {
+        return head;
+    }
+
+    /**
+     * Adding a node to the head of the linked list
+     *
+     * @param module
+     * @return it will return true if the addition was successful
+     */
+    public boolean addHead(SmartModule module) {
+        if (head == null)
+            head = new Node(module, null, null);
+        else {
+            Node temp = new Node(module, head, null);
+            head.prev = temp;
+            head = temp;
+        }
+        return true;
+    }
+
+    /**
+     * My idea for this method is to build it in a way where it is kind of sorted, the elements will be bundled together by what room they are in together.
+     *
+     * @param module
+     * @return
+     */
+    public boolean addToList(SmartModule module) {
+        if (head == null) {
+            addHead(module);
+            return true;
+        }
+        whereAmI = head;
+        if (module.getWhereIsModule() == head.module.getWhereIsModule()) {
+            addHead(module);
+            return true;
+        }
+
+        while (whereAmI.module.getWhereIsModule() != whereAmI.next.module.getWhereIsModule() && whereAmI.next != null) {
+            whereAmI = whereAmI.next;
+        }
+
+        if (whereAmI.next == null)
+            whereAmI.next = new Node(module, null, whereAmI);
+        else {
+            whereAmI.next = new Node(module, whereAmI.next, whereAmI);
+            whereAmI.next.next.prev=whereAmI.next;
+        }
+        return true;
+    }
+
+    /**
+     * The purpose of this method is to retrieve all the smart modules that are found in a particular room in the house.
+     * @param location
+     */
+    public void printAllElementsInRoom(String location){
+
+    }
+
+    /**
+     * If a module needs to be removed then this method will remove it from the list.
+     * @param module
+     * @return
+     */
+    public boolean removeModule(SmartModule module){
+        if (head.module==module){
+            head=head.next;
+            head.prev=null;
+        }
+        whereAmI=head;
+        while(whereAmI.next.module !=module){
+            whereAmI=whereAmI.next;
+        }
+        whereAmI.next=whereAmI.next.next;
+        whereAmI.next.prev=whereAmI;
+        return true;
+    }
+
+
+}
