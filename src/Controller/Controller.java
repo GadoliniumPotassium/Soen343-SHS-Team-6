@@ -2,8 +2,12 @@ package Controller;
 
 import Model.*;
 
+import java.util.ArrayList;
+
 public class Controller {
-    LinkedList moduleList=new LinkedList();
+    ModuleLinkedList moduleList=new ModuleLinkedList();
+    ArrayList<User> userList=new ArrayList<Model.User>(10);
+
 
     //This will be filled with method in order to modify the states of the smart devices
 
@@ -38,5 +42,12 @@ public class Controller {
     public void changeAwayModeState(SmartSecurity sec){
         sec.setInAwayMode(!sec.isInAwayMode());
     }
+
+    public void createAccount(String username,String password){
+        User temp=new User(username,password);
+        userList.add(temp);
+    }
+
+
 
 }

@@ -3,7 +3,7 @@ package Controller;
 import Model.SmartModule;
 
 //We are going to store each rooms Modules inside a linked list as they are efficient, easy to access and easy to modify.
-public class LinkedList {
+public class ModuleLinkedList {
 
 
     private class Node {
@@ -21,7 +21,7 @@ public class LinkedList {
     private Node head = null;
     private Node whereAmI;
 
-    public LinkedList() {
+    public ModuleLinkedList() {
         this.head = null;
         this.whereAmI = null;
     }
@@ -53,7 +53,7 @@ public class LinkedList {
      * @param module
      * @return
      */
-    public boolean addToList(SmartModule module) {
+    public boolean addModuleToList(SmartModule module) {
         if (head == null) {
             addHead(module);
             return true;
