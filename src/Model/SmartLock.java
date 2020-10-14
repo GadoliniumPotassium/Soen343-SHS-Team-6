@@ -4,9 +4,9 @@ public class SmartLock extends SmartModule{
 
     boolean isLocked;
 
-    public SmartLock(location whereIsModule, boolean isLocked) {
-        super(whereIsModule);
-        this.isLocked = isLocked;
+    public SmartLock(String name, String location, boolean isLocked) {
+        super(name, location);
+        this.isLocked = false;
     }
 
     public boolean isLocked() {
@@ -21,8 +21,8 @@ public class SmartLock extends SmartModule{
     public String toString() {
         return "SmartLock{" +
                 "isLocked=" + isLocked +
-                ", whereIsModule=" + whereIsModule +
                 ", name='" + name + '\'' +
+                ", location='" + location + '\'' +
                 '}';
     }
 }

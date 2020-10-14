@@ -59,12 +59,12 @@ public class ModuleLinkedList {
             return true;
         }
         whereAmI = head;
-        if (module.getWhereIsModule() == head.module.getWhereIsModule()) {
+        if (module.getLocation().equals(whereAmI.module.getLocation())) {
             addHead(module);
             return true;
         }
 
-        while (whereAmI.module.getWhereIsModule() != whereAmI.next.module.getWhereIsModule() && whereAmI.next != null) {
+        while (whereAmI.module.getLocation().equals(whereAmI.next.module.getLocation()) && whereAmI.next != null) {
             whereAmI = whereAmI.next;
         }
 
@@ -82,10 +82,10 @@ public class ModuleLinkedList {
      *
      * @param location
      */
-    public void printAllElementsInRoom(SmartModule.location location) {
+    public void printAllElementsInRoom(String location) {
         whereAmI = head;
         while (whereAmI != null) {
-            if (whereAmI.module.getWhereIsModule() == location) {
+            if (whereAmI.module.getLocation().equals(location)) {
                 //I'll add a toString method later
                 System.out.println(whereAmI.module.toString());
             }

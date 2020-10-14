@@ -6,8 +6,8 @@ public class SmartThermostat extends SmartModule {
     private double current_temp_heater;
     private boolean  isOn;
 
-    public SmartThermostat(location whereIsModule, double current_temp_heater, boolean isOn) {
-        super(whereIsModule);
+    public SmartThermostat(String name, String location, double current_temp_heater, boolean isOn) {
+        super(name, location);
         this.current_temp_heater = current_temp_heater;
         this.isOn = isOn;
     }
@@ -41,8 +41,8 @@ public class SmartThermostat extends SmartModule {
         return "SmartThermostat{" +
                 "current_temp_heater=" + current_temp_heater +
                 ", isOn=" + isOn +
-                ", whereIsModule=" + whereIsModule +
                 ", name='" + name + '\'' +
+                ", location='" + location + '\'' +
                 '}';
     }
 }

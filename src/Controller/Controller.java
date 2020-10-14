@@ -44,9 +44,20 @@ public class Controller {
     }
 
     public void createAccount(String username,String password){
+        for (int i=0;i<userList.size();i++){
+            if(userList.get(i).getUsername() == username){
+                System.out.println("Username already exists");
+                return;
+            }
+        }
         User temp=new User(username,password);
         userList.add(temp);
     }
+
+    public void removeAccount(User user){
+        userList.remove(user);
+    }
+
 
 
 

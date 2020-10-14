@@ -4,10 +4,10 @@ public class SmartSecurity extends SmartModule {
     boolean inAwayMode;
     boolean isSomeoneThere;
 
-    public SmartSecurity(location whereIsModule, boolean inAwayMode, boolean isSomeoneThere) {
-        super(whereIsModule);
-        this.inAwayMode = inAwayMode;
-        this.isSomeoneThere = isSomeoneThere;
+    public SmartSecurity(String name, String location) {
+        super(name, location);
+        this.inAwayMode = false;
+        this.isSomeoneThere = false;
     }
 
     public boolean isInAwayMode() {
@@ -31,8 +31,8 @@ public class SmartSecurity extends SmartModule {
         return "SmartSecurity{" +
                 "inAwayMode=" + inAwayMode +
                 ", isSomeoneThere=" + isSomeoneThere +
-                ", whereIsModule=" + whereIsModule +
                 ", name='" + name + '\'' +
+                ", location='" + location + '\'' +
                 '}';
     }
 }

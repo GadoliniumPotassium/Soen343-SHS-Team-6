@@ -6,8 +6,8 @@ public class SmartLight extends SmartModule {
     private int lightPercentage;
     private boolean isOn;
 
-    public SmartLight(location whereIsModule, boolean isDimmable, int lightPercentage, boolean isOn) {
-        super(whereIsModule);
+    public SmartLight(String name, String location, boolean isDimmable, int lightPercentage, boolean isOn) {
+        super(name, location);
         this.isDimmable = isDimmable;
         this.lightPercentage = lightPercentage;
         this.isOn = isOn;
@@ -39,8 +39,8 @@ public class SmartLight extends SmartModule {
                 "isDimmable=" + isDimmable +
                 ", lightPercentage=" + lightPercentage +
                 ", isOn=" + isOn +
-                ", whereIsModule=" + whereIsModule +
                 ", name='" + name + '\'' +
+                ", location='" + location + '\'' +
                 '}';
     }
 }

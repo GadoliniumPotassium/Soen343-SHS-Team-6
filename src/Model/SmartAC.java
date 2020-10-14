@@ -6,10 +6,10 @@ public class SmartAC extends SmartModule {
     private double current_temp_AC;
     private boolean isOn;
 
-    public SmartAC(location whereIsModule, double current_temp_AC, boolean isOn) {
-        super(whereIsModule);
-        this.current_temp_AC = current_temp_AC;
-        this.isOn = isOn;
+    public SmartAC(String name, String location) {
+        super(name, location);
+        this.current_temp_AC = 20;
+        this.isOn = false;
     }
 
     public static int getMaxTemp() {
@@ -41,8 +41,8 @@ public class SmartAC extends SmartModule {
         return "SmartAC{" +
                 "current_temp_AC=" + current_temp_AC +
                 ", isOn=" + isOn +
-                ", whereIsModule=" + whereIsModule +
                 ", name='" + name + '\'' +
+                ", location='" + location + '\'' +
                 '}';
     }
 }

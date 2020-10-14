@@ -1,23 +1,35 @@
 package Model;
 
 public abstract class SmartModule {
-
-
-    public static enum location {kitchen, master, living_room, deck, hallway, laundry, bathroom, bedroom_1, bedroom_2, garage}
-
-    protected location whereIsModule = null;
     protected String name;
+    protected String location;
 
-    public SmartModule(location whereIsModule) {
-        this.whereIsModule = whereIsModule;
+    public SmartModule(String name, String location) {
+        this.name = name;
+        this.location = location;
     }
 
-    public location getWhereIsModule() {
-        return whereIsModule;
+    public String getName() {
+        return name;
     }
 
-    public void setWhereIsModule(location whereIsModule) {
-        this.whereIsModule = whereIsModule;
+    public void setName(String name) {
+        this.name = name;
     }
 
+    public String getLocation() {
+        return location;
+    }
+
+    public void setLocation(String location) {
+        this.location = location;
+    }
+
+    @Override
+    public String toString() {
+        return "SmartModule{" +
+                "name='" + name + '\'' +
+                ", location='" + location + '\'' +
+                '}';
+    }
 }
