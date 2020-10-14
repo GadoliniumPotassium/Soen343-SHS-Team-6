@@ -6,7 +6,7 @@ import java.util.ArrayList;
 
 public class Controller {
     ModuleLinkedList moduleList=new ModuleLinkedList();
-    ArrayList<User> userList=new ArrayList<Model.User>(10);
+    ArrayList<User> userList=new ArrayList<User>(10);
 
 
     //This will be filled with method in order to modify the states of the smart devices
