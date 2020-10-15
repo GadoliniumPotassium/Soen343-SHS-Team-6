@@ -11,10 +11,10 @@ public class LoadHomeLayout {
         br.close();
         String information [][]=new String[lines.size()][5];
         for (int i=0;i<information.length;i++){
-            String y=lines.get(i);
-            String z []=y.split(";");
+            String roomInfo=lines.get(i);
+            String roomInfoSplit []=roomInfo.split(";");
             for(int j=0;j<information[i].length;j++){
-                information[i][j]=z[j];
+                information[i][j]=roomInfoSplit[j];
             }
         }
         return information;
