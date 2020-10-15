@@ -17,14 +17,16 @@ public class App extends Application {
 
     @Override
     public void start(Stage stage) throws IOException {
-        scene = new Scene(loadFXML("primary"), 640, 480);
+        // load the main window scene here
+        scene = new Scene(loadFXML("main_window"), 640, 480);
+        
         stage.setScene(scene);
         stage.show();
     }
 
-    static void setRoot(String fxml) throws IOException {
-        scene.setRoot(loadFXML(fxml));
-    }
+//    static void setRoot(String fxml) throws IOException {
+//        scene.setRoot(loadFXML(fxml));
+//    }
 
     private static Parent loadFXML(String fxml) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource(fxml + ".fxml"));
@@ -34,5 +36,14 @@ public class App extends Application {
     public static void main(String[] args) {
         launch();
     }
-
+    
+    /* store a reference to the output console controller */
+    public static OutputConsoleController outputConsole;
+    
+    /* log a message to the output console */
+    public static void log(String message) {
+        if (outputConsole != null)
+            outputConsole.log(message);
+    }
+    
 }
