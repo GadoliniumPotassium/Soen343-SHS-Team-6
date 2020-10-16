@@ -19,5 +19,6 @@ public class MainController {
     @FXML
     public void initialize() {
         outputConsoleController.log("Start...");
+        
     }
 }

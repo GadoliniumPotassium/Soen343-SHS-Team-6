@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TitledPane?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+
+<VBox alignment="TOP_CENTER" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mycompany.shsimulator.DashboardController">
+    <TabPane tabClosingPolicy="UNAVAILABLE">
+              <tabs>
+                <Tab text="SHC">
+                  <content>
+                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                           <children>
+                              <GridPane alignment="TOP_CENTER" layoutX="-14.0" layoutY="41.0" prefHeight="171.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                <columnConstraints>
+                                  <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" minWidth="10.0" prefWidth="100.0" />
+                                </columnConstraints>
+                                <rowConstraints>
+                                  <RowConstraints minHeight="10.0" prefHeight="30.0" valignment="TOP" vgrow="ALWAYS" />
+                                  <RowConstraints minHeight="10.0" prefHeight="30.0" valignment="TOP" vgrow="ALWAYS" />
+                                </rowConstraints>
+                                 <children>
+                                    <TitledPane animated="false" text="Item">
+                                      <content>
+                                 <VBox>
+                                    <children>
+                                                <ListView fx:id="shcItemList" prefHeight="132.0" prefWidth="178.0" />
+                                    </children>
+                                 </VBox>
+                                      </content>
+                                    </TitledPane>
+                                    <TitledPane animated="false" text="Open/Close" GridPane.rowIndex="1">
+                              <content>
+                                 <VBox prefHeight="200.0" prefWidth="100.0">
+                                    <children>
+                                       <ListView fx:id="shcOnOffList" prefHeight="200.0" prefWidth="200.0" />
+                                    </children>
+                                 </VBox>
+                              </content>
+                                    </TitledPane>
+                                 </children>
+                              </GridPane>
+                           </children>
+                        </AnchorPane>
+                  </content>
+                </Tab>
+                <Tab text="SHS">
+                  <content>
+                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                  </content>
+                </Tab>
+              </tabs>
+            </TabPane>
+</VBox>
