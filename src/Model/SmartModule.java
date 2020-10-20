@@ -3,7 +3,6 @@ package Model;
 public abstract class SmartModule {
     protected String name;
     protected String location;
-
     public SmartModule(String name, String location) {
         this.name = name;
         this.location = location;
