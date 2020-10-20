@@ -3,11 +3,13 @@ package Model;
 public class User {
     private String username;
     private String password;
+    private String location;
     private boolean isloggedIn;
 
-    public User(String username,String password) {
+    public User(String username,String password,String location) {
         this.username = username;
         this.password=password;
+        this.location=location;
         this.isloggedIn = false;
     }
 
@@ -35,10 +37,20 @@ public class User {
         this.password = password;
     }
 
+    public String getLocation() {
+        return location;
+    }
+
+    public void setLocation(String location) {
+        this.location = location;
+    }
+
     @Override
     public String toString() {
         return "User{" +
                 "username='" + username + '\'' +
+                ", password='" + password + '\'' +
+                ", location='" + location + '\'' +
                 ", isloggedIn=" + isloggedIn +
                 '}';
     }
