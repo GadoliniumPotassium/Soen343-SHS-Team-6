@@ -4,6 +4,11 @@ import java.io.*;
 import java.util.ArrayList;
 
 public class LoadHomeLayout {
+    /**
+     * This method is meant to read the layout file and parse the information and return is as a string array in tokens
+     * @param filename
+     * @return
+     */
     public String[][] readFile(String filename) {
         BufferedReader br = null;
         try {

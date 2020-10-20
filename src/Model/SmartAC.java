@@ -12,26 +12,50 @@ public class SmartAC extends SmartModule {
         this.isOn = false;
     }
 
+    /**
+     * Returns the maximum temperature of the AC
+     * @return
+     */
     public static int getMaxTemp() {
         return MAX_TEMP;
     }
 
+    /**
+     * Returns the minimum temperature of the AC
+     * @return
+     */
     public static int getMinTemp() {
         return MIN_TEMP;
     }
 
+    /**
+     * Returns the current temperature of the AC
+     * @return
+     */
     public double getCurrent_temp_AC() {
         return current_temp_AC;
     }
 
+    /**
+     * Sets the temperature of the AC
+     * @param current_temp_AC
+     */
     public void setCurrent_temp_AC(double current_temp_AC) {
         this.current_temp_AC = current_temp_AC;
     }
 
+    /**
+     * Returns if AC is on
+     * @return
+     */
     public boolean isOn() {
         return isOn;
     }
 
+    /**
+     * Toggle on or off AC
+     * @param on
+     */
     public void setOn(boolean on) {
         isOn = on;
     }

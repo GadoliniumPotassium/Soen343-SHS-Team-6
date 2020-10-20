@@ -21,11 +21,18 @@ public class ModuleLinkedList {
     private Node head = null;
     private Node whereAmI;
 
+    /**
+     * Creating linked list
+     */
     public ModuleLinkedList() {
         this.head = null;
         this.whereAmI = null;
     }
 
+    /**
+     *
+     * @return the head of the list
+     */
     public Node getHead() {
         return head;
     }
@@ -101,9 +108,9 @@ public class ModuleLinkedList {
      */
 
     public boolean removeModule(SmartModule module) {
-        if (head.module==module){
-            head=head.next;
-            head.prev=null;
+        if (head.module == module) {
+            head = head.next;
+            head.prev = null;
             return true;
         }
         whereAmI = head;

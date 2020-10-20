@@ -9,10 +9,18 @@ public class SmartLock extends SmartModule{
         this.isLocked = false;
     }
 
+    /**
+     * Returns if lock is closed or open
+     * @return
+     */
     public boolean isLocked() {
         return isLocked;
     }
 
+    /**
+     * Toggle lock
+     * @param locked
+     */
     public void setLocked(boolean locked) {
         isLocked = locked;
     }

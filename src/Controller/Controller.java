@@ -50,15 +50,12 @@ public class Controller {
                 return;
             }
         }
-        User temp=new User(username,password);
+        User temp=new User(username,password,"outside");
         userList.add(temp);
     }
 
     public void removeAccount(User user){
         userList.remove(user);
     }
-
-
-
 
 }
