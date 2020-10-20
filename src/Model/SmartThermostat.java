@@ -1,13 +1,14 @@
 package Model;
 
 public class SmartThermostat extends SmartModule {
-    final static int MIN_TEMP=0;
-    final static int MAX_TEMP=25;
+    final static int MIN_TEMP = 0;
+    final static int MAX_TEMP = 25;
     private double current_temp_heater;
-    private boolean  isOn;
+    private boolean isOn;
 
     /**
      * SmartThermostat constructor
+     *
      * @param name
      * @param location
      * @param current_temp_heater
@@ -21,6 +22,7 @@ public class SmartThermostat extends SmartModule {
 
     /**
      * Returns minimum temp of the thermostat
+     *
      * @return
      */
     public static int getMinTemp() {
@@ -29,6 +31,7 @@ public class SmartThermostat extends SmartModule {
 
     /**
      * Returns maximum temperature of teh smart thermostat
+     *
      * @return
      */
     public static int getMaxTemp() {
@@ -37,6 +40,7 @@ public class SmartThermostat extends SmartModule {
 
     /**
      * returns the current temperature the thermostat was set at
+     *
      * @return
      */
     public double getCurrent_temp_heater() {
@@ -45,6 +49,7 @@ public class SmartThermostat extends SmartModule {
 
     /**
      * set the temperature of the thermostat
+     *
      * @param current_temp_heater
      */
     public void setCurrent_temp_heater(double current_temp_heater) {
@@ -53,6 +58,7 @@ public class SmartThermostat extends SmartModule {
 
     /**
      * return is the thermostat is On
+     *
      * @return
      */
     public boolean isOn() {
@@ -61,6 +67,7 @@ public class SmartThermostat extends SmartModule {
 
     /**
      * Toggle thermostat
+     *
      * @param on
      */
     public void setOn(boolean on) {

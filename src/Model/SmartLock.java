@@ -1,6 +1,6 @@
 package Model;
 
-public class SmartLock extends SmartModule{
+public class SmartLock extends SmartModule {
 
     boolean isLocked;
 
@@ -11,6 +11,7 @@ public class SmartLock extends SmartModule{
 
     /**
      * Returns if lock is closed or open
+     *
      * @return
      */
     public boolean isLocked() {
@@ -19,6 +20,7 @@ public class SmartLock extends SmartModule{
 
     /**
      * Toggle lock
+     *
      * @param locked
      */
     public void setLocked(boolean locked) {

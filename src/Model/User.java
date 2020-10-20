@@ -6,15 +6,16 @@ public class User {
     private String location;
     private boolean isloggedIn;
 
-    public User(String username,String password,String location) {
+    public User(String username, String password, String location) {
         this.username = username;
-        this.password=password;
-        this.location=location;
+        this.password = password;
+        this.location = location;
         this.isloggedIn = false;
     }
 
     /**
      * returns users username
+     *
      * @return
      */
     public String getUsername() {
@@ -23,6 +24,7 @@ public class User {
 
     /**
      * set the username
+     *
      * @param username
      */
     public void setUsername(String username) {
@@ -31,6 +33,7 @@ public class User {
 
     /**
      * return true if user is logged in
+     *
      * @return
      */
     public boolean isIsloggedIn() {
@@ -39,6 +42,7 @@ public class User {
 
     /**
      * setter for if user is logged in
+     *
      * @param isloggedIn
      */
     public void setIsloggedIn(boolean isloggedIn) {
@@ -47,6 +51,7 @@ public class User {
 
     /**
      * returns user password
+     *
      * @return
      */
     public String getPassword() {
@@ -55,6 +60,7 @@ public class User {
 
     /**
      * set or reset user password
+     *
      * @param password
      */
     public void setPassword(String password) {
@@ -63,6 +69,7 @@ public class User {
 
     /**
      * get the users location
+     *
      * @return
      */
     public String getLocation() {
@@ -71,6 +78,7 @@ public class User {
 
     /**
      * set the users location
+     *
      * @param location
      */
     public void setLocation(String location) {

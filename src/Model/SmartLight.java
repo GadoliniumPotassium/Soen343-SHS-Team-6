@@ -8,6 +8,7 @@ public class SmartLight extends SmartModule {
 
     /**
      * Constructor for Smartlight class
+     *
      * @param name
      * @param location
      * @param isDimmable
@@ -23,6 +24,7 @@ public class SmartLight extends SmartModule {
 
     /**
      * Returns if this light is dimmable
+     *
      * @return
      */
     public boolean isDimmable() {
@@ -31,6 +33,7 @@ public class SmartLight extends SmartModule {
 
     /**
      * If light is dimmable it returns the percentage
+     *
      * @return
      */
     public int getLightPercentage() {
@@ -39,6 +42,7 @@ public class SmartLight extends SmartModule {
 
     /**
      * If the light is dimmable this will set the light percentage
+     *
      * @param lightPercentage
      */
     public void setLightPercentage(int lightPercentage) {
@@ -47,6 +51,7 @@ public class SmartLight extends SmartModule {
 
     /**
      * Returns if the light is on
+     *
      * @return
      */
     public boolean isOn() {
@@ -55,9 +60,10 @@ public class SmartLight extends SmartModule {
 
     /**
      * Toggle on or off light
+     *
      * @param on
      */
-    public void setOn (boolean on) {
+    public void setOn(boolean on) {
         isOn = on;
     }
 

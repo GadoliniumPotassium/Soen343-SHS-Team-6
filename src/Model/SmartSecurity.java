@@ -6,6 +6,7 @@ public class SmartSecurity extends SmartModule {
 
     /**
      * Smart security constructor
+     *
      * @param name
      * @param location
      */
@@ -17,6 +18,7 @@ public class SmartSecurity extends SmartModule {
 
     /**
      * Returns if the security system is in away mode
+     *
      * @return
      */
     public boolean isInAwayMode() {
@@ -25,6 +27,7 @@ public class SmartSecurity extends SmartModule {
 
     /**
      * toggle security system in away mode or home mode
+     *
      * @param inAwayMode
      */
     public void setInAwayMode(boolean inAwayMode) {
@@ -33,6 +36,7 @@ public class SmartSecurity extends SmartModule {
 
     /**
      * Returns if someone is in the house
+     *
      * @return
      */
     public boolean isSomeoneThere() {
@@ -41,6 +45,7 @@ public class SmartSecurity extends SmartModule {
 
     /**
      * Toggle if someone is in the house
+     *
      * @param someoneThere
      */
     public void setSomeoneThere(boolean someoneThere) {

@@ -1,12 +1,13 @@
 package Model;
 
-public class SmartWindow extends SmartModule{
+public class SmartWindow extends SmartModule {
 
     private boolean isOpen;
     private boolean isObstructed;
 
     /**
      * Smart Window constructor
+     *
      * @param name
      * @param location
      * @param isOpen
@@ -20,6 +21,7 @@ public class SmartWindow extends SmartModule{
 
     /**
      * returns if window is open
+     *
      * @return
      */
     public boolean isOpen() {
@@ -28,6 +30,7 @@ public class SmartWindow extends SmartModule{
 
     /**
      * set window open or closed
+     *
      * @param open
      */
     public void setOpen(boolean open) {
@@ -36,6 +39,7 @@ public class SmartWindow extends SmartModule{
 
     /**
      * returns if window is obstructed
+     *
      * @return
      */
     public boolean isObstructed() {
@@ -44,6 +48,7 @@ public class SmartWindow extends SmartModule{
 
     /**
      * set if window is obstructed
+     *
      * @param obstructed
      */
     public void setObstructed(boolean obstructed) {

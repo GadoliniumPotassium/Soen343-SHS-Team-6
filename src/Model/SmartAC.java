@@ -14,6 +14,7 @@ public class SmartAC extends SmartModule {
 
     /**
      * Returns the maximum temperature of the AC
+     *
      * @return
      */
     public static int getMaxTemp() {
@@ -22,6 +23,7 @@ public class SmartAC extends SmartModule {
 
     /**
      * Returns the minimum temperature of the AC
+     *
      * @return
      */
     public static int getMinTemp() {
@@ -30,6 +32,7 @@ public class SmartAC extends SmartModule {
 
     /**
      * Returns the current temperature of the AC
+     *
      * @return
      */
     public double getCurrent_temp_AC() {
@@ -38,6 +41,7 @@ public class SmartAC extends SmartModule {
 
     /**
      * Sets the temperature of the AC
+     *
      * @param current_temp_AC
      */
     public void setCurrent_temp_AC(double current_temp_AC) {
@@ -46,6 +50,7 @@ public class SmartAC extends SmartModule {
 
     /**
      * Returns if AC is on
+     *
      * @return
      */
     public boolean isOn() {
@@ -54,6 +59,7 @@ public class SmartAC extends SmartModule {
 
     /**
      * Toggle on or off AC
+     *
      * @param on
      */
     public void setOn(boolean on) {

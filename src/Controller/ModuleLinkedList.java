@@ -7,7 +7,7 @@ public class ModuleLinkedList {
 
 
     private class Node {
-        private SmartModule module;
+        private final SmartModule module;
         private Node next;
         private Node prev;
 
@@ -30,7 +30,6 @@ public class ModuleLinkedList {
     }
 
     /**
-     *
      * @return the head of the list
      */
     public Node getHead() {
