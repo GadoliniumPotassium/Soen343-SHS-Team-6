@@ -5,12 +5,15 @@ public class User {
     private String password;
     private String location;
     private boolean isloggedIn;
+    public static enum permissions{full,partial,none};
+    private permissions userPermission;
 
-    public User(String username, String password, String location) {
+    public User(String username, String password, String location,permissions perm) {
         this.username = username;
         this.password = password;
         this.location = location;
         this.isloggedIn = false;
+        this.userPermission=perm;
     }
 
     /**
@@ -85,6 +88,14 @@ public class User {
         this.location = location;
     }
 
+    public permissions getUserPermission() {
+        return userPermission;
+    }
+
+    public void setUserPermission(permissions userPermission) {
+        this.userPermission = userPermission;
+    }
+
     @Override
     public String toString() {
         return "User{" +
@@ -92,6 +103,7 @@ public class User {
                 ", password='" + password + '\'' +
                 ", location='" + location + '\'' +
                 ", isloggedIn=" + isloggedIn +
+                ", userPermission=" + userPermission +
                 '}';
     }
 }
