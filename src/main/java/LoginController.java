@@ -1,9 +1,9 @@
-package application;
+package main.java;
 import javafx.event.ActionEvent;
 import javafx.fxml.FMXL;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-public class Controller extends Application{
+public class LoginController extends Application{
     @FXML
     private Label lblStatus;
     @FXML
