@@ -6,7 +6,7 @@ import Model.SmartModule;
 public class ModuleLinkedList {
 
 
-    private class Node {
+     class Node {
         private final SmartModule module;
         private Node next;
         private Node prev;
@@ -15,6 +15,10 @@ public class ModuleLinkedList {
             this.module = module;
             this.next = next;
             this.prev = prev;
+        }
+
+        public SmartModule getModule() {
+            return module;
         }
     }
 
@@ -34,6 +38,19 @@ public class ModuleLinkedList {
      */
     public Node getHead() {
         return head;
+    }
+
+    public Node getWhereAmI() {
+        return whereAmI;
+    }
+
+    /**
+     * This will set the whereAmI node
+     * @param n
+     * @return
+     */
+    public void setWhereAmI(Node n) {
+        whereAmI = n;
     }
 
     /**

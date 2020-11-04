@@ -1,8 +1,9 @@
 package Model;
 
 public class SmartSecurity extends SmartModule {
-    boolean inAwayMode;
-    boolean isSomeoneThere;
+    private boolean inAwayMode;
+    private boolean isSomeoneThere;
+    private int timeSet;
 
     /**
      * Smart security constructor
@@ -14,6 +15,7 @@ public class SmartSecurity extends SmartModule {
         super(name, location);
         this.inAwayMode = false;
         this.isSomeoneThere = false;
+        this.timeSet=0;
     }
 
     /**
@@ -50,6 +52,22 @@ public class SmartSecurity extends SmartModule {
      */
     public void setSomeoneThere(boolean someoneThere) {
         isSomeoneThere = someoneThere;
+    }
+
+    /**
+     * this method allows the user to set the time in seconds before contacting the authorities
+     * @param time
+     */
+    public void setTimeSet(int time){
+        this.timeSet=time;
+    }
+
+    /**
+     * this returns the time set by user before contacting the authorities
+     * @return
+     */
+    public int getTimeSet() {
+        return timeSet;
     }
 
     @Override
