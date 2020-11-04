@@ -1,0 +1,57 @@
+package main;
+
+import javafx.application.Application;
+import javafx.fxml.FXMLLoader;
+import javafx.geometry.Rectangle2D;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.layout.BorderPane;
+import javafx.stage.Screen;
+import javafx.stage.Stage;
+
+
+public class LoginMain extends Application {
+
+    private static BorderPane main_root;
+    @Override
+    public void start(Stage primaryStage) throws Exception{
+        main_root = new BorderPane();
+        try {
+            new Main().loadData();
+
+            // get full screen
+
+            main_root.setStyle("-fx-background-color:  #f1f6f9");
+            Screen screen = Screen.getPrimary();
+            Rectangle2D bounds = screen.getVisualBounds();
+            main_root.setPrefWidth(bounds.getWidth());
+            main_root.setPrefHeight(bounds.getHeight());
+
+            Parent root = FXMLLoader.load(getClass().getResource("../FXML/Login.fxml"));
+            main_root.setCenter(root);
+
+            //scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
+            primaryStage.setScene(new Scene(main_root));
+            primaryStage.setFullScreen(true);
+            primaryStage.show();
+            primaryStage.setOnCloseRequest(e->{
+                new Main().saveData();
+            });
+
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+    }
+    public static void setMainRoot(Node root){
+        main_root.getChildren().clear();
+        main_root.setCenter(root);
+    }
+    public static BorderPane getMainRoot(){
+        return main_root;
+    }
+
+    public static void main(String[] args) {
+        launch(args);
+    }
+}

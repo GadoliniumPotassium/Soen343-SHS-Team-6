@@ -4,6 +4,7 @@ public class SmartWindow extends SmartModule {
 
     private boolean isOpen;
     private boolean isObstructed;
+    private boolean locked;
 
     /**
      * Smart Window constructor
@@ -53,5 +54,13 @@ public class SmartWindow extends SmartModule {
      */
     public void setObstructed(boolean obstructed) {
         isObstructed = obstructed;
+    }
+
+    public boolean isLocked() {
+        return locked;
+    }
+
+    public void setLocked(boolean locked) {
+        this.locked = locked;
     }
 }

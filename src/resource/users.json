@@ -1,0 +1,37 @@
+[
+ {
+  "password": "pass0101",
+  "userPermission": "full",
+  "isLoggedIn": false,
+  "location": "unknown",
+  "username": "Amneet0101"
+ },
+ {
+  "password": "merayar",
+  "userPermission": "full",
+  "isLoggedIn": true,
+  "location": "Enterance",
+  "username": "Suleiman"
+ },
+ {
+  "password": "pogo",
+  "userPermission": "full",
+  "isLoggedIn": false,
+  "location": "Backyard",
+  "username": "Arif"
+ },
+ {
+  "password": "mama",
+  "userPermission": "partial",
+  "isLoggedIn": false,
+  "location": "Master Room",
+  "username": "Maid"
+ },
+ {
+  "password": "papa",
+  "userPermission": "partial",
+  "isLoggedIn": false,
+  "location": "Amneet Room",
+  "username": "Iqra"
+ }
+]

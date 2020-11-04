@@ -5,8 +5,17 @@ public class User {
     private String password;
     private String location;
     private boolean isloggedIn;
+
+    public User() {
+    	username = "";
+    	password = "";
+    	location = "";
+    }
+
     public static enum permissions{full,partial,none};
     private permissions userPermission;
+
+    public String defaultLocation;
 
     public User(String username, String password, String location,permissions perm) {
         this.username = username;
@@ -14,6 +23,7 @@ public class User {
         this.location = location;
         this.isloggedIn = false;
         this.userPermission=perm;
+        defaultLocation = "outside";
     }
 
     /**

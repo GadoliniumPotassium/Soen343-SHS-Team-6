@@ -6,6 +6,8 @@ public class SmartLight extends SmartModule {
     private int lightPercentage;
     private boolean isOn;
 
+    private String away_mode_timing;
+
     /**
      * Constructor for Smartlight class
      *
@@ -76,5 +78,13 @@ public class SmartLight extends SmartModule {
                 ", name='" + name + '\'' +
                 ", location='" + location + '\'' +
                 '}';
+    }
+
+    public String getAway_mode_timing() {
+        return away_mode_timing;
+    }
+
+    public void setAway_mode_timing(String away_mode_timing) {
+        this.away_mode_timing = away_mode_timing;
     }
 }

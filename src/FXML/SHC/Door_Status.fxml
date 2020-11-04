@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<VBox alignment="CENTER" style="-fx-background-color: #f1f6f9;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.SHC.Door_Status">
+   <children>
+      <Label fx:id="door_name" text="Door Name" textFill="#14274e">
+         <font>
+            <Font name="Bell MT" size="22.0" />
+         </font>
+      </Label>
+      <HBox alignment="CENTER">
+         <children>
+            <JFXButton onAction="#door_open_close" prefHeight="60.0" prefWidth="45.0" text=" ">
+               <graphic>
+                  <ImageView fx:id="door_status" fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true" />
+               </graphic>
+            </JFXButton>
+            <JFXButton layoutX="10.0" layoutY="10.0" onAction="#door_lock_unlock" prefHeight="60.0" prefWidth="0.0" text=" ">
+               <graphic>
+                  <ImageView fx:id="door_lock" fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true" />
+               </graphic>
+            </JFXButton>
+            <JFXButton layoutX="84.0" layoutY="10.0" onAction="#door_obstructed" prefHeight="60.0" prefWidth="0.0" text=" ">
+               <graphic>
+                  <ImageView fx:id="door_obstruct" fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true" />
+               </graphic>
+            </JFXButton>
+         </children>
+      </HBox>
+   </children>
+</VBox>
