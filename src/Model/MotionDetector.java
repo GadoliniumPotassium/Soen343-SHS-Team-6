@@ -1,19 +1,21 @@
 package Model;
 
+import java.util.ArrayList;
+
 public class MotionDetector {
     // user name who came inside room
 
     // okay here i have done mistake using stack when multiple user can
     // enter the room and what  2 user enter the room and 1st one left first so this will be bad
 
-    private Stack<User> userStack;
+    private ArrayList<User> userStack;
 
     public MotionDetector(){
-        userStack = new Stack<>();
+        userStack = new ArrayList<>();
     }
 
     public void user_detect(User user){
-        userStack.push(user);
+        userStack.add(user);
     }
 
     public void user_left(User _user){

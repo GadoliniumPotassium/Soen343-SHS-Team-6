@@ -3,15 +3,15 @@
   "password": "pass0101",
   "userPermission": "full",
   "isLoggedIn": false,
-  "location": "unknown",
+  "location": "Master Room",
   "username": "Amneet0101"
  },
  {
-  "password": "merayar",
+  "password": "moka",
   "userPermission": "full",
-  "isLoggedIn": true,
+  "isLoggedIn": false,
   "location": "Enterance",
-  "username": "Suleiman"
+  "username": "asas"
  },
  {
   "password": "pogo",
@@ -24,14 +24,14 @@
   "password": "mama",
   "userPermission": "partial",
   "isLoggedIn": false,
-  "location": "Master Room",
-  "username": "Maid"
+  "location": "Garage",
+  "username": "madam"
  },
  {
   "password": "papa",
   "userPermission": "partial",
-  "isLoggedIn": false,
+  "isLoggedIn": true,
   "location": "Amneet Room",
-  "username": "Iqra"
+  "username": "lol"
  }
 ]
