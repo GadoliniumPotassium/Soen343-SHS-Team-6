@@ -4,15 +4,16 @@ public class SmartSecurity extends SmartModule {
     private boolean inAwayMode;
     private boolean isSomeoneThere;
     private int timeSet;
+    private static int idNum=1;
+
 
     /**
      * Smart security constructor
      *
-     * @param name
      * @param location
      */
-    public SmartSecurity(String name, String location) {
-        super(name, location);
+    public SmartSecurity(String location) {
+        super("SmartSecurity#"+(idNum++), location);
         this.inAwayMode = false;
         this.isSomeoneThere = false;
         this.timeSet=0;

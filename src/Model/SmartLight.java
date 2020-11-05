@@ -2,52 +2,22 @@ package Model;
 
 public class SmartLight extends SmartModule {
 
-    private final boolean isDimmable;
-    private int lightPercentage;
     private boolean isOn;
+    private static int idNum=1;
 
     /**
      * Constructor for Smartlight class
      *
-     * @param name
      * @param location
-     * @param isDimmable
-     * @param lightPercentage
      * @param isOn
      */
-    public SmartLight(String name, String location, boolean isDimmable, int lightPercentage, boolean isOn) {
-        super(name, location);
-        this.isDimmable = isDimmable;
-        this.lightPercentage = lightPercentage;
+    public SmartLight(String location, boolean isOn) {
+        super("SmartLight#"+(idNum++), location);
         this.isOn = isOn;
     }
 
-    /**
-     * Returns if this light is dimmable
-     *
-     * @return
-     */
-    public boolean isDimmable() {
-        return isDimmable;
-    }
 
-    /**
-     * If light is dimmable it returns the percentage
-     *
-     * @return
-     */
-    public int getLightPercentage() {
-        return lightPercentage;
-    }
 
-    /**
-     * If the light is dimmable this will set the light percentage
-     *
-     * @param lightPercentage
-     */
-    public void setLightPercentage(int lightPercentage) {
-        this.lightPercentage = lightPercentage;
-    }
 
     /**
      * Returns if the light is on
@@ -70,8 +40,6 @@ public class SmartLight extends SmartModule {
     @Override
     public String toString() {
         return "SmartLight{" +
-                "isDimmable=" + isDimmable +
-                ", lightPercentage=" + lightPercentage +
                 ", isOn=" + isOn +
                 ", name='" + name + '\'' +
                 ", location='" + location + '\'' +

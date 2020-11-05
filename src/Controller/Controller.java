@@ -2,13 +2,14 @@ package Controller;
 
 import Model.*;
 
+import javax.swing.*;
 import java.util.ArrayList;
 
 public class Controller {
     private ModuleLinkedList moduleList = new ModuleLinkedList();
     private ArrayList<User> userList = new ArrayList<User>(10);
     private boolean isSimRunning = false;
-
+    private FileWriter fw = new FileWriter();
 
     //This will be filled with method in order to modify the states of the smart devices
 
@@ -27,6 +28,7 @@ public class Controller {
      */
     public void toggleSimulation() {
         isSimRunning = !isSimRunning;
+        //Log command
     }
 
     /**
@@ -36,6 +38,7 @@ public class Controller {
      */
     public boolean isSimRunning() {
         return isSimRunning;
+        //Log command
     }
 
     /**
@@ -45,6 +48,7 @@ public class Controller {
      */
     public void toggleACPower(SmartAC AC) {
         AC.setOn(!AC.isOn());
+        //Log command
     }
 
     /**
@@ -55,6 +59,7 @@ public class Controller {
      */
     public void changeThermosValue(double value, SmartThermostat Thermos) {
         Thermos.setCurrent_temp_heater(Thermos.getCurrent_temp_heater() + value);
+        //Log command
     }
 
     /**
@@ -64,6 +69,7 @@ public class Controller {
      */
     public void toggleThermosPower(SmartThermostat Thermos) {
         Thermos.setOn(!Thermos.isOn());
+        //Log command
     }
 
     /**
@@ -73,18 +79,7 @@ public class Controller {
      */
     public void switchLightState(SmartLight light) {
         light.setOn(!light.isOn());
-    }
-
-    /**
-     * Changes the percentage of the light dim
-     *
-     * @param change
-     * @param light
-     */
-    public void changeLightDim(int change, SmartLight light) {
-        if (light.isOn() && light.isDimmable()) {
-            light.setLightPercentage(light.getLightPercentage() + change);
-        }
+        //Log command
     }
 
     /**
@@ -94,6 +89,7 @@ public class Controller {
      */
     public void changeLockState(SmartLock lock) {
         lock.setLocked(!lock.isLocked());
+        //Log command
     }
 
     /**
@@ -105,9 +101,23 @@ public class Controller {
         if (sec.isInAwayMode() && sec.isSomeoneThere()) {
             System.out.print("Users have been notified.\n" +
                     "How long do you want to wait before contacting authorities?");
-            //set timer here
-            //waits amount specified
+            //My brain broke, this is the best I could come up with.
+            String t = JOptionPane.showInputDialog("Activity has been detected in your house when in away mode," +
+                    " </br>how long before we contact the authorities? (insert answer in seconds please)", "");
+
+            long time = 0;
+            if (t.matches("-?\\d+(\\.\\d+)?")) {
+                time = Long.valueOf(t) * 1000;
+            } else {
+                time = 0;
+            }
+            try {
+                Thread.sleep(time);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
             System.out.println("We are contacting 911");
+            //Log command
         }
     }
 
@@ -124,11 +134,14 @@ public class Controller {
             while (moduleList.getWhereAmI() != null) {
                 if (moduleList.getWhereAmI().getModule() instanceof SmartLock) {
                     ((SmartLock) moduleList.getWhereAmI().getModule()).setLocked(true);
+                    //Log command
                 } else if (moduleList.getWhereAmI().getModule() instanceof SmartWindow) {
                     ((SmartWindow) moduleList.getWhereAmI().getModule()).setOpen(false);
+                    //Log command
                 }
             }
         }
+
     }
 
     /**
@@ -147,6 +160,7 @@ public class Controller {
         User temp = new User(username, password, "outside", permissions);
         userList.add(temp);
         //Add user to txtfile
+        //Log command
     }
 
     /**
@@ -157,6 +171,7 @@ public class Controller {
     public void removeAccount(User user) {
         userList.remove(user);
         //Remove user from txtfile
+        //Log command
     }
 
     /**
@@ -169,6 +184,7 @@ public class Controller {
             window.setOpen(window.isOpen());
         else
             System.out.println("Could not change the window state as the window is obstructed by an object. Please remove it.");
+        //Log command
     }
 
     /**
@@ -178,6 +194,7 @@ public class Controller {
      */
     public void toggleWindowObstruction(SmartWindow window) {
         window.setObstructed(!window.isObstructed());
+        //Log command
     }
 
     /**
@@ -187,6 +204,7 @@ public class Controller {
      */
     public void changeOutsideTemperature(double temp) {
         SmartModule.setOutsideTemp(temp);
+        //Log command
     }
 
     /**
@@ -214,5 +232,17 @@ public class Controller {
      */
     public void setSimRunning(boolean simRunning) {
         isSimRunning = simRunning;
+    }
+
+    /**
+     * This method serves to create a new module in the home
+     *
+     * @param type
+     * @param location
+     */
+    public void createModule(String type, String location) {
+        SmartModule m = ModuleFactory.createModule(type, location);
+        moduleList.addModuleToList(m);
+        //log module creation.
     }
 }

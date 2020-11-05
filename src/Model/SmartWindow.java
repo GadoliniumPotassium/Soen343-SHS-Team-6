@@ -4,17 +4,17 @@ public class SmartWindow extends SmartModule {
 
     private boolean isOpen;
     private boolean isObstructed;
+    private static int idNum=1;
 
     /**
      * Smart Window constructor
      *
-     * @param name
      * @param location
      * @param isOpen
      * @param isObstructed
      */
-    public SmartWindow(String name, String location, boolean isOpen, boolean isObstructed) {
-        super(name, location);
+    public SmartWindow( String location, boolean isOpen, boolean isObstructed) {
+        super("SmartWindow"+(idNum++), location);
         this.isOpen = isOpen;
         this.isObstructed = isObstructed;
     }

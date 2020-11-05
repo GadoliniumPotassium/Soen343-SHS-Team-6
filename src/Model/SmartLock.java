@@ -3,9 +3,11 @@ package Model;
 public class SmartLock extends SmartModule {
 
     boolean isLocked;
+    private static int idNum=1;
 
-    public SmartLock(String name, String location, boolean isLocked) {
-        super(name, location);
+
+    public SmartLock(String location, boolean isLocked) {
+        super("SmartLock#"+(idNum++), location);
         this.isLocked = false;
     }
 

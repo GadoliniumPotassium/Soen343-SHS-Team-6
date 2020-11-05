@@ -5,15 +5,27 @@ public class User {
     private String password;
     private String location;
     private boolean isloggedIn;
-    public static enum permissions{full,partial,none};
+    public static enum permissions {full, partial, none}
     private permissions userPermission;
+    private String personalPermissions = null;
 
-    public User(String username, String password, String location,permissions perm) {
+    public User(String username, String password, String location, permissions perm) {
         this.username = username;
         this.password = password;
         this.location = location;
         this.isloggedIn = false;
-        this.userPermission=perm;
+        this.userPermission = perm;
+    }
+
+    public User(String username, String password, String location, boolean isloggedIn, permissions userPermission, String personalPermissions) {
+        this.username = username;
+        this.password = password;
+        this.location = location;
+        this.isloggedIn = isloggedIn;
+        this.userPermission = userPermission;
+        if (userPermission.equals(permissions.partial)) {
+            this.personalPermissions = personalPermissions;
+        }
     }
 
     /**
