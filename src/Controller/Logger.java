@@ -12,7 +12,7 @@ import java.util.ArrayList;
  * All the exception handling and writing will be handled by this class so the programmer can just focus on what needs to be done.
  * Use a creational design pattern
  */
-public class FileManipulator {
+public class Logger {
 
     /**
      * This method takes a file and appends a line to it

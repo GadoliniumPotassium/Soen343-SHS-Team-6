@@ -76,5 +76,26 @@ public class LoadTxtInfo {
         }
         return informartion;
     }
+
+    public static ArrayList<String> loadUserFile() {
+        BufferedReader br = null;
+        try {
+            br = new BufferedReader(new FileReader("users.txt"));
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+            System.exit(0);
+        }
+        ArrayList<String> userInfo = new ArrayList<String>(10);
+        String line = null;
+        try {
+            while ((line = br.readLine()) != null) {
+                userInfo.add(line);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+            System.exit(0);
+        }
+        return userInfo;
+    }
 }
 

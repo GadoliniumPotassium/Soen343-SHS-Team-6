@@ -28,7 +28,7 @@ public class Controller {
      */
     public void toggleSimulation() {
         isSimRunning = !isSimRunning;
-        FileManipulator.append("log.txt", "toggled simulation state.");
+        Logger.append("log.txt", "toggled simulation state.");
     }
 
     /**
@@ -49,7 +49,7 @@ public class Controller {
      */
     public void changeThermosValue(double value, SmartThermostat Thermos) {
         Thermos.setCurrent_temp_heater(Thermos.getCurrent_temp_heater() + value);
-        FileManipulator.append("log.txt", "Changed the value of thermostat" + Thermos.getName() + " in " + Thermos.getLocation() + " to" + Thermos.getCurrent_temp_heater());
+        Logger.append("log.txt", "Changed the value of thermostat" + Thermos.getName() + " in " + Thermos.getLocation() + " to" + Thermos.getCurrent_temp_heater());
     }
 
     /**
@@ -57,11 +57,12 @@ public class Controller {
      * locked/unlocked state. (Will not toggle the obstruction state of a window, must use toggleWindowObstruction to do that)
      *
      * <em>Special case: If smart security is set on, it will lock every door and window</em>
+     *
      * @param module
      */
     public void toggleOnOffStateModule(SmartModule module) {
         module.toggleModule();
-        FileManipulator.append("log.txt", "We changed the state of " + module.getName() + " in " + module.getLocation());
+        Logger.append("log.txt", "We changed the state of " + module.getName() + " in " + module.getLocation());
         //This will toggle set every single door and window to locked and closed if SmartSecurity has been set to away mode.
         if (module instanceof SmartSecurity) {
             if (((SmartSecurity) module).isInAwayMode()) {
@@ -69,10 +70,10 @@ public class Controller {
                 while (moduleList.getWhereAmI() != null) {
                     if (moduleList.getWhereAmI().getModule() instanceof SmartLock) {
                         ((SmartLock) moduleList.getWhereAmI().getModule()).setLocked(true);
-                        FileManipulator.append("log.txt", "We changed the state of " + moduleList.getWhereAmI().getModule().getName() + " in " + moduleList.getWhereAmI().getModule().getLocation());
+                        Logger.append("log.txt", "We changed the state of " + moduleList.getWhereAmI().getModule().getName() + " in " + moduleList.getWhereAmI().getModule().getLocation());
                     } else if (moduleList.getWhereAmI().getModule() instanceof SmartWindow) {
                         ((SmartWindow) moduleList.getWhereAmI().getModule()).setOpen(false);
-                        FileManipulator.append("log.txt", "We changed the state of " + moduleList.getWhereAmI().getModule().getName() + " in " + moduleList.getWhereAmI().getModule().getLocation());
+                        Logger.append("log.txt", "We changed the state of " + moduleList.getWhereAmI().getModule().getName() + " in " + moduleList.getWhereAmI().getModule().getLocation());
                     }
                 }
             }
@@ -105,7 +106,7 @@ public class Controller {
                 e.printStackTrace();
             }
             System.out.println("We are contacting 911");
-            FileManipulator.append("log.txt", "SmartSecurity was tripped and the authorities have been contacted");
+            Logger.append("log.txt", "SmartSecurity was tripped and the authorities have been contacted");
         }
     }
 
@@ -125,8 +126,8 @@ public class Controller {
         }
         User temp = new User(username, password, "outside", permissions);
         userList.add(temp);
-        FileManipulator.append("users.txt", temp.getUsername() + ";" + temp.getPassword() + ";" + temp.getUserPermission());
-        FileManipulator.append("log.txt", "User has been created and added to database");
+        Logger.append("users.txt", temp.getUsername() + ";" + temp.getPassword() + ";" + temp.getUserPermission());
+        Logger.append("log.txt", "User has been created and added to database");
 
     }
 
@@ -137,8 +138,8 @@ public class Controller {
      */
     public void removeAccount(User user) {
         userList.remove(user);
-        FileManipulator.remove("users.txt", user.getUsername() + ";" + user.getPassword() + ";" + user.getUserPermission());
-        FileManipulator.append("log.txt", "We removed a user from the database");
+        Logger.remove("users.txt", user.getUsername() + ";" + user.getPassword() + ";" + user.getUserPermission());
+        Logger.append("log.txt", "We removed a user from the database");
     }
 
     /**
@@ -148,7 +149,7 @@ public class Controller {
      */
     public void toggleWindowObstruction(SmartWindow window) {
         window.setObstructed(!window.isObstructed());
-        FileManipulator.append("log.txt", "Toggled the obstruction state of the window");
+        Logger.append("log.txt", "Toggled the obstruction state of the window");
     }
 
     /**
@@ -158,7 +159,7 @@ public class Controller {
      */
     public void changeOutsideTemperature(double temp) {
         SmartModule.setOutsideTemp(temp);
-        FileManipulator.append("log.txt", "Changed the temperature of outside");
+        Logger.append("log.txt", "Changed the temperature of outside");
     }
 
     /**
@@ -201,6 +202,6 @@ public class Controller {
             return;
         }
         moduleList.addModuleToList(m);
-        //log module creation.
+        Logger.append("log.txt", "We created a new module of type " + type + " at location:" + location);
     }
 }
