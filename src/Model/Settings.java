@@ -4,9 +4,10 @@ public class Settings {
     private String date;
     private String time;
     private float temperature;
+    private int alertTiming;
 
     // MM/DD/YYYY
-    // HH:MM
+    // HH:mm
     // 00.0
 
 
@@ -14,6 +15,14 @@ public class Settings {
         setDate(_date);
         setTime(_time);
         setTemperature(_temp);
+    }
+
+    public void setAlertTiming(int alertTiming) {
+        this.alertTiming = alertTiming;
+    }
+
+    public int getAlertTiming() {
+        return alertTiming;
     }
 
     public void setDate(String date) {

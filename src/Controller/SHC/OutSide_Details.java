@@ -67,9 +67,11 @@ public class OutSide_Details {
                 user_label.setFont(Font.font("Bell MT",18));
                 user_label.setTextFill(Color.web("#9ba4b4"));
                 user_label.setAlignment(Pos.CENTER);
+                user_label.setPrefWidth(100);
 
                 removeBtn.setFont(Font.font("Bell MT",18));
                 removeBtn.setTextFill(Color.web("#9ba4b4"));
+                removeBtn.setPrefWidth(100);
 
                 user_box.getChildren().addAll(user_label,removeBtn);
 

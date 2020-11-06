@@ -7,6 +7,7 @@ import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import main.App;
+import main.Main;
 
 public class Window_Status {
 
@@ -35,7 +36,11 @@ public class Window_Status {
     }
 
     public void window_open_close(ActionEvent actionEvent) {
-        if(isWindow_locked()){
+        if(Main.away_mode){
+            App.log("You can not open the window in away mode active");
+            return;
+        }
+        if(isWindow_locked() && !isWindow_open()){
             App.log(window.getLocation()+" "+window.getName()+" is locked can not open");
             return;
         }
@@ -55,6 +60,10 @@ public class Window_Status {
     }
 
     public void window_lock_unlock(ActionEvent actionEvent) {
+        if(Main.away_mode){
+            App.log("While Away Mode is active you can not Unlock the door");
+            return;
+        }
         if(!isWindow_locked()){
             this.window.setLocked(true);
             window_lock.setImage(window_locked);

@@ -1,20 +1,13 @@
 package main;
 
-import Controller.DashboardController;
 import Model.*;
 import com.google.gson.Gson;
-import com.google.gson.JsonObject;
 import com.google.gson.stream.JsonReader;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.layout.AnchorPane;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.*;
-import java.time.LocalDate;
-import java.time.LocalTime;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -31,13 +24,15 @@ public class Main {
     public static ArrayList<SmartWindow> windows_inside = new ArrayList<>();
     public static ArrayList<SmartLight> lights_inside = new ArrayList<>();
 
+    public static ArrayList<SmartSecurity> securities = new ArrayList<>();
+
     public static User active_user;
 
-    public static boolean layoutLoaded;
     public static boolean house_loaded = false;
 
     public static boolean isSimulationRunning;
     public static boolean away_mode;
+    public static boolean automatic_lights;
 
     public static Settings settings;
 
@@ -78,6 +73,7 @@ public class Main {
             s.put("date",settings.getDate());
             s.put("time",settings.getTime());
             s.put("temperature",settings.getTemperature());
+            s.put("alertTiming",settings.getAlertTiming());
             as.put(s);
         } catch (JSONException e) {
             e.printStackTrace();

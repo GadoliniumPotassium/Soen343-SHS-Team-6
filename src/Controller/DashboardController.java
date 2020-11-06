@@ -10,7 +10,7 @@ import Controller.SHP.Light_box;
 import Controller.SHS.User_box;
 import Model.House;
 import Model.SmartLight;
-import Model.SmartWindow;
+import Model.SmartSecurity;
 import com.jfoenix.controls.JFXToggleButton;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
@@ -33,6 +33,7 @@ import main.NumFieldFX;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.Random;
 import java.util.concurrent.atomic.AtomicInteger;
 
 /**
@@ -42,33 +43,37 @@ import java.util.concurrent.atomic.AtomicInteger;
 public class DashboardController {
 
 
+    public JFXToggleButton automatic_lights;
     // SHC
-    @FXML public VBox listView;
+    @FXML private VBox listView;
 
-    public ListView home_outside_list;
-    public ListView doors;
-    public ListView lights;
+    @FXML private ListView<HBox> home_outside_list;
+    @FXML public ListView<HBox> doors;
+    @FXML public ListView<VBox> lights;
 
     // SHS
-    public ListView users_listView;
-    public TabPane tabPane;
+    @FXML private ListView<HBox> users_listView;
+    @FXML public TabPane tabPane;
 
-    public TextField temp_textField;
-    public DatePicker datepicker;
-    public TextField hour_tf;
-    public TextField minutes_tf;
+    @FXML private TextField temp_textField;
+    @FXML private DatePicker datepicker;
+    @FXML private TextField hour_tf;
+    @FXML private TextField minutes_tf;
 
-    public TextField room_name;
-    public TextField doors_input;
-    public TextField windows_input;
-    public TextField lights_input;
-    public TextField temp_input;
+    @FXML private TextField room_name;
+    @FXML private TextField doors_input;
+    @FXML private TextField windows_input;
+    @FXML private TextField lights_input;
+    @FXML private TextField temp_input;
     
     //SHP
-    public JFXToggleButton away_mode;
-    public ListView lights_listview;
-    public TextField hour_shp;
-    public TextField min_shp;
+    @FXML private JFXToggleButton away_mode;
+    @FXML private ListView<HBox> lights_outside_listview;
+    @FXML private ListView<HBox> lights_inside_listview;
+    @FXML private ComboBox<String> alert_time;
+    @FXML private ListView<HBox> monitoring_listview;
+//    public TextField hour_shp;
+//    public TextField min_shp;
 
     @FXML
     public void initialize() {
@@ -84,6 +89,13 @@ public class DashboardController {
 
         load_SHC();
         load_SHS();
+
+        alert_time.getItems().add("10 Minutes");
+        alert_time.getItems().add("5 Minutes");
+        alert_time.getItems().add("2 Minutes");
+        alert_time.getItems().add("1 Minutes");
+
+        alert_time.setValue("2 Minutes");
     }
 
     private void load_SHS(){
@@ -280,14 +292,74 @@ public class DashboardController {
 
     public void shp_selection(Event event) {
         setLights_listview();
+        monitoring();
+        update_monitoring();
+        away_mode.selectedProperty().setValue(Main.away_mode);
+    }
+
+    public void monitoring(){
+        Main.securities.clear();
+        Main.rooms_list.forEach(room->{
+            SmartSecurity smartSecurity = new SmartSecurity("",room.getName());
+            smartSecurity.setInAwayMode(Main.away_mode);
+            smartSecurity.setSomeoneThere(isSomeInRoom(room.getName()));
+
+            Main.securities.add(smartSecurity);
+        });
+    }
+
+    public boolean isSomeInRoom(String _roomName){
+        return Main.user_list.stream().filter(user -> user.getLocation().equals(_roomName)).count() > 0;
+    }
+
+    public void update_monitoring(){
+        this.monitoring_listview.getItems().clear();
+        HBox heading = new HBox();
+        heading.setAlignment(Pos.CENTER_LEFT);
+        heading.setStyle("fx-background-color: #f1f6f9");
+
+        Label room_name = new Label("Location");
+        room_name.setPrefWidth(125);
+        room_name.setTextFill(Color.web("#14274e"));
+        room_name.setFont(Font.font("Bell MT",18));
+
+        Label someone_in_room = new Label("Someone in Room");
+        someone_in_room.setPrefWidth(125);
+        someone_in_room.setTextFill(Color.web("#14274e"));
+        someone_in_room.setFont(Font.font("Bell MT",18));
+        heading.getChildren().addAll(room_name,someone_in_room);
+
+        this.monitoring_listview.getItems().add(heading);
+
+        Main.securities.forEach(security ->{
+            HBox s_box = new HBox();
+            s_box.setAlignment(Pos.CENTER_LEFT);
+            s_box.setStyle("fx-background-color: #f1f6f9");
+
+            Label s_loc = new Label(security.getLocation());
+            s_loc.setPrefWidth(125);
+            s_loc.setTextFill(Color.web("#14274e"));
+            s_loc.setFont(Font.font("Bell MT",18));
+
+            Label s_someoneThere = new Label(security.isSomeoneThere() ? "Yes":"No");
+            s_someoneThere.setPrefWidth(125);
+            s_someoneThere.setTextFill(Color.web("#14274e"));
+            s_someoneThere.setFont(Font.font("Bell MT",18));
+
+            s_box.getChildren().addAll(s_loc,s_someoneThere);
+            this.monitoring_listview.getItems().add(s_box);
+        });
+//        System.out.println(Main.securities.toString());
     }
 
     public void setLights_listview(){
+        lights_outside_listview.getItems().clear();
         Main.lights_outside.forEach(light ->{
-            lights_listview.getItems().add(light_box(light));
+            lights_outside_listview.getItems().add(light_box(light));
         });
+        lights_inside_listview.getItems().clear();
         Main.lights_inside.forEach(light ->{
-            lights_listview.getItems().add(light_box(light));
+            lights_inside_listview.getItems().add(light_box(light));
         });
     }
 
@@ -305,8 +377,21 @@ public class DashboardController {
     }
 
     public void setAwayMode(ActionEvent actionEvent) {
+        if(!Main.isIsSimulationRunning()) {
+            away_mode.selectedProperty().setValue(false);
+            App.log("Simulation is not running");
+            return;
+        }
+        if(Main.doors_outside.stream().filter(door -> door.isObstructed()).count() > 0 ||
+            Main.windows_inside.stream().filter(window -> window.isObstructed()).count() > 0 ||
+            Main.doors_inside.stream().filter(d -> d.isObstructed()).count() > 0){
+            App.log("Can not Activate the Away Mode Doors/ Windows are Obstructed");
+            away_mode.selectedProperty().setValue(false);
+            return;
+        }
         boolean off = away_mode.selectedProperty().get();
         Main.away_mode = off;
+
         // check if users in the room and msg to the console and not active away mode if users in room.
         int n = usersInRoom();
         if(!off){
@@ -316,6 +401,7 @@ public class DashboardController {
         if(n > 0){
             away_mode.selectedProperty().setValue(false);
             App.log(n+" Members in Home Can not active Away Mode");
+            Main.away_mode = false;
         }else{
             // send command to SHC to close all doors and windows and lock them.
             Main.doors_inside.forEach(door -> {
@@ -345,7 +431,33 @@ public class DashboardController {
         return count.get();
     }
 
-    public void save_alert_time_shp(ActionEvent actionEvent) {
+    public void set_users_locations_to_outside(ActionEvent actionEvent) {
+        if(!Main.isIsSimulationRunning()){
+            App.log("Simulation is not running");
+            return;
+        }
+        Main.user_list.forEach(user ->{
+            user.setLocation(Main.outSides.get(new Random().nextInt(Main.outSides.size())).getName());
+        });
+        App.log("All Users locations set to outsides");
     }
 
+    public void setAlertTime(ActionEvent mouseEvent) {
+        Main.settings.setAlertTiming(Integer.parseInt(String.valueOf(alert_time.getValue().charAt(0))));
+    }
+
+    public void automic_lights_on_off(ActionEvent actionEvent) {
+        if(!Main.isIsSimulationRunning() || Main.away_mode) {
+            automatic_lights.selectedProperty().setValue(false);
+            App.log("Simulation is not running");
+            return;
+        }
+        boolean on = automatic_lights.selectedProperty().getValue();
+        Main.automatic_lights = on;
+        if(!on){
+            App.log("Automatic Lights Smart System is off.");
+        }else{
+            App.log("Automatic Lights Smart System is on.");
+        }
+    }
 }

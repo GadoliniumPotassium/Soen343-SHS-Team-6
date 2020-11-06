@@ -4,8 +4,6 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
-<?import javafx.scene.image.Image?>
-<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.text.Font?>
 
@@ -21,15 +19,6 @@
             <Font name="Bell MT" size="20.0" />
          </font>
       </Label>
-      <JFXButton onAction="#on_off" text=" ">
-         <graphic>
-            <ImageView fx:id="light_imageView" fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../Images/light_off.png" />
-               </image>
-            </ImageView>
-         </graphic>
-      </JFXButton>
       <Label layoutX="362.0" layoutY="27.0" text="from" textFill="#14274e">
          <font>
             <Font name="Bell MT" size="20.0" />

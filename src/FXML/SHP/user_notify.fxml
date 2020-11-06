@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.TextFlow?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="240.0" prefWidth="500.0" style="-fx-background-color: #f1f6f9;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.SHP.User_Notify">
+   <children>
+      <Label layoutX="27.0" layoutY="23.0" text="Room Location:" textFill="#14274e">
+         <font>
+            <Font name="Bell MT" size="22.0" />
+         </font>
+      </Label>
+      <Label fx:id="room_name" layoutX="176.0" layoutY="23.0" prefHeight="26.0" prefWidth="196.0" text="room_name" textFill="#14274e">
+         <font>
+            <Font name="Bell MT" size="22.0" />
+         </font>
+      </Label>
+      <Label fx:id="alert_timer" alignment="TOP_CENTER" layoutX="45.0" layoutY="166.0" prefHeight="26.0" prefWidth="411.0" text="alert the authorities in 00:00" textFill="#14274e">
+         <font>
+            <Font name="Bell MT" size="18.0" />
+         </font>
+      </Label>
+      <JFXButton buttonType="RAISED" layoutX="27.0" layoutY="198.0" onAction="#homie_save" style="-fx-background-color: #14274e;" text="It's Safe" textFill="#f1f6f9">
+         <font>
+            <Font name="Bell MT" size="15.0" />
+         </font>
+      </JFXButton>
+      <JFXButton buttonType="RAISED" layoutX="111.0" layoutY="198.0" onAction="#Alert_Authorities" style="-fx-background-color: #14274e;" text="Alert" textFill="#f1f6f9">
+         <font>
+            <Font name="Bell MT" size="15.0" />
+         </font>
+      </JFXButton>
+      <TextFlow layoutX="27.0" layoutY="66.0" prefHeight="96.0" prefWidth="442.0">
+         <children>
+            <Label fx:id="msg" alignment="TOP_LEFT" prefHeight="78.0" prefWidth="411.0" text="msg" textFill="#14274e">
+               <font>
+                  <Font name="Bell MT" size="18.0" />
+               </font>
+            </Label>
+         </children>
+      </TextFlow>
+   </children>
+</AnchorPane>

@@ -59,4 +59,12 @@
          <Insets top="30.0" />
       </padding>
             </Label>
+   <JFXButton fx:id="timerSpeed" onAction="#increase_timerSpeed" text="2x" textFill="#9ba4b4" wrapText="true">
+      <VBox.margin>
+         <Insets top="10.0" />
+      </VBox.margin>
+      <font>
+         <Font name="Bell MT" size="20.0" />
+      </font>
+   </JFXButton>
 </VBox>

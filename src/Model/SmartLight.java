@@ -5,8 +5,7 @@ public class SmartLight extends SmartModule {
     private final boolean isDimmable;
     private int lightPercentage;
     private boolean isOn;
-
-    private String away_mode_timing;
+    private String awayModeTiming;
 
     /**
      * Constructor for Smartlight class
@@ -22,6 +21,8 @@ public class SmartLight extends SmartModule {
         this.isDimmable = isDimmable;
         this.lightPercentage = lightPercentage;
         this.isOn = isOn;
+
+        setAwayModeTiming("00:00,00:00");
     }
 
     /**
@@ -69,6 +70,14 @@ public class SmartLight extends SmartModule {
         isOn = on;
     }
 
+    public void setAwayModeTiming(String awayModeTiming) {
+        this.awayModeTiming = awayModeTiming;
+    }
+
+    public String getAwayModeTiming() {
+        return awayModeTiming;
+    }
+
     @Override
     public String toString() {
         return "SmartLight{" +
@@ -78,13 +87,5 @@ public class SmartLight extends SmartModule {
                 ", name='" + name + '\'' +
                 ", location='" + location + '\'' +
                 '}';
-    }
-
-    public String getAway_mode_timing() {
-        return away_mode_timing;
-    }
-
-    public void setAway_mode_timing(String away_mode_timing) {
-        this.away_mode_timing = away_mode_timing;
     }
 }

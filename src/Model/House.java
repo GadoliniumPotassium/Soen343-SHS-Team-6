@@ -50,17 +50,7 @@ public class House {
         private int lights;
         private float temperature;
 
-        private MotionDetector motionDetector;
-
         public Room(){
-            motionDetector = new MotionDetector();
-        }
-
-        public void Enter(User _user){
-            motionDetector.user_detect(_user);
-        }
-        public void Exit(User _user){
-            motionDetector.user_left(_user);
         }
 
         public void setName(String name) {

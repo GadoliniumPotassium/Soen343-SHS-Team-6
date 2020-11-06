@@ -1,37 +1,30 @@
 [
  {
-  "password": "pass0101",
+  "password": "pass",
   "userPermission": "full",
-  "isLoggedIn": false,
-  "location": "Master Room",
-  "username": "Amneet0101"
+  "isLoggedIn": true,
+  "location": "kitchen",
+  "username": "Amneet"
  },
  {
-  "password": "moka",
+  "password": "sup123",
   "userPermission": "full",
   "isLoggedIn": false,
-  "location": "Enterance",
-  "username": "asas"
+  "location": "Backyard",
+  "username": "jhon"
  },
  {
   "password": "pogo",
   "userPermission": "full",
   "isLoggedIn": false,
   "location": "Backyard",
-  "username": "Arif"
+  "username": "lololop"
  },
  {
   "password": "mama",
   "userPermission": "partial",
   "isLoggedIn": false,
-  "location": "Garage",
-  "username": "madam"
- },
- {
-  "password": "papa",
-  "userPermission": "partial",
-  "isLoggedIn": true,
-  "location": "Amneet Room",
-  "username": "lol"
+  "location": "Backyard",
+  "username": "Maid"
  }
 ]

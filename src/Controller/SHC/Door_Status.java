@@ -7,6 +7,7 @@ import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import main.App;
+import main.Main;
 
 public class Door_Status {
 
@@ -60,6 +61,10 @@ public class Door_Status {
     }
 
     public void door_open_close(ActionEvent actionEvent) {
+        if(Main.away_mode){
+            App.log("You can not open the door in away mode active");
+            return;
+        }
         if(isDoor_lock() && !isDoor_open()) {
             App.log(door.getLocation()+" "+door.getName()+" is locked can't open the door");
             return;
@@ -80,6 +85,10 @@ public class Door_Status {
     }
 
     public void door_lock_unlock(ActionEvent actionEvent) {
+        if(Main.away_mode){
+            App.log("While Away Mode is active you can not Unlock the door");
+            return;
+        }
         if(isDoor_lock()){
             door.setLocked(false);
             door_lock.setImage(door_unlock);
