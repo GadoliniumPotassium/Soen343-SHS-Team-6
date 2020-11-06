@@ -1,19 +1,25 @@
+package Controller;
+
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.io.Reader;
 import java.io.BufferedReader;
 import java.io.FileReader;
-package Controller;
+
 
 /**
  * The purpose of this class is to have a file writing class that is smaller and less verbose then BufferedWriter.
  * All the exception handling and writing will be handled by this class so the programmer can just focus on what needs to be done.
  * Use a creational design pattern
  */
-public class FileWriter {
+public class Writer {
 
-	public FileWriter(String fileName, String line) {
+	/**
+	 * Constructor for the writer object, it creates a file and puts in an initial line
+	 * @param fileName
+	 * @param line
+	 */
+	public Writer(String fileName, String line) {
 		try{
 			FileWriter myWriter = new FileWriter(fileName);
 			myWriter.write(line);
@@ -26,6 +32,12 @@ public class FileWriter {
 		}
 		
 	}
+
+	/**
+	 * This method takes a file and appends a line to it
+	 * @param file
+	 * @param line
+	 */
 	public void append(String file,String line) {
 		 try {
 			 
@@ -40,6 +52,13 @@ public class FileWriter {
 		      e.printStackTrace();
 		    }
 	}
+
+	/**
+	 * This method takes a file, and replaces a line with another
+	 * @param file
+	 * @param line
+	 * @param replace
+	 */
 	public void modify(String file, String line, String replace) {
 		ArrayList <String> text=new ArrayList<String>();
 		try {
@@ -68,6 +87,12 @@ public class FileWriter {
 		      e.printStackTrace();
 		    }
 	}
+
+	/**
+	 * This method erases a line from a file
+	 * @param file
+	 * @param line
+	 */
 	public void remove(String file, String line) {
 		ArrayList <String> text=new ArrayList<String>();
 		try {
