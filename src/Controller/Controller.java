@@ -242,6 +242,10 @@ public class Controller {
      */
     public void createModule(String type, String location) {
         SmartModule m = ModuleFactory.createModule(type, location);
+        if (m == null) {
+            System.out.println("Object could not be created and will not be added");
+            return;
+        }
         moduleList.addModuleToList(m);
         //log module creation.
     }
