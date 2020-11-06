@@ -9,7 +9,7 @@ public class Controller {
     private ModuleLinkedList moduleList = new ModuleLinkedList();
     private ArrayList<User> userList = new ArrayList<User>(10);
     private boolean isSimRunning = false;
-    private FileWriter fw = new FileWriter();
+
 
     //This will be filled with method in order to modify the states of the smart devices
 
@@ -28,6 +28,7 @@ public class Controller {
      */
     public void toggleSimulation() {
         isSimRunning = !isSimRunning;
+        FileManipulator.append("log.txt", "toggled simulation state.");
         //Log command
     }
 
@@ -38,59 +39,61 @@ public class Controller {
      */
     public boolean isSimRunning() {
         return isSimRunning;
-        //Log command
     }
 
     /**
-     * Toggles if simulation is running
-     *
-     * @param AC
-     */
-    public void toggleACPower(SmartAC AC) {
-        AC.setOn(!AC.isOn());
-        //Log command
-    }
-
-    /**
-     * Changes value of thermostat
+     * Changes value of thermostat, this method works by incrementing the value to the previous temperature.
+     * <br/> example, you the set temp is 20, the value you give will be added or subtracted to 20.
      *
      * @param value
      * @param Thermos
      */
     public void changeThermosValue(double value, SmartThermostat Thermos) {
         Thermos.setCurrent_temp_heater(Thermos.getCurrent_temp_heater() + value);
-        //Log command
+        FileManipulator.append("log.txt", "Changed the value of thermostat" + Thermos.getName() + " in " + Thermos.getLocation() + " to" + Thermos.getCurrent_temp_heater());
     }
 
     /**
-     * Toggles thermostat on off state
+     * This method takes in a module and using polymorphism figures out which type of module it is and toggles its on/off,
+     * locked/unlocked state. (Will not toggle the obstruction state of a window, must use toggleWindowObstruction to do that)
      *
-     * @param Thermos
+     * @param module
      */
-    public void toggleThermosPower(SmartThermostat Thermos) {
-        Thermos.setOn(!Thermos.isOn());
-        //Log command
+    public void toggleOnOffStateModule(SmartModule module) {
+        if (module instanceof SmartAC) {
+            ((SmartAC) module).setOn(!((SmartAC) module).isOn());
+        } else if (module instanceof SmartThermostat) {
+            ((SmartThermostat) module).setOn(!((SmartThermostat) module).isOn());
+        } else if (module instanceof SmartLight) {
+            ((SmartLight) module).setOn(!((SmartLight) module).isOn());
+        } else if (module instanceof SmartLock) {
+            ((SmartLock) module).setLocked(!((SmartLock) module).isLocked());
+        } else if (module instanceof SmartSecurity) {
+            ((SmartSecurity) module).setInAwayMode(!((SmartSecurity) module).isInAwayMode());
+            //if the house is set in away mode then it will lock all the doors and close all the windows
+            if (((SmartSecurity) module).isInAwayMode()) {
+                moduleList.setWhereAmI(getModuleList().getHead());
+                while (moduleList.getWhereAmI() != null) {
+                    if (moduleList.getWhereAmI().getModule() instanceof SmartLock) {
+                        ((SmartLock) moduleList.getWhereAmI().getModule()).setLocked(true);
+                        FileManipulator.append("log.txt", "We changed the state of " + moduleList.getWhereAmI().getModule().getName() + " in " + moduleList.getWhereAmI().getModule().getLocation());
+                    } else if (moduleList.getWhereAmI().getModule() instanceof SmartWindow) {
+                        ((SmartWindow) moduleList.getWhereAmI().getModule()).setOpen(false);
+                        FileManipulator.append("log.txt", "We changed the state of " + moduleList.getWhereAmI().getModule().getName() + " in " + moduleList.getWhereAmI().getModule().getLocation());
+                    }
+                }
+            }
+        } else if (module instanceof SmartWindow) {
+            if (!((SmartWindow) module).isObstructed()) {
+                ((SmartWindow) module).setOpen(!((SmartWindow) module).isOpen());
+            } else {
+                System.out.println("We could not change the window state, something was obstructing it");
+            }
+
+        }
+        FileManipulator.append("log.txt", "We changed the state of " + module.getName() + " in " + module.getLocation());
     }
 
-    /**
-     * Toggles light on off state
-     *
-     * @param light
-     */
-    public void switchLightState(SmartLight light) {
-        light.setOn(!light.isOn());
-        //Log command
-    }
-
-    /**
-     * Toggles the lock state locked unlocked
-     *
-     * @param lock
-     */
-    public void changeLockState(SmartLock lock) {
-        lock.setLocked(!lock.isLocked());
-        //Log command
-    }
 
     /**
      * This method will contact 911 in case of a break in
@@ -117,35 +120,13 @@ public class Controller {
                 e.printStackTrace();
             }
             System.out.println("We are contacting 911");
-            //Log command
+            FileManipulator.append("log.txt", "SmartSecurity was tripped and the authorities have been contacted");
         }
     }
 
-    /**
-     * Toggles away mode and if home is set in away mode, all the doors and windows are locked.
-     *
-     * @param sec
-     */
-    public void changeAwayModeState(SmartSecurity sec) {
-        sec.setInAwayMode(!sec.isInAwayMode());
-        //The following loop runs if the house is in away mode locking all the doors and windows.
-        if (sec.isInAwayMode()) {
-            moduleList.setWhereAmI(getModuleList().getHead());
-            while (moduleList.getWhereAmI() != null) {
-                if (moduleList.getWhereAmI().getModule() instanceof SmartLock) {
-                    ((SmartLock) moduleList.getWhereAmI().getModule()).setLocked(true);
-                    //Log command
-                } else if (moduleList.getWhereAmI().getModule() instanceof SmartWindow) {
-                    ((SmartWindow) moduleList.getWhereAmI().getModule()).setOpen(false);
-                    //Log command
-                }
-            }
-        }
-
-    }
 
     /**
-     * This method creates a user account
+     * This method creates a user account and adds it to the database.
      *
      * @param username
      * @param password
@@ -159,8 +140,9 @@ public class Controller {
         }
         User temp = new User(username, password, "outside", permissions);
         userList.add(temp);
-        //Add user to txtfile
-        //Log command
+        FileManipulator.append("users.txt", temp.getUsername() + ";" + temp.getPassword() + ";" + temp.getUserPermission());
+        FileManipulator.append("log.txt", "User has been created and added to database");
+
     }
 
     /**
@@ -170,21 +152,8 @@ public class Controller {
      */
     public void removeAccount(User user) {
         userList.remove(user);
-        //Remove user from txtfile
-        //Log command
-    }
-
-    /**
-     * This method toggles the window state
-     *
-     * @param window
-     */
-    public void toggleWindowState(SmartWindow window) {
-        if (!window.isObstructed())
-            window.setOpen(window.isOpen());
-        else
-            System.out.println("Could not change the window state as the window is obstructed by an object. Please remove it.");
-        //Log command
+        FileManipulator.remove("users.txt", user.getUsername() + ";" + user.getPassword() + ";" + user.getUserPermission());
+        FileManipulator.append("log.txt", "We removed a user from the database");
     }
 
     /**
@@ -194,7 +163,7 @@ public class Controller {
      */
     public void toggleWindowObstruction(SmartWindow window) {
         window.setObstructed(!window.isObstructed());
-        //Log command
+        FileManipulator.append("log.txt", "Toggled the obstruction state of the window");
     }
 
     /**
@@ -204,7 +173,7 @@ public class Controller {
      */
     public void changeOutsideTemperature(double temp) {
         SmartModule.setOutsideTemp(temp);
-        //Log command
+        FileManipulator.append("log.txt", "Changed the temperature of outside");
     }
 
     /**
