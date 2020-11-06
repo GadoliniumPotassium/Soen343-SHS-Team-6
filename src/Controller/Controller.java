@@ -29,7 +29,6 @@ public class Controller {
     public void toggleSimulation() {
         isSimRunning = !isSimRunning;
         FileManipulator.append("log.txt", "toggled simulation state.");
-        //Log command
     }
 
     /**
@@ -57,20 +56,14 @@ public class Controller {
      * This method takes in a module and using polymorphism figures out which type of module it is and toggles its on/off,
      * locked/unlocked state. (Will not toggle the obstruction state of a window, must use toggleWindowObstruction to do that)
      *
+     * <em>Special case: If smart security is set on, it will lock every door and window</em>
      * @param module
      */
     public void toggleOnOffStateModule(SmartModule module) {
-        if (module instanceof SmartAC) {
-            ((SmartAC) module).setOn(!((SmartAC) module).isOn());
-        } else if (module instanceof SmartThermostat) {
-            ((SmartThermostat) module).setOn(!((SmartThermostat) module).isOn());
-        } else if (module instanceof SmartLight) {
-            ((SmartLight) module).setOn(!((SmartLight) module).isOn());
-        } else if (module instanceof SmartLock) {
-            ((SmartLock) module).setLocked(!((SmartLock) module).isLocked());
-        } else if (module instanceof SmartSecurity) {
-            ((SmartSecurity) module).setInAwayMode(!((SmartSecurity) module).isInAwayMode());
-            //if the house is set in away mode then it will lock all the doors and close all the windows
+        module.toggleModule();
+        FileManipulator.append("log.txt", "We changed the state of " + module.getName() + " in " + module.getLocation());
+        //This will toggle set every single door and window to locked and closed if SmartSecurity has been set to away mode.
+        if (module instanceof SmartSecurity) {
             if (((SmartSecurity) module).isInAwayMode()) {
                 moduleList.setWhereAmI(getModuleList().getHead());
                 while (moduleList.getWhereAmI() != null) {
@@ -83,15 +76,7 @@ public class Controller {
                     }
                 }
             }
-        } else if (module instanceof SmartWindow) {
-            if (!((SmartWindow) module).isObstructed()) {
-                ((SmartWindow) module).setOpen(!((SmartWindow) module).isOpen());
-            } else {
-                System.out.println("We could not change the window state, something was obstructing it");
-            }
-
         }
-        FileManipulator.append("log.txt", "We changed the state of " + module.getName() + " in " + module.getLocation());
     }
 
 

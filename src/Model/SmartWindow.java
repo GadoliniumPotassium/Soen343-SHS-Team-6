@@ -20,6 +20,17 @@ public class SmartWindow extends SmartModule {
     }
 
     /**
+     * Toggle Windows open closed state
+     */
+    @Override
+    public void toggleModule() {
+        if(!isObstructed)
+            setOpen(!isOpen);
+        else
+            System.out.println("Window is obstructed, could not change its state");
+    }
+
+    /**
      * returns if window is open
      *
      * @return

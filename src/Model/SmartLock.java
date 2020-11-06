@@ -12,6 +12,14 @@ public class SmartLock extends SmartModule {
     }
 
     /**
+     * Toggles Smartlock locked/unlocked state
+     */
+    @Override
+    public void toggleModule() {
+        setLocked(!isLocked);
+    }
+
+    /**
      * Returns if lock is closed or open
      *
      * @return

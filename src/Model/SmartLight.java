@@ -17,7 +17,13 @@ public class SmartLight extends SmartModule {
     }
 
 
-
+    /**
+     * Toggles smart light on/off state.
+     */
+    @Override
+    public void toggleModule() {
+        setOn(!isOn);
+    }
 
     /**
      * Returns if the light is on

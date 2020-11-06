@@ -20,6 +20,14 @@ public class SmartSecurity extends SmartModule {
     }
 
     /**
+     * Toggles away mode state
+     */
+    @Override
+    public void toggleModule() {
+        setInAwayMode(!isInAwayMode());
+    }
+
+    /**
      * Returns if the security system is in away mode
      *
      * @return

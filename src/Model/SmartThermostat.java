@@ -22,6 +22,14 @@ public class SmartThermostat extends SmartModule {
     }
 
     /**
+     * Toggles thermostat on off state
+     */
+    @Override
+    public void toggleModule() {
+        setOn(!isOn());
+    }
+
+    /**
      * Returns minimum temp of the thermostat
      *
      * @return
