@@ -13,6 +13,11 @@ public class SmartAC extends SmartModule {
         this.isOn = false;
     }
 
+    @Override
+    public void togglePower() {
+        setOn(!isOn);
+    }
+
     /**
      * Returns the maximum temperature of the AC
      *
