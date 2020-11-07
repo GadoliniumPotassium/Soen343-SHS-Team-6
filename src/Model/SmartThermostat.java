@@ -5,19 +5,23 @@ public class SmartThermostat extends SmartModule {
     final static int MAX_TEMP = 25;
     private double current_temp_heater;
     private boolean isOn;
+    private static int idNum=0;
 
     /**
      * SmartThermostat constructor
-     *
-     * @param name
      * @param location
      * @param current_temp_heater
      * @param isOn
      */
-    public SmartThermostat(String name, String location, double current_temp_heater, boolean isOn) {
-        super(name, location);
+    public SmartThermostat(String location, double current_temp_heater, boolean isOn) {
+        super("SmartThermos#"+(idNum++), location);
         this.current_temp_heater = current_temp_heater;
         this.isOn = isOn;
+    }
+
+    @Override
+    public void togglePower() {
+        setOn(!isOn);
     }
 
     /**

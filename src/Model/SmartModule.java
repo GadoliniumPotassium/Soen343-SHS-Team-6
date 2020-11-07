@@ -34,6 +34,8 @@ public abstract class SmartModule {
         SmartModule.outsideTemp = outsideTemp;
     }
 
+    public abstract void togglePower();
+
     @Override
     public String toString() {
         return "SmartModule{" +

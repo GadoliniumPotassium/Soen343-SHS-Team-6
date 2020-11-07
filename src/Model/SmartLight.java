@@ -6,6 +6,7 @@ public class SmartLight extends SmartModule {
     private int lightPercentage;
     private boolean isOn;
     private String awayModeTiming;
+    private static int idNum=0;
 
     /**
      * Constructor for Smartlight class
@@ -16,13 +17,18 @@ public class SmartLight extends SmartModule {
      * @param lightPercentage
      * @param isOn
      */
-    public SmartLight(String name, String location, boolean isDimmable, int lightPercentage, boolean isOn) {
-        super(name, location);
+    public SmartLight( String location, boolean isDimmable, int lightPercentage, boolean isOn) {
+        super("SmartLight#"+(idNum++), location);
         this.isDimmable = isDimmable;
         this.lightPercentage = lightPercentage;
         this.isOn = isOn;
 
         setAwayModeTiming("00:00,00:00");
+    }
+
+    @Override
+    public void togglePower() {
+        setOn(!isOn);
     }
 
     /**
