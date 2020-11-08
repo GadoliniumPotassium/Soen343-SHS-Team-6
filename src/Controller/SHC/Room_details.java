@@ -1,9 +1,6 @@
 package Controller.SHC;
 
-import Model.House;
-import Model.SmartLight;
-import Model.SmartWindow;
-import Model.User;
+import Model.*;
 import com.jfoenix.controls.JFXToggleButton;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
@@ -26,41 +23,43 @@ public class Room_details {
     public ListView windows_in_room;
     public ListView lights_in_room;
     public TextField temp_value;
-    private House room;
+    private Room room;
+
+    private Main main = Main.getInstance();
 
     public void change_temperature(ActionEvent actionEvent) {
         if(temp_value.getText().isEmpty()) return;
-        this.room.room.setTemperature(Float.parseFloat(temp_value.getText()));
+        this.room.setTemperature(Float.parseFloat(temp_value.getText()));
     }
-    public void room_Details(House _room,int _users){
+    public void room_Details(Room _room,int _users){
         this.room = _room;
-        room_name.setText(room.room.getName());
-        temp_value.setText(room.room.getTemperature()+"");
+        room_name.setText(room.getName());
+        temp_value.setText(room.getTemperature()+"");
 
         //list of users in room
         update_user_list();
 
-        Main.doors_inside.forEach(e->{
-            if(e.getLocation().equals(room.room.getName())){
-                doors_in_room.getItems().add(getDoorBox(e));
+        main.doors_inside.forEach(e->{
+            if(e.getLocation().equals(room.getName())){
+                doors_in_room.getItems().add(getDoorBox((SmartWindow) e));
             }
         });
 
-        Main.windows_inside.forEach(e->{
-            if(e.getLocation().equals(room.room.getName())){
-                windows_in_room.getItems().add(getWindowBox(e));
+        main.windows_inside.forEach(e->{
+            if(e.getLocation().equals(room.getName())){
+                windows_in_room.getItems().add(getWindowBox((SmartWindow)e));
             }
         });
 
-        Main.lights_inside.forEach(e->{
-            if(e.getLocation().equals(room.room.getName())){
-                lights_in_room.getItems().add(getLightBox(e));
+        main.lights_inside.forEach(e->{
+            if(e.getLocation().equals(room.getName())){
+                lights_in_room.getItems().add(getLightBox((SmartLight) e));
             }
         });
     }
     public void update_user_list(){
-        for(User user : Main.user_list){
-            if(user.getLocation() != null && user.getLocation().equals(this.room.room.getName())){
+        for(User user : main.user_list){
+            if(user.getLocation() != null && user.getLocation().equals(this.room.getName())){
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("../../FXML/SHC/user_in_room.fxml"));
                 HBox h = null;
                 try {

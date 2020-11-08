@@ -26,15 +26,6 @@
                   </ImageView>
                </graphic>
             </JFXButton>
-            <JFXButton layoutX="10.0" layoutY="10.0" onAction="#window_lock_unlock" prefHeight="60.0" prefWidth="0.0" text=" ">
-               <graphic>
-                  <ImageView fx:id="window_lock" fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../Images/lock.png" />
-                     </image>
-                  </ImageView>
-               </graphic>
-            </JFXButton>
             <JFXButton layoutX="84.0" layoutY="10.0" onAction="#window_obstructed" prefHeight="60.0" prefWidth="0.0" text=" ">
                <graphic>
                   <ImageView fx:id="window_Obstruct" fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">

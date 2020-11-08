@@ -20,8 +20,14 @@ public class User_Notify {
 
     private Timeline timeline;
 
+    private Main main = Main.getInstance();
+
     @FXML
     void initialize(){
+        Stage stage = (Stage) msg.getScene().getWindow();
+        stage.setOnCloseRequest(e->{
+            close();
+        });
 
     }
 
@@ -35,11 +41,11 @@ public class User_Notify {
     private void Timer(){
         timeline = new Timeline();
         timeline.setCycleCount(Timeline.INDEFINITE);
-        AtomicInteger minutes = new AtomicInteger(Main.settings.getAlertTiming());
+        AtomicInteger minutes = new AtomicInteger(main.settings.getAlertTiming()-1);
         AtomicInteger sec = new AtomicInteger(59);
         KeyFrame keyFrame = new KeyFrame(Duration.seconds(1), e->{
             sec.getAndDecrement();
-            if(sec.intValue() == 00) {
+            if(sec.intValue() <= 00) {
                 minutes.getAndDecrement();
                 if (minutes.intValue() < 0) {
                     // close the this popup window and alert the authorities.
@@ -57,6 +63,8 @@ public class User_Notify {
     }
 
     private void close(){
+        main.away_mode = false;
+        timeline.stop();
         Stage stage = (Stage) msg.getScene().getWindow();
         stage.close();
     }
@@ -65,7 +73,6 @@ public class User_Notify {
     public void homie_save(ActionEvent actionEvent) {
         // closing the away mode.
         App.log("User Response: it's safe.");
-        Main.away_mode = false;
         close();
         timeline.stop();
     }

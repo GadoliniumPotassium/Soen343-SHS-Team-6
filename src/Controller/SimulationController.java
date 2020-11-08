@@ -38,6 +38,8 @@ public class SimulationController {
     @FXML private Label date_time;
     @FXML private JFXToggleButton onToggleBtn;
 
+    private Main main = Main.getInstance();
+
     private Timeline timeline;
 
     enum Time_states {
@@ -49,7 +51,7 @@ public class SimulationController {
     Time_states t_s = Time_states.normal;
 
     @FXML private void initialize() {
-        new Main().readTimeAndDate();
+        main.readTimeAndDate();
         update();
         Timer();
 
@@ -58,14 +60,14 @@ public class SimulationController {
     }
 
     public void update(){
-        User currentUser = Main.active_user;
+        User currentUser = main.active_user;
         user_name.setText(currentUser.getUsername());
         loc.setText(currentUser.getLocation());
 
-        temp.setText("Temperature: "+Main.settings.getTemperature());
+        temp.setText("Temperature: "+main.settings.getTemperature());
 
-        date_time.setText(Main.settings.getDate()+" "+
-                Main.settings.getTime());
+        date_time.setText(main.settings.getDate()+" "+
+                main.settings.getTime());
     }
     private int sec = 0;
     public void Timer(){
@@ -73,7 +75,7 @@ public class SimulationController {
         timeline.setCycleCount(Timeline.INDEFINITE);
         KeyFrame keyFrame = new KeyFrame(Duration.seconds(1), e->{
             sec++;
-            String[] t = Main.settings.getTime().split(":");
+            String[] t = main.settings.getTime().split(":");
             int hour = Integer.parseInt(t[0]);
             int minute = Integer.parseInt(t[1]);
 
@@ -93,27 +95,27 @@ public class SimulationController {
 
             // turn on off lights when on away mode.
 //            System.out.println("away mode"+Main.away_mode);
-            if(Main.away_mode){
+            if(main.away_mode){
                 int finalHour = hour;
                 int finalMinute = minute;
-                Main.lights_outside.forEach(smartLight -> {
-                    check_awayMode_lights(smartLight,finalHour,finalMinute);
+                main.lights_outside.forEach(smartLight -> {
+                    check_awayMode_lights((SmartLight)smartLight,finalHour,finalMinute);
                 });
 
-                Main.lights_inside.forEach(smartLight -> {
-                    check_awayMode_lights(smartLight,finalHour,finalMinute);
+                main.lights_inside.forEach(smartLight -> {
+                    check_awayMode_lights((SmartLight)smartLight,finalHour,finalMinute);
                 });
 
             }
 
-            Main.settings.setTime((hour < 10 ? "0"+hour:hour)+":"+(minute < 10 ? "0"+minute:minute));
-            date_time.setText(Main.settings.getDate()+" "+
-                    Main.settings.getTime()+":"+
+            main.settings.setTime((hour < 10 ? "0"+hour:hour)+":"+(minute < 10 ? "0"+minute:minute));
+            date_time.setText(main.settings.getDate()+" "+
+                    main.settings.getTime()+":"+
                     (sec < 10 ? "0"+sec:sec));
         });
         timeline.getKeyFrames().add(keyFrame);
         timeline.setRate(timeline.getRate());
-        if(Main.isIsSimulationRunning())
+        if(main.isIsSimulationRunning())
             timeline.play();
     }
 
@@ -151,7 +153,7 @@ public class SimulationController {
 
     @FXML private void onToggleBtn(ActionEvent actionEvent) {
         boolean isOn = onToggleBtn.selectedProperty().get();
-        Main.setIsSimulationRunning(isOn);
+        main.setIsSimulationRunning(isOn);
         if(isOn) timeline.play(); else timeline.pause();
         App.log("Simulation: "+(isOn?"On":"Off"));
     }

@@ -24,13 +24,14 @@ public class OutSide_Details {
     public ListView doors;
     public ListView lights;
 
-    private House.OutSide outside;
+    private House outside;
 
+    private Main main;
     @FXML void initialize(){
-
+        main = Main.getInstance();
     }
 
-    public void setOutside(House.OutSide outside) {
+    public void setOutside(House outside) {
         this.outside = outside;
 
         name.setText(outside.getName());
@@ -40,21 +41,21 @@ public class OutSide_Details {
     }
 
     public void update(){
-        Main.doors_outside.forEach(door ->{
+        main.doors_outside.forEach(door ->{
             if(door.getLocation().equals(outside.getName())){
-                doors.getItems().add(getDoorBox(door));
+                doors.getItems().add(getDoorBox((SmartWindow)door));
             }
         });
-        Main.lights_outside.forEach(light ->{
+        main.lights_outside.forEach(light ->{
             if(light.getLocation().equals(outside.getName())){
-                lights.getItems().add(getLightBox(light));
+                lights.getItems().add(getLightBox((SmartLight) light));
             }
         });
     }
 
     private void user_list(){
         users.getItems().clear();
-        for(User user : Main.user_list){
+        for(User user : main.user_list){
             if(user.getLocation() != null && user.getLocation().equals(outside.getName())){
                 HBox user_box = new HBox();
                 user_box.setAlignment(Pos.CENTER_LEFT);

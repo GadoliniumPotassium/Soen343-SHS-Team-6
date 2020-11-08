@@ -11,11 +11,13 @@ public class Home_OutSide {
     public Label lights;
     public Label users;
 
-    public void setValues(House.OutSide out){
+    Main main = Main.getInstance();
+
+    public void setValues(House out){
         name.setText(out.getName());
         doors.setText(String.valueOf(out.getDoors()));
         lights.setText(String.valueOf(out.getLights()));
 
-        users.setText(Main.users_outside(out.getName())+"");
+        users.setText(main.users_outside(out.getName())+"");
     }
 }

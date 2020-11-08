@@ -5,6 +5,13 @@ import javafx.scene.control.TextField;
 import javafx.scene.input.KeyEvent;
 
 public class NumFieldFX {
+
+    private static NumFieldFX numFieldFX = new NumFieldFX();
+
+    public static NumFieldFX getInstance(){
+        return numFieldFX;
+    }
+
     public void numField(TextField tf){
         tf.addEventFilter(KeyEvent.KEY_TYPED, new EventHandler<KeyEvent>() {
             public void handle( KeyEvent t ) {

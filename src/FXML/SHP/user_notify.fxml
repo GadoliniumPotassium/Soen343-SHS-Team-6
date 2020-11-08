@@ -35,7 +35,7 @@
       </JFXButton>
       <TextFlow layoutX="27.0" layoutY="66.0" prefHeight="96.0" prefWidth="442.0">
          <children>
-            <Label fx:id="msg" alignment="TOP_LEFT" prefHeight="78.0" prefWidth="411.0" text="msg" textFill="#14274e">
+            <Label fx:id="msg" alignment="TOP_LEFT" prefHeight="87.0" prefWidth="443.0" text="msg" textFill="#14274e" wrapText="true">
                <font>
                   <Font name="Bell MT" size="18.0" />
                </font>

@@ -2,9 +2,9 @@ package Controller.SHS;
 
 import Controller.LoginController;
 import Controller.SHP.User_Notify;
+import Model.MotionDetector;
+import Model.SmartLight;
 import Model.User;
-import javafx.animation.KeyFrame;
-import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -16,13 +16,13 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import javafx.util.Duration;
 import main.App;
 import main.LoginMain;
 import main.Main;
 
 import java.io.IOException;
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.concurrent.atomic.AtomicReference;
 
 public class User_box {
 
@@ -31,6 +31,8 @@ public class User_box {
 
     private ListView listView;
     private User user;
+
+    private Main main = Main.getInstance();
 
     @FXML
     void initialize(){
@@ -45,17 +47,17 @@ public class User_box {
     }
     private void updateValues(){
         username_label.setText(this.user.getUsername());
-        Main.outSides.forEach(outSide -> {
+        main.outSides.forEach(outSide -> {
             locations.getItems().add(outSide.getName());
         });
-        Main.rooms_list.forEach(r->{
+        main.rooms_list.forEach(r->{
             locations.getItems().add(r.getName());
         });
         locations.setValue(user.getLocation());
     }
 
     @FXML private void login_user(ActionEvent actionEvent) {
-        if(Main.isIsSimulationRunning()) {
+        if(main.isIsSimulationRunning()) {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("../../FXML/Login.fxml"));
             AnchorPane root = null;
             try {
@@ -64,7 +66,7 @@ public class User_box {
                 e.printStackTrace();
             }
             this.user.setIsloggedIn(false);
-            Main.setIsSimulationRunning(false);
+            main.setIsSimulationRunning(false);
             LoginController lc = loader.getController();
             lc.setTxtUserName(user.getUsername());
             LoginMain.setMainRoot(root);
@@ -73,7 +75,7 @@ public class User_box {
     }
 
     @FXML private void edit_user(ActionEvent actionEvent) {
-        if(Main.isIsSimulationRunning()) {
+        if(main.isIsSimulationRunning()) {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("../../FXML/SHS/user_details.fxml"));
             AnchorPane root = null;
             try {
@@ -94,12 +96,37 @@ public class User_box {
     }
 
     @FXML private void change_location(ActionEvent actionEvent) {
-        if(Main.isIsSimulationRunning()) {
+        if(main.isIsSimulationRunning()) {
             String preLoc = this.user.getLocation();
             this.user.setLocation(locations.getValue());
             App.log(this.user.getUsername() + " location is changed to" + this.user.getLocation());
 
-            if(Main.away_mode && usersInRoom() > 0){
+            main.rooms_list.forEach(room -> {
+                // User Enter in new Room
+                if(room.getName().equals(user.getLocation())){
+                    MotionDetector c_md = room.getMotionDetector();
+                    c_md.count();
+                    if(main.automatic_lights && c_md.isSomeoneThere()){
+                        main.lights_inside.forEach( e -> {
+                            if(e.getLocation().equals(room.getName()))
+                                ((SmartLight)e).setOn(true);
+                        });
+                    }
+                }
+                // User left the room.
+                if(room.getName().equals(preLoc)){
+                    MotionDetector p_md = room.getMotionDetector();
+                    p_md.deduct();
+                    if(main.automatic_lights && !p_md.isSomeoneThere()){
+                        main.lights_inside.forEach(e ->{
+                            if(e.getLocation().equals(room.getName()))
+                                ((SmartLight)e).setOn(false);
+                        });
+                    }
+                }
+            });
+
+            if(main.away_mode && usersInRoom() > 0){
                 // open the popup window.
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("../../FXML/SHP/user_notify.fxml"));
                 AnchorPane pane = null;
@@ -121,24 +148,6 @@ public class User_box {
                 });
             }
 
-            //Turn on the lights when user enter
-            if(Main.automatic_lights) {
-                Main.lights_inside.forEach(e -> {
-                    if (e.getLocation().equals(user.getLocation())) {
-                        e.setOn(true);
-                    }
-                });
-
-                // check if there is no one in home then turn off the lights.
-                Main.lights_inside.forEach(light -> {
-                    if (light.getLocation().equals(preLoc)) {
-                        if (Main.users_in_same_room(preLoc) == 0) {
-                            light.setOn(false);
-                        }
-                    }
-                });
-            }
-
         }else {
             locations.setValue(user.getLocation());
             App.log("Simulation is not Running");
@@ -146,18 +155,18 @@ public class User_box {
     }
 
     @FXML private void remove_user(ActionEvent actionEvent) {
-        if(Main.isIsSimulationRunning()) {
-            if(this.user != Main.active_user) {
-                if (Main.user_list.contains(this.user)) {
+        if(main.isIsSimulationRunning()) {
+            if(this.user != main.active_user) {
+                if (main.user_list.contains(this.user)) {
                     App.log(this.user.getUsername()+" user is removed.");
-                    Main.user_list.remove(this.user);
+                    main.user_list.remove(this.user);
                 }
             }else
                 App.log("You can not remove active user.");
 
             listView.getItems().clear();
 
-            Main.user_list.forEach(user -> {
+            main.user_list.forEach(user -> {
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("../../FXML/SHS/user_box.fxml"));
                 HBox user_box = null;
                 try {
@@ -173,11 +182,10 @@ public class User_box {
         }else
             App.log("Simulation is not Running");
     }
-
     public int usersInRoom(){
         AtomicInteger count = new AtomicInteger();
-        Main.user_list.forEach(user -> {
-            count.addAndGet((int)Main.rooms_list.stream().filter(room -> room.getName().equals(user.getLocation())).count());
+        main.user_list.forEach(user -> {
+            count.addAndGet((int)main.rooms_list.stream().filter(room -> room.getName().equals(user.getLocation())).count());
 //            System.out.println(count.get());
         });
         return count.get();

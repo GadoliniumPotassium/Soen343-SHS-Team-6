@@ -1,4 +1,4 @@
-/*package Controller;//package com.mycompany.shsimulator;
+package Controller.trash;/*package Controller;//package com.mycompany.shsimulator;
 
 import java.io.IOException;
 import javafx.fxml.FXML;

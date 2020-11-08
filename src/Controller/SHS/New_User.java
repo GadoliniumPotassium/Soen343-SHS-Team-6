@@ -16,6 +16,9 @@ public class New_User {
     public ChoiceBox permissions;
     public PasswordField pass_textField;
     public Label msg_label;
+
+    private Main main = Main.getInstance();
+
     @FXML
     void initialize(){
         setPermissions();
@@ -39,7 +42,7 @@ public class New_User {
                 (permissions.getValue().equals("full")? User.permissions.full :
                         (permissions.getValue().equals("partial")? User.permissions.partial: User.permissions.none))
         );
-        Main.user_list.add(newUser);
+        main.user_list.add(newUser);
         Stage stage =  (Stage)msg_label.getScene().getWindow();
         stage.close();
     }

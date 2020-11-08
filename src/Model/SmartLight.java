@@ -11,13 +11,13 @@ public class SmartLight extends SmartModule {
     /**
      * Constructor for Smartlight class
      *
-     * @param name
+     //* @param name
      * @param location
      * @param isDimmable
      * @param lightPercentage
      * @param isOn
      */
-    public SmartLight( String location, boolean isDimmable, int lightPercentage, boolean isOn) {
+    public SmartLight(String location, boolean isDimmable, int lightPercentage, boolean isOn) {
         super("SmartLight#"+(idNum++), location);
         this.isDimmable = isDimmable;
         this.lightPercentage = lightPercentage;

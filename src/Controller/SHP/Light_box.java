@@ -1,6 +1,7 @@
 package Controller.SHP;
 
 import Model.SmartLight;
+import Model.SmartModule;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
@@ -21,15 +22,16 @@ public class Light_box {
 //    private Image on;
 //    private Image off;
 
+    private NumFieldFX numFieldFX = NumFieldFX.getInstance();
     @FXML
     void initialize(){
 //        on = new Image("FXML/Images/light_on.png");
 //        off = new Image("FXML/Images/light_off.png");
 
-        new NumFieldFX().numField(from_hour);
-        new NumFieldFX().numField(from_min);
-        new NumFieldFX().numField(to_hour);
-        new NumFieldFX().numField(to_min);
+        numFieldFX.numField(from_hour);
+        numFieldFX.numField(from_min);
+        numFieldFX.numField(to_hour);
+        numFieldFX.numField(to_min);
     }
 //
 //    public void on_off(ActionEvent actionEvent) {
@@ -42,8 +44,8 @@ public class Light_box {
 //        }
 //    }
 
-    public void setLight(SmartLight light) {
-        this.light = light;
+    public void setLight(SmartModule light) {
+        this.light = (SmartLight) light;
         loc.setText(light.getLocation());
         name.setText(light.getName());
         setAwayModeTextFields();

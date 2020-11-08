@@ -26,11 +26,6 @@
                   <ImageView fx:id="door_lock" fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true" />
                </graphic>
             </JFXButton>
-            <JFXButton layoutX="84.0" layoutY="10.0" onAction="#door_obstructed" prefHeight="60.0" prefWidth="0.0" text=" ">
-               <graphic>
-                  <ImageView fx:id="door_obstruct" fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true" />
-               </graphic>
-            </JFXButton>
          </children>
       </HBox>
    </children>

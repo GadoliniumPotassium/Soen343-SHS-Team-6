@@ -29,11 +29,12 @@ public class OutputConsoleController {
     private void initialize() {
         App.outputConsole = this;
     }
-    
+
+    private Main main = Main.getInstance();
     
     
     public void log(String string) {
-        textArea.setText("[" + Main.settings.getDate()+" "+Main.settings.getTime() + "] " + string + "\n" + textArea.getText());
+        textArea.setText("[" + main.settings.getDate()+" "+main.settings.getTime() + "] " + string + "\n" + textArea.getText());
     }
 
     public void clear(ActionEvent actionEvent) {

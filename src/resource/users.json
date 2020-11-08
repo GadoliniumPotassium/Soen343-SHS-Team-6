@@ -3,14 +3,14 @@
   "password": "pass",
   "userPermission": "full",
   "isLoggedIn": true,
-  "location": "kitchen",
+  "location": "Backyard",
   "username": "Amneet"
  },
  {
   "password": "sup123",
   "userPermission": "full",
   "isLoggedIn": false,
-  "location": "Backyard",
+  "location": "Enterance",
   "username": "jhon"
  },
  {
@@ -24,7 +24,7 @@
   "password": "mama",
   "userPermission": "partial",
   "isLoggedIn": false,
-  "location": "Backyard",
+  "location": "Enterance",
   "username": "Maid"
  }
 ]

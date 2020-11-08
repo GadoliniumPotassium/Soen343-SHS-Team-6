@@ -8,9 +8,7 @@ package Controller;
 import Controller.SHC.*;
 import Controller.SHP.Light_box;
 import Controller.SHS.User_box;
-import Model.House;
-import Model.SmartLight;
-import Model.SmartSecurity;
+import Model.*;
 import com.jfoenix.controls.JFXToggleButton;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
@@ -33,6 +31,7 @@ import main.NumFieldFX;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.Random;
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -75,17 +74,25 @@ public class DashboardController {
 //    public TextField hour_shp;
 //    public TextField min_shp;
 
+    /*
+    These are singleton classes.
+     */
+    private Main main = Main.getInstance();
+    private NumFieldFX numFieldFX = NumFieldFX.getInstance();
+
+    private ArrayList<MotionDetector> detectors = new ArrayList<>();
+
     @FXML
     public void initialize() {
 
-        new NumFieldFX().numField(temp_textField);
-        new NumFieldFX().numField(hour_tf);
-        new NumFieldFX().numField(minutes_tf);
-        new NumFieldFX().numField(doors_input);
-        new NumFieldFX().numField(windows_input);
-        new NumFieldFX().numField(lights_input);
-        new NumFieldFX().numField(temp_input);
-        new NumFieldFX().numField(temp_input);
+        numFieldFX.numField(temp_textField);
+        numFieldFX.numField(hour_tf);
+        numFieldFX.numField(minutes_tf);
+        numFieldFX.numField(doors_input);
+        numFieldFX.numField(windows_input);
+        numFieldFX.numField(lights_input);
+        numFieldFX.numField(temp_input);
+        numFieldFX.numField(temp_input);
 
         load_SHC();
         load_SHS();
@@ -103,15 +110,15 @@ public class DashboardController {
 
         user_box();
 
-        temp_textField.setText(Main.settings.getTemperature()+"");
+        temp_textField.setText(main.settings.getTemperature()+"");
         datepicker.setValue(LocalDate.now());
-        String[] time = Main.settings.getTime().split(":");
+        String[] time = main.settings.getTime().split(":");
         hour_tf.setText(time[0]);
         minutes_tf.setText(time[1]);
     }
     private void user_box(){
         users_listView.getItems().clear();
-        Main.user_list.forEach(user -> {
+        main.user_list.forEach(user -> {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("../FXML/SHS/user_box.fxml"));
             HBox user_box = null;
             try {
@@ -129,15 +136,15 @@ public class DashboardController {
 
     private void load_SHC(){
         listView.getChildren().clear();
-        for(House.Room e : Main.rooms_list){
+        for(Room e : main.rooms_list){
 
-            if(Main.active_user.getUserPermission().name().equals("full")) {
+            if(main.active_user.getUserPermission().name().equals("full")) {
 
                 listView.getChildren().add(room_item(e));
-            } else if(Main.active_user.getUserPermission().name().equals("partial")){
-                int user_location = Main.user_location_room(Main.active_user.getLocation());
+            } else if(main.active_user.getUserPermission().name().equals("partial")){
+                int user_location = main.user_location_room(main.active_user.getLocation());
                 if(user_location == -1) continue;
-                if(e.getName().equals(Main.rooms_list.get(user_location).getName())){
+                if(e.getName().equals(main.rooms_list.get(user_location).getName())){
                     listView.getChildren().add(room_item(e));
                 }
             }else{
@@ -181,7 +188,7 @@ public class DashboardController {
 
         home_outside_list.getItems().add(heading);
 
-        Main.outSides.forEach(outSide -> {
+        main.outSides.forEach(outSide -> {
             HBox item = home_outSide_item(outSide);
             item.setOnMouseClicked(e->{
                 FXMLLoader loader = new FXMLLoader(getClass().getResource(
@@ -206,7 +213,7 @@ public class DashboardController {
     }
 
 
-    public HBox home_outSide_item(House.OutSide e){
+    public HBox home_outSide_item(House e){
         FXMLLoader loader = new FXMLLoader(getClass().getResource("../FXML/SHC/home_outside_item.fxml"));
         HBox hbox = null;
         try {
@@ -219,7 +226,7 @@ public class DashboardController {
         return hbox;
     }
 
-    private HBox room_item(House.Room e){
+    private HBox room_item(Room e){
         FXMLLoader loader = new FXMLLoader(getClass().getResource("../FXML/SHC/room_item.fxml"));
         HBox hbox = null;
         try {
@@ -234,13 +241,13 @@ public class DashboardController {
 
     public void update_SHS(ActionEvent actionEvent) {
         if(temp_textField.getText().isEmpty() || hour_tf.getText().isEmpty() || minutes_tf.getText().isEmpty()) return;
-        Main.settings.setTemperature(Float.parseFloat(temp_textField.getText()));
-        Main.settings.setDate(datepicker.getValue().format(DateTimeFormatter.ofPattern("MM/dd/yyyy")));
-        Main.settings.setTime(hour_tf.getText()+":"+minutes_tf.getText());
+        main.settings.setTemperature(Float.parseFloat(temp_textField.getText()));
+        main.settings.setDate(datepicker.getValue().format(DateTimeFormatter.ofPattern("MM/dd/yyyy")));
+        main.settings.setTime(hour_tf.getText()+":"+minutes_tf.getText());
     }
 
     public void add_user(ActionEvent actionEvent) {
-        if(Main.isIsSimulationRunning()) {
+        if(main.isIsSimulationRunning()) {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("../FXML/SHS/New_User.fxml"));
             AnchorPane root = null;
             try {
@@ -273,19 +280,19 @@ public class DashboardController {
         lights_input.getText().isEmpty() ||
         temp_input.getText().isEmpty()) return;
 
-        House room = new House();
+        Room room = new Room();
 
-        room.room.setName(room_name.getText());
-        room.room.setDoors(Integer.parseInt(doors_input.getText()));
-        room.room.setWindows(Integer.parseInt(windows_input.getText()));
-        room.room.setLights(Integer.parseInt(lights_input.getText()));
-        room.room.setTemperature(Float.parseFloat(temp_input.getText()));
+        room.setName(room_name.getText());
+        room.setDoors(Integer.parseInt(doors_input.getText()));
+        room.setWindows(Integer.parseInt(windows_input.getText()));
+        room.setLights(Integer.parseInt(lights_input.getText()));
+        room.setTemperature(Float.parseFloat(temp_input.getText()));
 
-        if(!new Main().room_exists(room.room.getName())) {
-            Main.rooms_list.add(room.room);
-            App.log("Added New Room [ "+room.room.getName()+" ]");
+        if(!main.room_exists(room.getName())) {
+            main.rooms_list.add(room);
+            App.log("Added New Room [ "+room.getName()+" ]");
         } else
-            App.log("Room Already Exists with this name ("+room.room.getName()+")");
+            App.log("Room Already Exists with this name ("+room.getName()+")");
     }
 
     //SHP
@@ -294,23 +301,20 @@ public class DashboardController {
         setLights_listview();
         monitoring();
         update_monitoring();
-        away_mode.selectedProperty().setValue(Main.away_mode);
+        away_mode.selectedProperty().setValue(main.away_mode);
     }
 
     public void monitoring(){
-        Main.securities.clear();
-        Main.rooms_list.forEach(room->{
-            SmartSecurity smartSecurity = new SmartSecurity("",room.getName());
-            smartSecurity.setInAwayMode(Main.away_mode);
-            smartSecurity.setSomeoneThere(isSomeInRoom(room.getName()));
-
-            Main.securities.add(smartSecurity);
+        detectors.clear();
+        main.rooms_list.forEach(room -> {
+            MotionDetector detector = room.getMotionDetector();
+            detectors.add(detector);
         });
     }
-
+/*
     public boolean isSomeInRoom(String _roomName){
-        return Main.user_list.stream().filter(user -> user.getLocation().equals(_roomName)).count() > 0;
-    }
+        return main.user_list.stream().filter(user -> user.getLocation().equals(_roomName)).count() > 0;
+    }*/
 
     public void update_monitoring(){
         this.monitoring_listview.getItems().clear();
@@ -331,39 +335,45 @@ public class DashboardController {
 
         this.monitoring_listview.getItems().add(heading);
 
-        Main.securities.forEach(security ->{
+        detectors.forEach(motionDetector -> {
             HBox s_box = new HBox();
             s_box.setAlignment(Pos.CENTER_LEFT);
             s_box.setStyle("fx-background-color: #f1f6f9");
 
-            Label s_loc = new Label(security.getLocation());
+            Label s_loc = new Label(motionDetector.room_name());
             s_loc.setPrefWidth(125);
             s_loc.setTextFill(Color.web("#14274e"));
             s_loc.setFont(Font.font("Bell MT",18));
 
-            Label s_someoneThere = new Label(security.isSomeoneThere() ? "Yes":"No");
+            Label s_someoneThere = new Label(motionDetector.isSomeoneThere() ? "Yes":"No");
             s_someoneThere.setPrefWidth(125);
             s_someoneThere.setTextFill(Color.web("#14274e"));
             s_someoneThere.setFont(Font.font("Bell MT",18));
 
             s_box.getChildren().addAll(s_loc,s_someoneThere);
             this.monitoring_listview.getItems().add(s_box);
+
         });
+
+        /*main.securities.forEach(security ->{
+            SmartSecurity s = (SmartSecurity) security;
+
+        });*/
 //        System.out.println(Main.securities.toString());
     }
 
     public void setLights_listview(){
         lights_outside_listview.getItems().clear();
-        Main.lights_outside.forEach(light ->{
+        main.lights_outside.forEach(light ->{
             lights_outside_listview.getItems().add(light_box(light));
         });
         lights_inside_listview.getItems().clear();
-        Main.lights_inside.forEach(light ->{
+        main.lights_inside.forEach(light ->{
             lights_inside_listview.getItems().add(light_box(light));
         });
     }
 
-    public HBox light_box(SmartLight _light){
+    public HBox light_box(SmartModule _light){
         FXMLLoader loader = new FXMLLoader(getClass().getResource("../FXML/SHP/light_box.fxml"));
         HBox hBox = null;
         try{
@@ -377,20 +387,23 @@ public class DashboardController {
     }
 
     public void setAwayMode(ActionEvent actionEvent) {
-        if(!Main.isIsSimulationRunning()) {
+        if(!main.isIsSimulationRunning()) {
             away_mode.selectedProperty().setValue(false);
             App.log("Simulation is not running");
             return;
         }
-        if(Main.doors_outside.stream().filter(door -> door.isObstructed()).count() > 0 ||
-            Main.windows_inside.stream().filter(window -> window.isObstructed()).count() > 0 ||
-            Main.doors_inside.stream().filter(d -> d.isObstructed()).count() > 0){
+        if(main.active_user.getUserPermission() == User.permissions.none){
+            away_mode.selectedProperty().setValue(false);
+            App.log("Sorry you don't have any authority.");
+            return;
+        }
+        if(main.windows_inside.stream().filter(window -> ((SmartWindow)window).isObstructed()).count() > 0){
             App.log("Can not Activate the Away Mode Doors/ Windows are Obstructed");
             away_mode.selectedProperty().setValue(false);
             return;
         }
         boolean off = away_mode.selectedProperty().get();
-        Main.away_mode = off;
+        main.away_mode = off;
 
         // check if users in the room and msg to the console and not active away mode if users in room.
         int n = usersInRoom();
@@ -401,22 +414,22 @@ public class DashboardController {
         if(n > 0){
             away_mode.selectedProperty().setValue(false);
             App.log(n+" Members in Home Can not active Away Mode");
-            Main.away_mode = false;
+            main.away_mode = false;
         }else{
             // send command to SHC to close all doors and windows and lock them.
-            Main.doors_inside.forEach(door -> {
-                door.setOpen(false);
-                door.setLocked(true);
+            main.doors_inside.forEach(door -> {
+                ((SmartWindow)door).setOpen(false);
+                ((SmartWindow)door).setLocked(true);
             });
             App.log("Doors are closed and locked home inside");
-            Main.windows_inside.forEach(window ->{
-                window.setOpen(false);
-                window.setLocked(true);
+            main.windows_inside.forEach(window ->{
+                ((SmartWindow)window).setOpen(false);
+                ((SmartWindow)window).setLocked(true);
             });
             App.log("Windows are closed and locked home inside");
-            Main.doors_outside.forEach(d ->{
-                d.setOpen(false);
-                d.setLocked(true);
+            main.doors_outside.forEach(d ->{
+                ((SmartWindow)d).setOpen(false);
+                ((SmartWindow)d).setLocked(true);
             });
             App.log("Doors are closed and locked home outside");
 
@@ -424,39 +437,58 @@ public class DashboardController {
     }
     public int usersInRoom(){
         AtomicInteger count = new AtomicInteger();
-        Main.user_list.forEach(user -> {
-            count.addAndGet((int)Main.rooms_list.stream().filter(room -> room.getName().equals(user.getLocation())).count());
+        main.user_list.forEach(user -> {
+            count.addAndGet((int)main.rooms_list.stream().filter(room -> room.getName().equals(user.getLocation())).count());
 //            System.out.println(count.get());
         });
         return count.get();
     }
 
     public void set_users_locations_to_outside(ActionEvent actionEvent) {
-        if(!Main.isIsSimulationRunning()){
+        if(!main.isIsSimulationRunning()){
             App.log("Simulation is not running");
             return;
         }
-        Main.user_list.forEach(user ->{
-            user.setLocation(Main.outSides.get(new Random().nextInt(Main.outSides.size())).getName());
+        main.user_list.forEach(user ->{
+            user.setLocation(main.outSides.get(new Random().nextInt(main.outSides.size())).getName());
         });
+        detectors.forEach(MotionDetector::deduct);
+        update_monitoring();
         App.log("All Users locations set to outsides");
     }
 
     public void setAlertTime(ActionEvent mouseEvent) {
-        Main.settings.setAlertTiming(Integer.parseInt(String.valueOf(alert_time.getValue().charAt(0))));
+        main.settings.setAlertTiming(Integer.parseInt(String.valueOf(alert_time.getValue().charAt(0))));
     }
 
     public void automic_lights_on_off(ActionEvent actionEvent) {
-        if(!Main.isIsSimulationRunning() || Main.away_mode) {
+        if(!main.isIsSimulationRunning() || main.away_mode) {
             automatic_lights.selectedProperty().setValue(false);
-            App.log("Simulation is not running");
+            App.log("cannot active automatic lights right now");
             return;
         }
         boolean on = automatic_lights.selectedProperty().getValue();
-        Main.automatic_lights = on;
+        main.automatic_lights = on;
         if(!on){
+
             App.log("Automatic Lights Smart System is off.");
         }else{
+            main.rooms_list.forEach(room -> {
+                MotionDetector detector = room.getMotionDetector();
+                if(detector.isSomeoneThere()){
+                    main.lights_inside.forEach(light ->{
+                        if(light.getLocation().equals(room.getName())){
+                            ((SmartLight)light).setOn(true);
+                        }
+                    });
+                }else{
+                    main.lights_inside.forEach(light ->{
+                        if(light.getLocation().equals(room.getName())){
+                            ((SmartLight)light).setOn(false);
+                        }
+                    });
+                }
+            });
             App.log("Automatic Lights Smart System is on.");
         }
     }

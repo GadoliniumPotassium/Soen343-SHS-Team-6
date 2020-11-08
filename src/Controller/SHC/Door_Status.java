@@ -20,10 +20,10 @@ public class Door_Status {
     private Image door_close;
     private Image door_locked;
     private Image door_unlock;
-    private Image door_obstructed;
-    private Image door_unobstructed;
 
     private SmartWindow door;
+
+    private Main main = Main.getInstance();
 
     @FXML
     void initialize(){
@@ -31,8 +31,6 @@ public class Door_Status {
         door_close = new Image("FXML/Images/door_close.png");
         door_locked = new Image("FXML/Images/lock.png");
         door_unlock = new Image("FXML/Images/unlock.png");
-        door_obstructed = new Image("FXML/Images/caution_p.png");
-        door_unobstructed = new Image("FXML/Images/caution.png");
 
     }
 
@@ -49,11 +47,6 @@ public class Door_Status {
             door_status.setImage(door_open);
         else
             door_status.setImage(door_close);
-
-        if(door.isObstructed())
-            door_obstruct.setImage(door_obstructed);
-        else
-            door_obstruct.setImage(door_unobstructed);
     }
 
     public String getDoor_name() {
@@ -61,7 +54,7 @@ public class Door_Status {
     }
 
     public void door_open_close(ActionEvent actionEvent) {
-        if(Main.away_mode){
+        if(main.away_mode){
             App.log("You can not open the door in away mode active");
             return;
         }
@@ -85,7 +78,7 @@ public class Door_Status {
     }
 
     public void door_lock_unlock(ActionEvent actionEvent) {
-        if(Main.away_mode){
+        if(main.away_mode){
             App.log("While Away Mode is active you can not Unlock the door");
             return;
         }
@@ -111,17 +104,6 @@ public class Door_Status {
         return door.isLocked();
     }
 
-    public void door_obstructed(ActionEvent actionEvent) {
-        if(isDoor_obstructed()){
-            door.setObstructed(false);
-            door_obstruct.setImage(door_unobstructed);
-        }
-        else{
-            door.setObstructed(true);
-            door_obstruct.setImage(door_obstructed);
-        }
-        App.log(door.getLocation()+" "+door.getName()+" "+(isDoor_obstructed() ? "Obstructed":"Unobstructed"));
-    }
 
     public boolean isDoor_obstructed(){
         return door.isObstructed();

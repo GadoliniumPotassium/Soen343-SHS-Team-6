@@ -1,6 +1,7 @@
 package Controller.SHC;
 
 import Model.House;
+import Model.Room;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -25,18 +26,19 @@ public class Room_Item {
 
     @FXML void initialize(){}
 
-    private House room = new House();
+    private Room room = new Room();
     private int users;
 
+    private Main main = Main.getInstance();
 
-    public void setValues(House.Room _room){
-        this.room.room = _room;
-        this.users = Main.users_in_same_room(_room.getName());
+    public void setValues(Room _room){
+        this.room = _room;
+        this.users = main.users_in_same_room(_room.getName());
         updateValues();
     }
 
     public void load_room_details(MouseEvent mouseEvent) {
-        if(Main.isIsSimulationRunning()) {
+        if(main.isIsSimulationRunning()) {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("../../FXML/SHC/room_details.fxml"));
             BorderPane root = null;
             try {
@@ -58,11 +60,11 @@ public class Room_Item {
         }
     }
     public void updateValues(){
-        room_name_label.setText(room.room.getName());
-        temp_label.setText(room.room.getTemperature()+"");
-        doors_label.setText(room.room.getDoors()+"");
-        windows_label.setText(room.room.getWindows()+"");
-        lights_label.setText(room.room.getLights()+"");
-        users_label.setText(Main.users_in_same_room(room.room.getName())+"");
+        room_name_label.setText(room.getName());
+        temp_label.setText(room.getTemperature()+"");
+        doors_label.setText(room.getDoors()+"");
+        windows_label.setText(room.getWindows()+"");
+        lights_label.setText(room.getLights()+"");
+        users_label.setText(main.users_in_same_room(room.getName())+"");
     }
 }

@@ -13,12 +13,15 @@ import javafx.stage.Stage;
 
 public class LoginMain extends Application {
 
+
+    private Main main = Main.getInstance();
+
     private static BorderPane main_root;
     @Override
     public void start(Stage primaryStage) throws Exception{
         main_root = new BorderPane();
         try {
-            new Main().loadData();
+            main.loadData();
 
             // get full screen
 
@@ -36,7 +39,7 @@ public class LoginMain extends Application {
             primaryStage.setFullScreen(true);
             primaryStage.show();
             primaryStage.setOnCloseRequest(e->{
-                new Main().saveData();
+                main.saveData();
             });
 
         }catch(Exception e){

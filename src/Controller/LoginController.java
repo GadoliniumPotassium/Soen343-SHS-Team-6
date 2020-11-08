@@ -19,6 +19,8 @@ public class LoginController {
     @FXML
     private TextField txtPassword;
 
+    private Main main = Main.getInstance();
+
     @FXML
     void initialize(){
 
@@ -30,11 +32,11 @@ public class LoginController {
 
     public void Login(ActionEvent event) throws Exception {
         //if (controller.user_exists(txtUserName.getText(),txtPassword.getText())){
-        if (Main.user_exists(txtUserName.getText(), txtPassword.getText())) {
+        if (main.user_exists(txtUserName.getText(), txtPassword.getText())) {
             lblStatus.setText("Login Success");
             Stage primaryStage = (Stage) txtUserName.getScene().getWindow();
             Parent root;
-            if (!Main.house_loaded) {
+            if (!main.house_loaded) {
                 root = FXMLLoader.load(getClass().getResource("../FXML/UploadHouseLayout.fxml"));
                 LoginMain.setMainRoot(root);
                 Scene scene = new Scene(LoginMain.getMainRoot());
@@ -44,7 +46,7 @@ public class LoginController {
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("../FXML/mami.fxml"));
                 root = loader.load();
                 //Controller controller = loader.getController();
-                Main.active_user.setIsloggedIn(true);
+                main.active_user.setIsloggedIn(true);
                 //controller.setUserList(Main.user_list);
                 LoginMain.setMainRoot(root);
                 //scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());

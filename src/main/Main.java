@@ -13,33 +13,44 @@ import java.util.Collections;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class Main {
-    public static ArrayList<User> user_list = new ArrayList<>();
-    public static ArrayList<House.Room> rooms_list = new ArrayList<>();
-    public static ArrayList<House.OutSide> outSides = new ArrayList<>();
+    public ArrayList<User> user_list = new ArrayList<>();
+    public ArrayList<Room> rooms_list = new ArrayList<>();
+    public ArrayList<House> outSides = new ArrayList<>();
 
-    public static ArrayList<SmartWindow> doors_outside = new ArrayList<>();
-    public static ArrayList<SmartLight> lights_outside = new ArrayList<>();
+    public ArrayList<SmartModule> doors_outside = new ArrayList<>();
+    public ArrayList<SmartModule> lights_outside = new ArrayList<>();
 
-    public static ArrayList<SmartWindow> doors_inside = new ArrayList<>();
-    public static ArrayList<SmartWindow> windows_inside = new ArrayList<>();
-    public static ArrayList<SmartLight> lights_inside = new ArrayList<>();
+    public ArrayList<SmartModule> doors_inside = new ArrayList<>();
+    public ArrayList<SmartModule> windows_inside = new ArrayList<>();
+    public ArrayList<SmartModule> lights_inside = new ArrayList<>();
 
-    public static ArrayList<SmartSecurity> securities = new ArrayList<>();
+//    public ArrayList<SmartModule> securities = new ArrayList<>();
 
-    public static User active_user;
+    public User active_user;
 
-    public static boolean house_loaded = false;
+    public boolean house_loaded = false;
 
-    public static boolean isSimulationRunning;
-    public static boolean away_mode;
-    public static boolean automatic_lights;
+    public boolean isSimulationRunning;
+    public boolean away_mode;
+    public boolean automatic_lights;
 
-    public static Settings settings;
+    public Settings settings;
+
+    private Main(){
+
+    }
+
+    private static Main obj = new Main();
+
+    public static Main getInstance(){
+        return obj;
+    }
+
 
     /**
      * this method check if user exists
      */
-    public static boolean user_exists(String _username, String _password){
+    public boolean user_exists(String _username, String _password){
         for (int i = 0; i < user_list.size(); i++) {
             if (user_list.get(i).getUsername().equals(_username) && user_list.get(i).getPassword().equals(_password)) {
                 active_user = user_list.get(i);
@@ -51,7 +62,7 @@ public class Main {
     /**
      * this method load users
      */
-    public static void load_users(){
+    public void load_users(){
         String path = "src/resource/users.json";
         File json = new File(path);
 
@@ -105,7 +116,7 @@ public class Main {
         DateTimeFormatter t = DateTimeFormatter.ofPattern("HH:mm:a");
         settings = new Settings(d.format(date),t.format(time),18);*/
     }
-    public static int user_location_room(String _loc){
+    public int user_location_room(String _loc){
         for(int i = 0; i< rooms_list.size();i++){
             if(rooms_list.get(i).getName().equals(_loc))
                 return i;
@@ -120,7 +131,7 @@ public class Main {
         ReadHomeOutSide();
         doors_and_windows_and_lights();
     }
-    public static void ReadHomeOutSide(){
+    public void ReadHomeOutSide(){
         String path = "src/resource/HomeOutSide.json";
 
         File json = new File(path);
@@ -132,41 +143,45 @@ public class Main {
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
             }
-            House.OutSide[] houses = new Gson().fromJson(reader,House.OutSide[].class);
+            House[] houses = new Gson().fromJson(reader,House[].class);
+//            System.out.println(houses.toString());
             Collections.addAll(outSides,houses);
         }else house_loaded = false;
     }
     public void doors_and_windows_and_lights(){
-        for (House.OutSide outSide : outSides) {
+        for (House outSide : outSides) {
             for(int i = 0; i<outSide.getDoors(); i++){
-                SmartWindow door = new SmartWindow("Door "+(i+1),outSide.getName(),false,false);
-                door.setLocked(false);
+                SmartModule door = ModuleFactory.createModule("SmartWindow",outSide.getName());
                 doors_outside.add(door);
             }
             for(int j = 0; j<outSide.getLights();j++){
-                SmartLight light = new SmartLight("Light "+(j+1),outSide.getName(),false,1,false);
+                SmartModule light = ModuleFactory.createModule("SmartLight",outSide.getName());
                 lights_outside.add(light);
             }
         }
         rooms_list.forEach(room ->{
             for(int i = 0; i<room.getDoors();i++){
-                SmartWindow door = new SmartWindow("Door "+(i+1),room.getName(),false,false);
-                door.setLocked(false);
+                SmartModule door = ModuleFactory.createModule("SmartWindow",room.getName());
                 doors_inside.add(door);
             }
             for(int i = 0; i<room.getWindows(); i++){
-                SmartWindow window = new SmartWindow("Window "+(i+1),room.getName(), false,false);
-                window.setLocked(false);
+                SmartModule window = ModuleFactory.createModule("SmartWindow",room.getName());
                 windows_inside.add(window);
             }
             for(int i =0; i<room.getLights(); i++){
-                SmartLight light = new SmartLight("Light "+(i+1),room.getName(),false,1,false);
+                SmartModule light = ModuleFactory.createModule("SmartLight",room.getName());
                 lights_inside.add(light);
             }
+            user_list.forEach(user ->{
+                if(user.getLocation().equals(room.getName())){
+                    MotionDetector md = room.getMotionDetector();
+                    md.count();
+                }
+            });
         });
     }
 
-    public static void loadHouseLayout(){
+    public void loadHouseLayout(){
         String path = "src/resource/HouseLayout.json";
 
         File json = new File(path);
@@ -178,23 +193,23 @@ public class Main {
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
             }
-            House.Room[] houses = new Gson().fromJson(reader,House.Room[].class);
+            Room[] houses = new Gson().fromJson(reader,Room[].class);
             Collections.addAll(rooms_list,houses);
         }else house_loaded = false;
     }
 
-    public static void setIsSimulationRunning(boolean isSimulationRunning) {
-        Main.isSimulationRunning = isSimulationRunning;
+    public void setIsSimulationRunning(boolean isSimulationRunning) {
+        obj.isSimulationRunning = isSimulationRunning;
     }
 
-    public static boolean isIsSimulationRunning() {
+    public boolean isIsSimulationRunning() {
         return isSimulationRunning;
     }
 
     /**
      * This method will count users with same location
      */
-    public static int users_in_same_room(String _loc){
+    public int users_in_same_room(String _loc){
         AtomicInteger count = new AtomicInteger();
         user_list.forEach(u ->{
             if(u.getLocation() == null) return;
@@ -202,7 +217,7 @@ public class Main {
         });
         return count.intValue();
     }
-    public static int users_outside(String _loc){
+    public int users_outside(String _loc){
         AtomicInteger count = new AtomicInteger();
         user_list.forEach(u ->{
             if(u.getLocation() == null) return;
@@ -278,7 +293,7 @@ public class Main {
     }
 
     public boolean room_exists(String _name){
-        for(House.Room room : rooms_list){
+        for(Room room : rooms_list){
             if(room.getName().equals(_name))
                 return true;
         }

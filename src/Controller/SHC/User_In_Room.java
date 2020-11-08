@@ -1,6 +1,7 @@
 package Controller.SHC;
 
 import Model.House;
+import Model.Room;
 import Model.User;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
@@ -16,14 +17,16 @@ public class User_In_Room {
     private User user;
 
     private ListView listView;
-    private House room;
+    private Room room;
+
+    private Main main = Main.getInstance();
 
     public void removeUserFromRoom(ActionEvent actionEvent) {
         this.user.setLocation("outside");
         listView.getItems().clear();
 
-        for(User user : Main.user_list){
-            if(user.getLocation() != null && user.getLocation().equals(this.room.room.getName())){
+        for(User user : main.user_list){
+            if(user.getLocation() != null && user.getLocation().equals(this.room.getName())){
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("../FXML/user_in_room.fxml"));
                 HBox h = null;
                 try {
@@ -40,7 +43,7 @@ public class User_In_Room {
        // System.out.println(user.defaultLocation+"\nUSERS\n"+ Main.user_list.toString());
     }
 
-    public void setRoom(House room) {
+    public void setRoom(Room room) {
         this.room = room;
     }
 
