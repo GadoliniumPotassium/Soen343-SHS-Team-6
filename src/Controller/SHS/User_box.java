@@ -39,12 +39,21 @@ public class User_box {
 
     }
 
+    /**
+     * This method serves to load the users
+     * @param user
+     * @param users_listView
+     */
     public void load_user(User user, ListView users_listView) {
         this.user = user;
         this.listView = users_listView;
         updateValues();
 
     }
+
+    /**
+     * This method serves to update the user values in the GUI
+     */
     private void updateValues(){
         username_label.setText(this.user.getUsername());
         main.outSides.forEach(outSide -> {
@@ -56,6 +65,10 @@ public class User_box {
         locations.setValue(user.getLocation());
     }
 
+    /**
+     * This method serves to log in the user in the GUI
+     * @param actionEvent
+     */
     @FXML private void login_user(ActionEvent actionEvent) {
         if(main.isIsSimulationRunning()) {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("../../FXML/Login.fxml"));
@@ -74,6 +87,10 @@ public class User_box {
             App.log("Simulation is off");
     }
 
+    /**
+     * This method serves to edit the user in the GUI
+     * @param actionEvent
+     */
     @FXML private void edit_user(ActionEvent actionEvent) {
         if(main.isIsSimulationRunning()) {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("../../FXML/SHS/user_details.fxml"));
@@ -95,6 +112,10 @@ public class User_box {
             App.log("Simulation is not Running");
     }
 
+    /**
+     * This method serves to change the location in the GUI
+     * @param actionEvent
+     */
     @FXML private void change_location(ActionEvent actionEvent) {
         if(main.isIsSimulationRunning()) {
             String preLoc = this.user.getLocation();
@@ -154,6 +175,10 @@ public class User_box {
         }
     }
 
+    /**
+     * This method serves to remove a user
+     * @param actionEvent
+     */
     @FXML private void remove_user(ActionEvent actionEvent) {
         if(main.isIsSimulationRunning()) {
             if(this.user != main.active_user) {
@@ -182,6 +207,11 @@ public class User_box {
         }else
             App.log("Simulation is not Running");
     }
+
+    /**
+     * This method returns in  which rooms the users are in
+     * @return
+     */
     public int usersInRoom(){
         AtomicInteger count = new AtomicInteger();
         main.user_list.forEach(user -> {

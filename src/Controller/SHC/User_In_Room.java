@@ -21,6 +21,10 @@ public class User_In_Room {
 
     private Main main = Main.getInstance();
 
+    /**
+     * This method removes a user from a room
+     * @param actionEvent
+     */
     public void removeUserFromRoom(ActionEvent actionEvent) {
         this.user.setLocation("outside");
         listView.getItems().clear();
@@ -43,14 +47,26 @@ public class User_In_Room {
        // System.out.println(user.defaultLocation+"\nUSERS\n"+ Main.user_list.toString());
     }
 
+    /**
+     * This method sets a room
+     * @param room
+     */
     public void setRoom(Room room) {
         this.room = room;
     }
 
+    /**
+     * This method gives a list view for the items in the room
+     * @param listView
+     */
     public void setListView(ListView listView) {
         this.listView = listView;
     }
 
+    /**
+     * This method sets the user name?
+     * @param _user
+     */
     public void setUserName(User _user) {
         this.user = _user;
         this.userName.setText(_user.getUsername());

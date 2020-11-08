@@ -1,7 +1,7 @@
 package Model;
 
 public abstract class SmartModule {
-    protected String name;
+    protected final String name;
     protected String location;
     protected static double outsideTemp = 20;
 
@@ -10,30 +10,49 @@ public abstract class SmartModule {
         this.location = location;
     }
 
+    /**
+     * Returns the module name
+     * @return
+     */
     public String getName() {
         return name;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
+    /**
+     * Gets the location where the smart module is
+     * @return
+     */
     public String getLocation() {
         return location;
     }
 
+    /**
+     * Can set or reset the location where the smart module is
+     * @param location
+     */
     public void setLocation(String location) {
         this.location = location;
     }
 
+    /**
+     * This method can pull what the outside temperature is
+     * @return
+     */
     public static double getOutsideTemp() {
         return outsideTemp;
     }
 
+    /**
+     * This method can set the temperature outside the house in the simulation
+     * @param outsideTemp
+     */
     public static void setOutsideTemp(double outsideTemp) {
         SmartModule.outsideTemp = outsideTemp;
     }
 
+    /**
+     * The purpose of this method is to toggle the state of the module.
+     */
     public abstract void togglePower();
 
     @Override

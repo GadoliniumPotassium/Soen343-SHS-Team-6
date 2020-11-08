@@ -13,6 +13,10 @@ public class Home_OutSide {
 
     Main main = Main.getInstance();
 
+    /**
+     *This method serves to set the values of the doors and lights outside your house
+     * @param out
+     */
     public void setValues(House out){
         name.setText(out.getName());
         doors.setText(String.valueOf(out.getDoors()));

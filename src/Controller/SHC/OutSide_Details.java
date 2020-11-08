@@ -31,6 +31,10 @@ public class OutSide_Details {
         main = Main.getInstance();
     }
 
+    /**
+     * This method serves to do something?
+     * @param outside
+     */
     public void setOutside(House outside) {
         this.outside = outside;
 
@@ -40,6 +44,9 @@ public class OutSide_Details {
         user_list();
     }
 
+    /**
+     * This method serves to update the update the door and lights and add them in items
+     */
     public void update(){
         main.doors_outside.forEach(door ->{
             if(door.getLocation().equals(outside.getName())){
@@ -53,6 +60,9 @@ public class OutSide_Details {
         });
     }
 
+    /**
+     * This method serves to place the user list in the screen
+     */
     private void user_list(){
         users.getItems().clear();
         for(User user : main.user_list){

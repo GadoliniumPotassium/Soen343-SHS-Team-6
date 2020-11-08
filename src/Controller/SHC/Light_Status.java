@@ -22,6 +22,11 @@ public class Light_Status {
         on = new Image("FXML/Images/light_on.png");
         off = new Image("FXML/Images/light_off.png");
     }
+
+    /**
+     *This method serves to toggle the light
+     * @param actionEvent
+     */
     public void light_on_off(ActionEvent actionEvent) {
         if(isOn()){
             light.setOn(false);
@@ -34,6 +39,10 @@ public class Light_Status {
                 (isOn() ? "On":"off"));
     }
 
+    /**
+     * This method serves to set the light
+     * @param light
+     */
     public void setLight(SmartLight light) {
         this.light = light;
         light_name.setText(light.getName());
@@ -42,6 +51,10 @@ public class Light_Status {
             light_state.setImage(on);
     }
 
+    /**
+     * This method returns if the light is on or off
+     * @return
+     */
     public boolean isOn(){
         return light.isOn();
     }
