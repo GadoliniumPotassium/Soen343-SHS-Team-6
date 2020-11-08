@@ -3,17 +3,22 @@ package Model;
 public class SmartSecurity extends SmartModule {
     boolean inAwayMode;
     boolean isSomeoneThere;
+    private static int idNum=0;
 
     /**
      * Smart security constructor
      *
-     * @param name
      * @param location
      */
-    public SmartSecurity(String name, String location) {
-        super(name, location);
+    public SmartSecurity(String location) {
+        super("SecurityModule#"+(idNum++), location);
         this.inAwayMode = false;
         this.isSomeoneThere = false;
+    }
+
+    @Override
+    public void togglePower() {
+        setInAwayMode(!isInAwayMode());
     }
 
     /**

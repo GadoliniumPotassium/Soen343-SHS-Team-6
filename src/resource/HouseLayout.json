@@ -1,0 +1,37 @@
+[
+ {
+  "doors": 2,
+  "name": "Bed Room",
+  "temperature": 22,
+  "windows": 2,
+  "lights": 4
+ },
+ {
+  "doors": 1,
+  "name": "kitchen",
+  "temperature": 18.399999618530273,
+  "windows": 1,
+  "lights": 2
+ },
+ {
+  "doors": 2,
+  "name": "Garage",
+  "temperature": 21,
+  "windows": 2,
+  "lights": 3
+ },
+ {
+  "doors": 0,
+  "name": "Master Room",
+  "temperature": 17.5,
+  "windows": 3,
+  "lights": 5
+ },
+ {
+  "doors": 1,
+  "name": "Amneet Room",
+  "temperature": 20.899999618530273,
+  "windows": 3,
+  "lights": 6
+ }
+]

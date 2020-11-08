@@ -4,19 +4,28 @@ public class SmartWindow extends SmartModule {
 
     private boolean isOpen;
     private boolean isObstructed;
+    private boolean locked;
+    private static int idNum = 0;
 
     /**
      * Smart Window constructor
      *
-     * @param name
      * @param location
      * @param isOpen
      * @param isObstructed
      */
-    public SmartWindow(String name, String location, boolean isOpen, boolean isObstructed) {
-        super(name, location);
+    public SmartWindow(String location, boolean isOpen, boolean isObstructed) {
+        super("SmartWindow#" + (idNum++), location);
         this.isOpen = isOpen;
         this.isObstructed = isObstructed;
+    }
+
+    @Override
+    public void togglePower() {
+        if (!isObstructed)
+            setOpen(!isOpen);
+        else
+            System.out.println("Could not toggle the window, it is obstructed");
     }
 
     /**
@@ -53,5 +62,13 @@ public class SmartWindow extends SmartModule {
      */
     public void setObstructed(boolean obstructed) {
         isObstructed = obstructed;
+    }
+
+    public boolean isLocked() {
+        return locked;
+    }
+
+    public void setLocked(boolean locked) {
+        this.locked = locked;
     }
 }

@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.text.Font?>
+
+<HBox alignment="CENTER" prefHeight="50.0" spacing="20.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.SHP.Light_box">
+   <children>
+      <Label fx:id="loc" text="location" textFill="#14274e">
+         <font>
+            <Font name="Bell MT" size="20.0" />
+         </font>
+      </Label>
+      <Label fx:id="name" layoutX="10.0" layoutY="23.0" text="name" textFill="#14274e">
+         <font>
+            <Font name="Bell MT" size="20.0" />
+         </font>
+      </Label>
+      <Label layoutX="362.0" layoutY="27.0" text="from" textFill="#14274e">
+         <font>
+            <Font name="Bell MT" size="20.0" />
+         </font>
+      </Label>
+      <TextField fx:id="from_hour" alignment="CENTER" prefHeight="33.0" prefWidth="41.0" promptText="00">
+         <font>
+            <Font name="Bell MT" size="16.0" />
+         </font>
+      </TextField>
+      <Label layoutX="95.0" layoutY="27.0" text=":" textFill="#14274e">
+         <font>
+            <Font name="Bell MT" size="20.0" />
+         </font>
+         <HBox.margin>
+            <Insets left="-20.0" right="-20.0" />
+         </HBox.margin>
+      </Label>
+      <TextField fx:id="from_min" alignment="CENTER" layoutX="253.0" layoutY="23.0" prefHeight="33.0" prefWidth="43.0" promptText="00">
+         <font>
+            <Font name="Bell MT" size="16.0" />
+         </font>
+      </TextField>
+      <Label layoutX="403.0" layoutY="27.0" text="to" textFill="#14274e">
+         <font>
+            <Font name="Bell MT" size="20.0" />
+         </font>
+      </Label>
+      <TextField fx:id="to_hour" alignment="CENTER" layoutX="253.0" layoutY="23.0" prefHeight="33.0" prefWidth="41.0" promptText="00">
+         <font>
+            <Font name="Bell MT" size="16.0" />
+         </font>
+      </TextField>
+      <Label layoutX="294.0" layoutY="27.0" text=":" textFill="#14274e">
+         <font>
+            <Font name="Bell MT" size="20.0" />
+         </font>
+         <HBox.margin>
+            <Insets left="-20.0" right="-20.0" />
+         </HBox.margin>
+      </Label>
+      <TextField fx:id="to_min" alignment="CENTER" layoutX="299.0" layoutY="23.0" prefHeight="33.0" prefWidth="43.0" promptText="00">
+         <font>
+            <Font name="Bell MT" size="16.0" />
+         </font>
+      </TextField>
+      <JFXButton buttonType="RAISED" onAction="#set_time" style="-fx-background-color: #14274e;" text="SetTime" textFill="#f1f6f9">
+         <font>
+            <Font name="Bell MT" size="15.0" />
+         </font>
+      </JFXButton>
+   </children>
+</HBox>

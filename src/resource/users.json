@@ -1,0 +1,30 @@
+[
+ {
+  "password": "pass",
+  "userPermission": "full",
+  "isLoggedIn": true,
+  "location": "Backyard",
+  "username": "Amneet"
+ },
+ {
+  "password": "sup123",
+  "userPermission": "full",
+  "isLoggedIn": false,
+  "location": "Enterance",
+  "username": "jhon"
+ },
+ {
+  "password": "pogo",
+  "userPermission": "full",
+  "isLoggedIn": false,
+  "location": "Backyard",
+  "username": "lololop"
+ },
+ {
+  "password": "mama",
+  "userPermission": "partial",
+  "isLoggedIn": false,
+  "location": "Enterance",
+  "username": "Maid"
+ }
+]

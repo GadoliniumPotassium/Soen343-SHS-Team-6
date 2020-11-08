@@ -5,11 +5,17 @@ public class SmartAC extends SmartModule {
     public static final int MIN_TEMP = 17;
     private double current_temp_AC;
     private boolean isOn;
+    private static int idNum=0;
 
-    public SmartAC(String name, String location) {
-        super(name, location);
+    public SmartAC(String location) {
+        super("SmartAC"+(idNum++), location);
         this.current_temp_AC = 20;
         this.isOn = false;
+    }
+
+    @Override
+    public void togglePower() {
+        setOn(!isOn);
     }
 
     /**

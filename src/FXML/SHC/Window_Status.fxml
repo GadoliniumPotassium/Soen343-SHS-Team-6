@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<VBox alignment="CENTER" style="-fx-background-color: #f1f6f9;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.SHC.Window_Status">
+   <children>
+      <Label fx:id="window_name" text="Window No" textFill="#14274e">
+         <font>
+            <Font name="Bell MT" size="22.0" />
+         </font>
+      </Label>
+      <HBox alignment="CENTER">
+         <children>
+            <JFXButton onAction="#window_open_close" prefHeight="60.0" prefWidth="45.0" text=" ">
+               <graphic>
+                  <ImageView fx:id="window_status" fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../Images/window_open.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </JFXButton>
+            <JFXButton layoutX="84.0" layoutY="10.0" onAction="#window_obstructed" prefHeight="60.0" prefWidth="0.0" text=" ">
+               <graphic>
+                  <ImageView fx:id="window_Obstruct" fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../Images/caution.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </JFXButton>
+         </children>
+      </HBox>
+   </children>
+</VBox>

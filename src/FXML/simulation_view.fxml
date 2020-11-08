@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXToggleButton?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<VBox alignment="TOP_CENTER" prefHeight="550.0" prefWidth="200.0" style="-fx-background-color: #14274e;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.SimulationController">
+   <JFXButton onAction="#refresh" text="Simulation" textFill="#9ba4b4">
+      <font>
+         <Font name="Bell MT" size="29.0" />
+      </font>
+   </JFXButton>
+   <JFXToggleButton fx:id="onToggleBtn" onAction="#onToggleBtn" text="On/Off" textFill="#9ba4b4" unToggleColor="#f1f6f9" unToggleLineColor="#9ba4b4">
+      <font>
+         <Font name="Bell MT" size="15.0" />
+      </font>
+   </JFXToggleButton>
+            <ImageView fitHeight="126.0" fitWidth="82.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@Images/Person.png" />
+               </image>
+            </ImageView>
+            <Label fx:id="user_name" text="Parent" textFill="#9ba4b4">
+               <font>
+                  <Font name="Bell MT" size="19.0" />
+               </font>
+            </Label>
+            <Label text="Location:" textFill="#9ba4b4">
+      <font>
+         <Font name="Bell MT" size="20.0" />
+      </font>
+      <padding>
+         <Insets top="20.0" />
+      </padding>
+   </Label>
+            <Label fx:id="loc" text="Kitchen" textFill="#9ba4b4">
+               <font>
+                  <Font name="Bell MT" size="19.0" />
+               </font>
+            </Label>
+            <Label fx:id="temp" text="Outside Temp: 15C" textFill="#9ba4b4">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font>
+      <padding>
+         <Insets top="30.0" />
+      </padding>
+            </Label>
+            <Label fx:id="date_time" text="Fri. Sep 18 2020 10:36" textFill="#9ba4b4">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font>
+      <padding>
+         <Insets top="30.0" />
+      </padding>
+            </Label>
+   <JFXButton fx:id="timerSpeed" onAction="#increase_timerSpeed" text="2x" textFill="#9ba4b4" wrapText="true">
+      <VBox.margin>
+         <Insets top="10.0" />
+      </VBox.margin>
+      <font>
+         <Font name="Bell MT" size="20.0" />
+      </font>
+   </JFXButton>
+</VBox>
