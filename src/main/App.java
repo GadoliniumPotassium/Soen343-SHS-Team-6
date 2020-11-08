@@ -21,6 +21,11 @@ public class App extends Application {
 
     private static Scene scene;
 
+    /**
+     * This method is overriden from Javafx application in order to start the app
+     * @param stage
+     * @throws IOException
+     */
     @Override
     public void start(Stage stage) throws IOException {
         // load the main window scene here
@@ -30,15 +35,16 @@ public class App extends Application {
         stage.show();
     }
 
-//    static void setRoot(String fxml) throws IOException {
-//        scene.setRoot(loadFXML(fxml));
-//    }
 
     private static Parent loadFXML(String fxml) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("../FXML/"+fxml + ".fxml"));
         return fxmlLoader.load();
     }
 
+    /**
+     * The main method of the program
+     * @param args
+     */
     public static void main(String[] args) {
         launch();
     }

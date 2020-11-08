@@ -33,6 +33,10 @@ public class Window_Status {
         window_unobstructed = new Image("FXML/Images/caution.png");
     }
 
+    /**
+     * This method toggles the open close state of a window
+     * @param actionEvent
+     */
     public void window_open_close(ActionEvent actionEvent) {
         if(main.away_mode){
             App.log("You can not open the window in away mode active");
@@ -53,6 +57,10 @@ public class Window_Status {
                 (isWindow_open() ? "Open":"Close"));
     }
 
+    /**
+     * This method sets the lock unlock state of the window
+     * @param window
+     */
     public void setWindow(SmartWindow window) {
         this.window = window;
         window_name.setText(window.getName());
@@ -68,11 +76,18 @@ public class Window_Status {
             window_Obstruct.setImage(window_unobstructed);
     }
 
-
+    /**
+     * This method returns true if the window is open
+     * @return
+     */
     public boolean isWindow_open() {
         return this.window.isOpen();
     }
 
+    /**
+     * This method toggles the window obstruction state
+     * @param actionEvent
+     */
     public void window_obstructed(ActionEvent actionEvent) {
         if(isWindow_Obstructed()){
             window.setObstructed(false);
@@ -84,6 +99,10 @@ public class Window_Status {
         App.log(window.getLocation()+" "+window.getName()+" "+(isWindow_Obstructed() ? "Obstructed":"UnObstructed"));
     }
 
+    /**
+     * This method returns if the window is obstructed
+     * @return
+     */
     public boolean isWindow_Obstructed(){
         return this.window.isObstructed();
     }

@@ -19,31 +19,25 @@ public class Light_box {
 
     private SmartLight light;
 
-//    private Image on;
-//    private Image off;
 
     private NumFieldFX numFieldFX = NumFieldFX.getInstance();
     @FXML
+    /**
+     * Thsi method initializes the light box
+     */
     void initialize(){
-//        on = new Image("FXML/Images/light_on.png");
-//        off = new Image("FXML/Images/light_off.png");
+
 
         numFieldFX.numField(from_hour);
         numFieldFX.numField(from_min);
         numFieldFX.numField(to_hour);
         numFieldFX.numField(to_min);
     }
-//
-//    public void on_off(ActionEvent actionEvent) {
-//        if(isOn()){
-//            light_imageView.setImage(off);
-//            this.light.setOn(false);
-//        }else{
-//            light_imageView.setImage(on);
-//            this.light.setOn(true);
-//        }
-//    }
 
+    /**
+     * This method sets the light in its location
+     * @param light
+     */
     public void setLight(SmartModule light) {
         this.light = (SmartLight) light;
         loc.setText(light.getLocation());
@@ -51,6 +45,9 @@ public class Light_box {
         setAwayModeTextFields();
     }
 
+    /**
+     * This method returns the set away mode text fields
+     */
     private void setAwayModeTextFields(){
         String[] timing = light.getAwayModeTiming().split(",");
         String[] from = timing[0].split(":");
@@ -67,10 +64,18 @@ public class Light_box {
         to_min.setText(t_min+"");
     }
 
+    /**
+     * This method returns whether the light is on or off
+     * @return
+     */
     private boolean isOn(){
         return light.isOn();
     }
 
+    /**
+     * This method serves to set the away mode timing in case of a break-in or for the lights
+     * @param actionEvent
+     */
     public void set_time(ActionEvent actionEvent) {
         if(from_hour.getText().isEmpty() && from_min.getText().isEmpty()
         && to_hour.getText().isEmpty() && to_min.getText().isEmpty()){

@@ -25,6 +25,9 @@ public class Door_Status {
 
     private Main main = Main.getInstance();
 
+    /**
+     * This method initializes the door
+     */
     @FXML
     void initialize(){
         door_open = new Image("FXML/Images/door_open.png");
@@ -34,6 +37,10 @@ public class Door_Status {
 
     }
 
+    /**
+     * This method takes in a window? and sets its values
+     * @param door
+     */
     public void setDoor(SmartWindow door) {
         this.door = door;
         door_name.setText(door.getName());
@@ -49,6 +56,10 @@ public class Door_Status {
             door_status.setImage(door_close);
     }
 
+    /**
+     * This method returns the current doors name
+     * @return
+     */
     public String getDoor_name() {
         return this.door.getName();
     }
@@ -77,6 +88,10 @@ public class Door_Status {
                 (isDoor_open() ? "Open":"Close"));
     }
 
+    /**
+     * This method toggles the lock/unlock state of the door, method will not work if the house is in away mode.
+     * @param actionEvent
+     */
     public void door_lock_unlock(ActionEvent actionEvent) {
         if(main.away_mode){
             App.log("While Away Mode is active you can not Unlock the door");
@@ -96,15 +111,26 @@ public class Door_Status {
     }
 
 
+    /**
+     * this method returns if the door is open
+     * @return
+     */
     public boolean isDoor_open() {
         return door.isOpen();
     }
 
+    /**
+     * This method returns if a door is locked
+     * @return
+     */
     public boolean isDoor_lock() {
         return door.isLocked();
     }
 
-
+    /**
+     * This method returns if a door is obstructed
+     * @return
+     */
     public boolean isDoor_obstructed(){
         return door.isObstructed();
     }

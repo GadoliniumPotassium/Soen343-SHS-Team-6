@@ -31,12 +31,20 @@ public class Room_Item {
 
     private Main main = Main.getInstance();
 
+    /**
+     * This methid takes a room and sets it
+     * @param _room
+     */
     public void setValues(Room _room){
         this.room = _room;
         this.users = main.users_in_same_room(_room.getName());
         updateValues();
     }
 
+    /**
+     * This method loads the room details into the screen
+     * @param mouseEvent
+     */
     public void load_room_details(MouseEvent mouseEvent) {
         if(main.isIsSimulationRunning()) {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("../../FXML/SHC/room_details.fxml"));
@@ -59,6 +67,10 @@ public class Room_Item {
             App.log("Please Run the Simulator to perform these actions");
         }
     }
+
+    /**
+     * This method updates the room values
+     */
     public void updateValues(){
         room_name_label.setText(room.getName());
         temp_label.setText(room.getTemperature()+"");
