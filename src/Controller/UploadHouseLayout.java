@@ -17,7 +17,10 @@ public class UploadHouseLayout {
     public Label file_name;
     public Button uhl;
 
-
+    /**
+     * this method acts in order to upload the house layout
+     * @param actionEvent
+     */
     public void upload_house_layout(ActionEvent actionEvent) {
         try {
             Stage primaryStage = (Stage) uhl.getScene().getWindow();
@@ -32,6 +35,11 @@ public class UploadHouseLayout {
         }
     }
 
+
+    /**
+     * This method chooses a file for the house layout
+     * @param actionEvent
+     */
     public void choose_file(ActionEvent actionEvent) {
         uhl.setDisable(true);
         FileChooser fileChooser = new FileChooser();

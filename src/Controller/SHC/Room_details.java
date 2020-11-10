@@ -27,10 +27,20 @@ public class Room_details {
 
     private Main main = Main.getInstance();
 
+    /**
+     * This method changes the temperature in a room
+     * @param actionEvent
+     */
     public void change_temperature(ActionEvent actionEvent) {
         if(temp_value.getText().isEmpty()) return;
         this.room.setTemperature(Float.parseFloat(temp_value.getText()));
     }
+
+    /**
+     * This method takes a room and a user and
+     * @param _room
+     * @param _users
+     */
     public void room_Details(Room _room,int _users){
         this.room = _room;
         room_name.setText(room.getName());
@@ -57,6 +67,10 @@ public class Room_details {
             }
         });
     }
+
+    /**
+     * This method serves to update the user list
+     */
     public void update_user_list(){
         for(User user : main.user_list){
             if(user.getLocation() != null && user.getLocation().equals(this.room.getName())){
@@ -75,6 +89,12 @@ public class Room_details {
             }
         }
     }
+
+    /**
+     * this method serves to pull the door UI box
+     * @param _door
+     * @return
+     */
     public VBox getDoorBox(SmartWindow _door){
         FXMLLoader loader = new FXMLLoader(getClass().getResource("../../FXML/SHC/Door_Status.fxml"));
         VBox vBox = null;
@@ -88,6 +108,11 @@ public class Room_details {
         return vBox;
     }
 
+    /**
+     * This method serves to pull the window UI box
+     * @param _window
+     * @return
+     */
     public VBox getWindowBox(SmartWindow _window){
         FXMLLoader loader = new FXMLLoader(getClass().getResource("../../FXML/SHC/Window_Status.fxml"));
         VBox vBox = null;
@@ -101,6 +126,11 @@ public class Room_details {
         return vBox;
     }
 
+    /**
+     * this method serves to pull the light UI box
+     * @param _light
+     * @return
+     */
     public VBox getLightBox(SmartLight _light){
         FXMLLoader loader = new FXMLLoader(getClass().getResource("../../FXML/SHC/Light_Status.fxml"));
         VBox vBox = null;

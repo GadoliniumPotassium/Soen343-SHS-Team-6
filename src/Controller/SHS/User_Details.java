@@ -17,6 +17,10 @@ public class User_Details {
 
     private User user;
 
+    /**
+     * This method updates the user details in the GUI
+     * @param actionEvent
+     */
     public void update(ActionEvent actionEvent) {
         if(user_textField.getText().isEmpty() ||
             pass_textField.getText().isEmpty()){
@@ -42,6 +46,10 @@ public class User_Details {
         stage.close();
     }
 
+    /**
+     * This method allows us to set the user object
+     * @param _user
+     */
     public void setUser(User _user) {
         this.user = _user;
         setPermissions();
@@ -49,8 +57,10 @@ public class User_Details {
         setPass_textField(_user.getPassword());
     }
 
+    /**
+     * This method serves to  set eh user permissions
+      */
     private void setPermissions() {
-        //System.out.println(user.getUserPermission().name());
         permissions.getSelectionModel().select(user.getUserPermission().name());
 
         permissions.getItems().add("full");
@@ -58,9 +68,18 @@ public class User_Details {
         permissions.getItems().add("none");
     }
 
+    /**
+     * This method serves to set the user text field in the GUI for username
+     * @param _username
+     */
     private void setUser_textField(String _username) {
         this.user_textField.setText(_username);
     }
+
+    /**
+     * This method serves to set the password field in the GUI
+     * @param _pass
+     */
     private void setPass_textField(String _pass){
         this.pass_textField.setText(_pass);
         this.pass_textField.setVisible(true);

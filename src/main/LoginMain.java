@@ -17,6 +17,12 @@ public class LoginMain extends Application {
     private Main main = Main.getInstance();
 
     private static BorderPane main_root;
+
+    /**
+     * This method starts the login screen
+     * @param primaryStage
+     * @throws Exception
+     */
     @Override
     public void start(Stage primaryStage) throws Exception{
         main_root = new BorderPane();
@@ -46,14 +52,28 @@ public class LoginMain extends Application {
             e.printStackTrace();
         }
     }
+
+    /**
+     * Manipulates GUI elements
+     * @param root
+     */
     public static void setMainRoot(Node root){
         main_root.getChildren().clear();
         main_root.setCenter(root);
     }
+
+    /**
+     * Manipulates GUI elements
+     * @return
+     */
     public static BorderPane getMainRoot(){
         return main_root;
     }
 
+    /**
+     * Main method for the login
+     * @param args
+     */
     public static void main(String[] args) {
         launch(args);
     }

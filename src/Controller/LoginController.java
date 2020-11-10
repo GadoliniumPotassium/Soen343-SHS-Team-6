@@ -26,12 +26,20 @@ public class LoginController {
 
     }
 
+    /**
+     * This method serves to the set the username in the login
+     * @param _uname
+     */
     public void setTxtUserName(String _uname){
         txtUserName.setText(_uname);
     }
 
+    /**
+     * This method handles the login process
+     * @param event
+     * @throws Exception
+     */
     public void Login(ActionEvent event) throws Exception {
-        //if (controller.user_exists(txtUserName.getText(),txtPassword.getText())){
         if (main.user_exists(txtUserName.getText(), txtPassword.getText())) {
             lblStatus.setText("Login Success");
             Stage primaryStage = (Stage) txtUserName.getScene().getWindow();
@@ -45,14 +53,13 @@ public class LoginController {
 
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("../FXML/mami.fxml"));
                 root = loader.load();
-                //Controller controller = loader.getController();
+
                 main.active_user.setIsloggedIn(true);
-                //controller.setUserList(Main.user_list);
+
                 LoginMain.setMainRoot(root);
-                //scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
-//                primaryStage.setScene(new Scene(LoginMain.getMainRoot()));
+
             }
-//            primaryStage.show();
+
         } else {
             lblStatus.setText("Username or password incorrect");
         }

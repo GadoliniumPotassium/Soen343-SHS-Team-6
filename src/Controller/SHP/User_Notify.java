@@ -28,6 +28,11 @@ public class User_Notify {
 
     }
 
+    /**
+     * This method serves as a set up for the notification box taking in the title and message
+     * @param _rName
+     * @param _msg
+     */
     public void setup(String _rName, String _msg){
         room_name.setText(_rName);
         msg.setText(_msg);
@@ -35,6 +40,9 @@ public class User_Notify {
         Timer();
     }
 
+    /**
+     * This  method serves as a timer
+     */
     private void Timer(){
         timeline = new Timeline();
         timeline.setCycleCount(Timeline.INDEFINITE);
@@ -59,6 +67,9 @@ public class User_Notify {
         timeline.play();
     }
 
+    /**
+     * This method serves to close the notification
+     */
     private void close(){
         main.away_mode = false;
         timeline.stop();
@@ -66,7 +77,10 @@ public class User_Notify {
         stage.close();
     }
 
-
+    /**
+     * This method logs that the home is safe
+     * @param actionEvent
+     */
     public void homie_save(ActionEvent actionEvent) {
         // closing the away mode.
         App.log("User Response: it's safe.");
@@ -74,6 +88,10 @@ public class User_Notify {
         timeline.stop();
     }
 
+    /**
+     * This method serves to alert the authorities in case of a break-in
+     * @param actionEvent
+     */
     public void Alert_Authorities(ActionEvent actionEvent) {
         App.log("User Response: Alerting the authorities");
         close();

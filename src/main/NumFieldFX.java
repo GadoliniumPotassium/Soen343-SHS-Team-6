@@ -12,6 +12,10 @@ public class NumFieldFX {
         return numFieldFX;
     }
 
+    /**
+     * This handles numbber fields in the GUI
+     * @param tf
+     */
     public void numField(TextField tf){
         tf.addEventFilter(KeyEvent.KEY_TYPED, new EventHandler<KeyEvent>() {
             public void handle( KeyEvent t ) {

@@ -24,6 +24,10 @@ public class New_User {
         setPermissions();
     }
 
+    /**
+     * This method serves to add a new user when the button is clicked
+     * @param actionEvent
+     */
     public void add(ActionEvent actionEvent) {
         User newUser = new User();
         if(user_textField.getText().isEmpty() ||
@@ -46,6 +50,10 @@ public class New_User {
         Stage stage =  (Stage)msg_label.getScene().getWindow();
         stage.close();
     }
+
+    /**
+     * This method serves to get the permissions and add them in the box
+     */
     private void setPermissions() {
         permissions.getItems().add("full");
         permissions.getItems().add("partial");

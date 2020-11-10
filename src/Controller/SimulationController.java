@@ -50,6 +50,9 @@ public class SimulationController {
     }
     Time_states t_s = Time_states.normal;
 
+    /**
+     * This method initializes the simulation
+     */
     @FXML private void initialize() {
         main.readTimeAndDate();
         update();
@@ -59,6 +62,9 @@ public class SimulationController {
         t_s = Time_states.x2;
     }
 
+    /**
+     * This method updates things in the simulation as things happen
+     */
     public void update(){
         User currentUser = main.active_user;
         user_name.setText(currentUser.getUsername());
@@ -93,8 +99,6 @@ public class SimulationController {
                 }
             }
 
-            // turn on off lights when on away mode.
-//            System.out.println("away mode"+Main.away_mode);
             if(main.away_mode){
                 int finalHour = hour;
                 int finalMinute = minute;
@@ -119,6 +123,12 @@ public class SimulationController {
             timeline.play();
     }
 
+    /**
+     * This method serves to check to turn off/on a light after a set amount of time in away mode
+     * @param _smartLight
+     * @param _hour
+     * @param _minute
+     */
     private void check_awayMode_lights(SmartLight _smartLight, int _hour, int _minute){
         if(!_smartLight.getAwayModeTiming().equals("00:00,00:00")){
             String[] timing = _smartLight.getAwayModeTiming().split(",");
@@ -130,9 +140,6 @@ public class SimulationController {
             int t_hour = Integer.parseInt(to[0]);
             int t_min = Integer.parseInt(to[1]);
 
-//            System.out.println(_hour+":"+_minute+"\n"+f_hour+":"+f_min+","+t_hour+":"+t_min);
-            // Time Compare
-
             LocalTime current = LocalTime.of(_hour,_minute);
             LocalTime f_light = LocalTime.of(f_hour,f_min);
             LocalTime t_light = LocalTime.of(t_hour,t_min);
@@ -143,11 +150,7 @@ public class SimulationController {
                 _smartLight.setOn(false);
             }
 
-            /*if(_hour >= f_hour && _hour <= t_hour){
-                _smartLight.setOn(true);
-            }else{
-                _smartLight.setOn(false);
-            }*/
+
         }
     }
 
@@ -158,10 +161,18 @@ public class SimulationController {
         App.log("Simulation: "+(isOn?"On":"Off"));
     }
 
+    /**
+     * This method refreshes the GUI
+     * @param actionEvent
+     */
     public void refresh(ActionEvent actionEvent) {
         update();
     }
 
+    /**
+     * This method increases the timers speed
+     * @param actionEvent
+     */
     public void increase_timerSpeed(ActionEvent actionEvent) {
         switch(t_s){
             case normal: {

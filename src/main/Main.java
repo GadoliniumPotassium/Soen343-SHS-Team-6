@@ -116,6 +116,12 @@ public class Main {
         DateTimeFormatter t = DateTimeFormatter.ofPattern("HH:mm:a");
         settings = new Settings(d.format(date),t.format(time),18);*/
     }
+
+    /**
+     * This method serves to get in which rooms the users are
+     * @param _loc
+     * @return
+     */
     public int user_location_room(String _loc){
         for(int i = 0; i< rooms_list.size();i++){
             if(rooms_list.get(i).getName().equals(_loc))
@@ -124,6 +130,9 @@ public class Main {
         return -1;
     }
 
+    /**
+     * This method loads all the data
+     */
     public void loadData(){
         loadHouseLayout();
         load_users();
@@ -131,6 +140,10 @@ public class Main {
         ReadHomeOutSide();
         doors_and_windows_and_lights();
     }
+
+    /**
+     * This methods gets the data from outside the home
+     */
     public void ReadHomeOutSide(){
         String path = "src/resource/HomeOutSide.json";
 
@@ -148,6 +161,10 @@ public class Main {
             Collections.addAll(outSides,houses);
         }else house_loaded = false;
     }
+
+    /**
+     * This method handles the doors windows and lights in the simulation
+     */
     public void doors_and_windows_and_lights(){
         for (House outSide : outSides) {
             for(int i = 0; i<outSide.getDoors(); i++){
@@ -181,6 +198,9 @@ public class Main {
         });
     }
 
+    /**
+     * This method loads the house layout
+     */
     public void loadHouseLayout(){
         String path = "src/resource/HouseLayout.json";
 
@@ -198,10 +218,18 @@ public class Main {
         }else house_loaded = false;
     }
 
+    /**
+     * This method sets if the simulation is running or not
+     * @param isSimulationRunning
+     */
     public void setIsSimulationRunning(boolean isSimulationRunning) {
         obj.isSimulationRunning = isSimulationRunning;
     }
 
+    /**
+     * This method returns if the simulation is running
+     * @return
+     */
     public boolean isIsSimulationRunning() {
         return isSimulationRunning;
     }
@@ -217,6 +245,12 @@ public class Main {
         });
         return count.intValue();
     }
+
+    /**
+     * This method gets the number of users  outside
+     * @param _loc
+     * @return
+     */
     public int users_outside(String _loc){
         AtomicInteger count = new AtomicInteger();
         user_list.forEach(u ->{
@@ -226,16 +260,18 @@ public class Main {
         return count.intValue();
     }
 
-//    public static void main(String args[]){
-//        new Main().write();
-//    }
-
+    /**
+     * This method saves the data and logs it
+     */
     public void saveData(){
         writeHouseLayout();
         writeUsersData();
         writeSettings();
     }
 
+    /**
+     * This method writes and logs the user data
+     */
     public void writeUsersData(){
         JSONArray student = new JSONArray();
         user_list.forEach(user->{
@@ -265,6 +301,9 @@ public class Main {
         }
     }
 
+    /**
+     * This method writes and logs the house layout
+     */
     public void writeHouseLayout(){
         JSONArray rooms = new JSONArray();
         rooms_list.forEach(room->{
@@ -292,6 +331,11 @@ public class Main {
 
     }
 
+    /**
+     * This method returns true if a room exists
+     * @param _name
+     * @return
+     */
     public boolean room_exists(String _name){
         for(Room room : rooms_list){
             if(room.getName().equals(_name))
@@ -300,6 +344,9 @@ public class Main {
         return false;
     }
 
+    /**
+     * This method serves to write a json file for the house layout
+     */
     void write(){
          try {
             JSONObject roomDetails = new JSONObject();

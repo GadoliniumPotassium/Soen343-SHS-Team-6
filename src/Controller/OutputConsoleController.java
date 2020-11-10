@@ -31,12 +31,19 @@ public class OutputConsoleController {
     }
 
     private Main main = Main.getInstance();
-    
-    
+
+    /**
+     * This method outputs to the log
+     * @param string
+     */
     public void log(String string) {
         textArea.setText("[" + main.settings.getDate()+" "+main.settings.getTime() + "] " + string + "\n" + textArea.getText());
     }
 
+    /**
+     * This method clears the output controller
+     * @param actionEvent
+     */
     public void clear(ActionEvent actionEvent) {
         textArea.clear();
         System.out.println("The button was clicked!");

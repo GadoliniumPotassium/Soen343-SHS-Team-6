@@ -133,7 +133,9 @@ public class DashboardController {
         });
     }
 
-
+    /**
+     * Loads SHC
+     */
     private void load_SHC(){
         listView.getChildren().clear();
         for(Room e : main.rooms_list){
@@ -161,6 +163,9 @@ public class DashboardController {
         home_outside();
     }
 
+    /**
+     * This method does the GUI for the outside home
+     */
     public void home_outside(){
         home_outside_list.getItems().clear();
         HBox heading = new HBox();
@@ -212,7 +217,11 @@ public class DashboardController {
         });
     }
 
-
+    /**
+     * does something
+     * @param e
+     * @return
+     */
     public HBox home_outSide_item(House e){
         FXMLLoader loader = new FXMLLoader(getClass().getResource("../FXML/SHC/home_outside_item.fxml"));
         HBox hbox = null;
@@ -226,6 +235,11 @@ public class DashboardController {
         return hbox;
     }
 
+    /**
+     * Gets the room items
+     * @param e
+     * @return
+     */
     private HBox room_item(Room e){
         FXMLLoader loader = new FXMLLoader(getClass().getResource("../FXML/SHC/room_item.fxml"));
         HBox hbox = null;
@@ -239,6 +253,10 @@ public class DashboardController {
         return hbox;
     }
 
+    /**
+     * Updates the SHS
+     * @param actionEvent
+     */
     public void update_SHS(ActionEvent actionEvent) {
         if(temp_textField.getText().isEmpty() || hour_tf.getText().isEmpty() || minutes_tf.getText().isEmpty()) return;
         main.settings.setTemperature(Float.parseFloat(temp_textField.getText()));
@@ -246,6 +264,10 @@ public class DashboardController {
         main.settings.setTime(hour_tf.getText()+":"+minutes_tf.getText());
     }
 
+    /**
+     * This method serves to add a user via the GUI
+     * @param actionEvent
+     */
     public void add_user(ActionEvent actionEvent) {
         if(main.isIsSimulationRunning()) {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("../FXML/SHS/New_User.fxml"));
@@ -273,6 +295,10 @@ public class DashboardController {
         load_SHC();
     }
 
+    /**
+     * This method allows you to add room info and even add a whole room
+     * @param actionEvent
+     */
     public void add_room(ActionEvent actionEvent) {
         if(room_name.getText().isEmpty() ||
         doors_input.getText().isEmpty() ||
@@ -297,6 +323,10 @@ public class DashboardController {
 
     //SHP
 
+    /**
+     * SHP Selection
+     * @param event
+     */
     public void shp_selection(Event event) {
         setLights_listview();
         monitoring();
@@ -304,6 +334,9 @@ public class DashboardController {
         away_mode.selectedProperty().setValue(main.away_mode);
     }
 
+    /**
+     * This method serves to manage the detectors
+     */
     public void monitoring(){
         detectors.clear();
         main.rooms_list.forEach(room -> {
@@ -311,11 +344,10 @@ public class DashboardController {
             detectors.add(detector);
         });
     }
-/*
-    public boolean isSomeInRoom(String _roomName){
-        return main.user_list.stream().filter(user -> user.getLocation().equals(_roomName)).count() > 0;
-    }*/
 
+    /**
+     * This method serves to update the room monitoring in case of a user room change
+     */
     public void update_monitoring(){
         this.monitoring_listview.getItems().clear();
         HBox heading = new HBox();
@@ -355,13 +387,11 @@ public class DashboardController {
 
         });
 
-        /*main.securities.forEach(security ->{
-            SmartSecurity s = (SmartSecurity) security;
-
-        });*/
-//        System.out.println(Main.securities.toString());
     }
 
+    /**
+     * This method serves to get the list of the lights?
+     */
     public void setLights_listview(){
         lights_outside_listview.getItems().clear();
         main.lights_outside.forEach(light ->{
@@ -373,6 +403,11 @@ public class DashboardController {
         });
     }
 
+    /**
+     * This method serves as a light box manager
+     * @param _light
+     * @return
+     */
     public HBox light_box(SmartModule _light){
         FXMLLoader loader = new FXMLLoader(getClass().getResource("../FXML/SHP/light_box.fxml"));
         HBox hBox = null;
@@ -386,6 +421,10 @@ public class DashboardController {
         return hBox;
     }
 
+    /**
+     * This method sets the house in Away Mode from the GUI
+     * @param actionEvent
+     */
     public void setAwayMode(ActionEvent actionEvent) {
         if(!main.isIsSimulationRunning()) {
             away_mode.selectedProperty().setValue(false);
@@ -444,6 +483,10 @@ public class DashboardController {
         return count.get();
     }
 
+    /**
+     * This method allows us from the GUI to  change the users location
+     * @param actionEvent
+     */
     public void set_users_locations_to_outside(ActionEvent actionEvent) {
         if(!main.isIsSimulationRunning()){
             App.log("Simulation is not running");
@@ -457,10 +500,18 @@ public class DashboardController {
         App.log("All Users locations set to outsides");
     }
 
+    /**
+     * This method allows us to set the alert time
+     * @param mouseEvent
+     */
     public void setAlertTime(ActionEvent mouseEvent) {
         main.settings.setAlertTiming(Integer.parseInt(String.valueOf(alert_time.getValue().charAt(0))));
     }
 
+    /**
+     * This method handles the auto light toggling whether a user entered or left a room
+     * @param actionEvent
+     */
     public void automic_lights_on_off(ActionEvent actionEvent) {
         if(!main.isIsSimulationRunning() || main.away_mode) {
             automatic_lights.selectedProperty().setValue(false);
