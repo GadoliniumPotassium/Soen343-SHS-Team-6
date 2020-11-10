@@ -11,27 +11,27 @@
   "name": "kitchen",
   "temperature": 18.399999618530273,
   "windows": 1,
-  "lights": 2
+  "lights": 1
  },
  {
   "doors": 2,
   "name": "Garage",
   "temperature": 21,
   "windows": 2,
-  "lights": 3
+  "lights": 1
  },
  {
   "doors": 0,
   "name": "Master Room",
   "temperature": 17.5,
   "windows": 3,
-  "lights": 5
+  "lights": 1
  },
  {
   "doors": 1,
   "name": "Amneet Room",
-  "temperature": 20.899999618530273,
+  "temperature": 18.5,
   "windows": 3,
-  "lights": 6
+  "lights": 1
  }
 ]

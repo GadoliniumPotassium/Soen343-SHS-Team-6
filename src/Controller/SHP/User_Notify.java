@@ -24,10 +24,7 @@ public class User_Notify {
 
     @FXML
     void initialize(){
-        Stage stage = (Stage) msg.getScene().getWindow();
-        stage.setOnCloseRequest(e->{
-            close();
-        });
+
 
     }
 
