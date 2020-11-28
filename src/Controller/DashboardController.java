@@ -6,6 +6,7 @@
 package Controller;
 
 import Controller.SHC.*;
+import Controller.SHH.Zone_HBox;
 import Controller.SHP.Light_box;
 import Controller.SHS.User_box;
 import Model.*;
@@ -15,6 +16,7 @@ import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
@@ -43,6 +45,16 @@ public class DashboardController {
 
 
     public JFXToggleButton automatic_lights;
+<<<<<<< Updated upstream
+=======
+
+    //SHS variables
+    public VBox vbox;
+    public JFXToggleButton havc;
+    public Label season_name;
+
+
+>>>>>>> Stashed changes
     // SHC
     @FXML private VBox listView;
 
@@ -103,6 +115,17 @@ public class DashboardController {
         alert_time.getItems().add("1 Minutes");
 
         alert_time.setValue("2 Minutes");
+<<<<<<< Updated upstream
+=======
+
+        //making first zone.
+        SmartZone zone = new SmartZone();
+        // adding all the rooms in zone A
+        for (Room room : main.rooms_list) {
+            zone.rooms.add(room);
+        }
+        main.zones.add(zone);
+>>>>>>> Stashed changes
     }
 
     private void load_SHS(){
@@ -140,19 +163,28 @@ public class DashboardController {
         listView.getChildren().clear();
         for(Room e : main.rooms_list){
 
+<<<<<<< Updated upstream
             if(main.active_user.getUserPermission().name().equals("full")) {
 
                 listView.getChildren().add(room_item(e));
             } else if(main.active_user.getUserPermission().name().equals("partial")){
+=======
+            if(main.active_user.getUserPermission().name().equals("parent")) {
+
+                listView.getChildren().add(room_item(e));
+            } else if(main.active_user.getUserPermission().name().equals("guest") ||
+                    main.active_user.getUserPermission().name().equals("child")){
+>>>>>>> Stashed changes
                 int user_location = main.user_location_room(main.active_user.getLocation());
                 if(user_location == -1) continue;
                 if(e.getName().equals(main.rooms_list.get(user_location).getName())){
                     listView.getChildren().add(room_item(e));
                 }
             }else{
-                Label msg = new Label("Stranger has no Permission");
-                msg.setFont(Font.font("Bell MT",35));
+                Label msg = new Label("Non identified users have no permissions no matter where they are located");
+                msg.setFont(Font.font("Bell MT",28));
                 msg.setTextFill(Color.web("#14274e"));
+                msg.setWrapText(true);
                 HBox msg_box = new HBox();
                 msg_box.setAlignment(Pos.CENTER);
                 msg_box.getChildren().add(msg);
@@ -332,6 +364,7 @@ public class DashboardController {
         monitoring();
         update_monitoring();
         away_mode.selectedProperty().setValue(main.away_mode);
+<<<<<<< Updated upstream
     }
 
     /**
@@ -390,6 +423,66 @@ public class DashboardController {
     }
 
     /**
+=======
+    }
+
+    /**
+     * This method serves to manage the detectors
+     */
+    public void monitoring(){
+        detectors.clear();
+        main.rooms_list.forEach(room -> {
+            MotionDetector detector = room.getMotionDetector();
+            detectors.add(detector);
+        });
+    }
+
+    /**
+     * This method serves to update the room monitoring in case of a user room change
+     */
+    public void update_monitoring(){
+        this.monitoring_listview.getItems().clear();
+        HBox heading = new HBox();
+        heading.setAlignment(Pos.CENTER_LEFT);
+        heading.setStyle("fx-background-color: #f1f6f9");
+
+        Label room_name = new Label("Location");
+        room_name.setPrefWidth(125);
+        room_name.setTextFill(Color.web("#14274e"));
+        room_name.setFont(Font.font("Bell MT",18));
+
+        Label someone_in_room = new Label("Someone in Room");
+        someone_in_room.setPrefWidth(125);
+        someone_in_room.setTextFill(Color.web("#14274e"));
+        someone_in_room.setFont(Font.font("Bell MT",18));
+        heading.getChildren().addAll(room_name,someone_in_room);
+
+        this.monitoring_listview.getItems().add(heading);
+
+        detectors.forEach(motionDetector -> {
+            HBox s_box = new HBox();
+            s_box.setAlignment(Pos.CENTER_LEFT);
+            s_box.setStyle("fx-background-color: #f1f6f9");
+
+            Label s_loc = new Label(motionDetector.room_name());
+            s_loc.setPrefWidth(125);
+            s_loc.setTextFill(Color.web("#14274e"));
+            s_loc.setFont(Font.font("Bell MT",18));
+
+            Label s_someoneThere = new Label(motionDetector.isSomeoneThere() ? "Yes":"No");
+            s_someoneThere.setPrefWidth(125);
+            s_someoneThere.setTextFill(Color.web("#14274e"));
+            s_someoneThere.setFont(Font.font("Bell MT",18));
+
+            s_box.getChildren().addAll(s_loc,s_someoneThere);
+            this.monitoring_listview.getItems().add(s_box);
+
+        });
+
+    }
+
+    /**
+>>>>>>> Stashed changes
      * This method serves to get the list of the lights?
      */
     public void setLights_listview(){
@@ -431,9 +524,20 @@ public class DashboardController {
             App.log("Simulation is not running");
             return;
         }
+<<<<<<< Updated upstream
         if(main.active_user.getUserPermission() == User.permissions.none){
             away_mode.selectedProperty().setValue(false);
             App.log("Sorry you don't have any authority.");
+=======
+        if(main.active_user.getUserPermission() == User.permissions.stranger){
+            away_mode.selectedProperty().setValue(false);
+            App.log("Non identified users have no permissions to set away mode on/off");
+            return;
+        }
+        if(main.active_user.getUserPermission() == User.permissions.guest){
+            away_mode.selectedProperty().setValue(false);
+            App.log("Guest do not have permissions to set awa mode on/off");
+>>>>>>> Stashed changes
             return;
         }
         if(main.windows_inside.stream().filter(window -> ((SmartWindow)window).isObstructed()).count() > 0){
@@ -506,6 +610,7 @@ public class DashboardController {
      */
     public void setAlertTime(ActionEvent mouseEvent) {
         main.settings.setAlertTiming(Integer.parseInt(String.valueOf(alert_time.getValue().charAt(0))));
+<<<<<<< Updated upstream
     }
 
     /**
@@ -542,5 +647,133 @@ public class DashboardController {
             });
             App.log("Automatic Lights Smart System is on.");
         }
+=======
+    }
+
+    /**
+     * This method handles the auto light toggling whether a user entered or left a room
+     * @param actionEvent
+     */
+    public void automic_lights_on_off(ActionEvent actionEvent) {
+        if(!main.isIsSimulationRunning() || main.away_mode) {
+            automatic_lights.selectedProperty().setValue(false);
+            App.log("cannot active automatic lights right now");
+            return;
+        }
+        boolean on = automatic_lights.selectedProperty().getValue();
+        main.automatic_lights = on;
+        if(!on){
+
+            App.log("Automatic Lights Smart System is off.");
+        }else{
+            main.rooms_list.forEach(room -> {
+                MotionDetector detector = room.getMotionDetector();
+                if(detector.isSomeoneThere()){
+                    main.lights_inside.forEach(light ->{
+                        if(light.getLocation().equals(room.getName())){
+                            ((SmartLight)light).setOn(true);
+                        }
+                    });
+                }else{
+                    main.lights_inside.forEach(light ->{
+                        if(light.getLocation().equals(room.getName())){
+                            ((SmartLight)light).setOn(false);
+                        }
+                    });
+                }
+            });
+            App.log("Automatic Lights Smart System is on.");
+        }
+    }
+
+    // SHH system here..
+    /**
+     * When ever the SHH tab will be selected this method will be called to refresh all the GUI components
+     * @param event
+     */
+    public void shh_selection(Event event) {
+        shh_setup();
+    }
+
+    /**
+     * this method is to setup shh module system.
+     */
+    public void shh_setup(){
+        this.vbox.getChildren().clear();
+        for(SmartZone zone : main.zones){
+            this.vbox.getChildren().add(newZone(zone));
+        }
+        season_name.setText(getSeason());
+    }
+    public String getSeason(){
+        int month = Integer.parseInt(main.settings.getDate().split("/")[0]);
+
+        String season = "";
+        if(month >= 4 && month <= 9) season = "Summer";
+        else season = "Winter";
+        return season;
+    }
+
+
+    /**
+     * load FXML and Controller of Zone GUI
+     */
+    public VBox newZone(SmartZone zone){
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("../FXML/SHH/zone_hbox.fxml"));
+        VBox container = null;
+        try{
+            container = loader.load();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        Zone_HBox controller = loader.getController();
+        controller.setVbox(this.vbox);
+        controller.setZone(zone);
+        controller.setup();
+        return container;
+    }
+
+    /**
+     * to add new zone
+     * @param actionEvent
+     */
+    public void add_zone(ActionEvent actionEvent) {
+        if(!main.isIsSimulationRunning()){
+            App.log("Simulation is not running");
+            return;
+        }
+        SmartZone zone = new SmartZone();
+        main.zones.add(zone);
+
+        vbox.getChildren().add(newZone(zone));
+        App.log(zone.getName()+" is added to SHH");
+    }
+
+    /**
+     * HAVC Maintaining Temperature Mode set on or off
+     * @param actionEvent
+     */
+    public void havc_system(ActionEvent actionEvent) {
+        if(!main.isIsSimulationRunning()){
+            App.log("Simulation is not running");
+            havc.selectedProperty().set(false);
+            return;
+        }
+        if(main.active_user.getUserPermission() == User.permissions.child){
+            havc.selectedProperty().setValue(false);
+            App.log("No permissions granted");
+            return;
+        }
+        if(main.active_user.getUserPermission() == User.permissions.stranger){
+            havc.selectedProperty().setValue(false);
+            App.log("Non identified users have no permissions at all");
+            return;
+        }
+
+        boolean cond = havc.selectedProperty().get();
+        main.havc_system = cond;
+        App.log("HAVC Temperature Mode is "+ cond);
+
+>>>>>>> Stashed changes
     }
 }

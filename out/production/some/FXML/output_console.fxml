@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXTextArea?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.OutputConsoleController">
+   <children>
+      <JFXTextArea fx:id="textArea" editable="false" layoutY="56.0" prefHeight="160.0" prefWidth="464.0" wrapText="true">
+         <font>
+            <Font name="Bell MT" size="15.0" />
+         </font>
+      </JFXTextArea>
+      <Label layoutX="7.0" layoutY="7.0" text="Output Console" textFill="#394867">
+         <font>
+            <Font name="Bell MT" size="22.0" />
+         </font>
+      </Label>
+      <Button layoutX="411.0" layoutY="8.0" mnemonicParsing="false" onAction="#clear" text="clear" textFill="#394867">
+         <font>
+            <Font name="Bell MT" size="17.0" />
+         </font>
+      </Button>
+   </children>
+</AnchorPane>

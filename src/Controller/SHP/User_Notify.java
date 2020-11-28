@@ -24,7 +24,14 @@ public class User_Notify {
 
     @FXML
     void initialize(){
+<<<<<<< Updated upstream
 
+=======
+        Stage stage = (Stage) msg.getScene().getWindow();
+        stage.setOnCloseRequest(e->{
+            close();
+        });
+>>>>>>> Stashed changes
 
     }
 

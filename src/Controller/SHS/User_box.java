@@ -161,6 +161,10 @@ public class User_box {
                 controller.setup(user.getLocation(),"Alert: Smart house Security Detect someone in this room waiting for your response.");
 
                 Stage stage = new Stage();
+<<<<<<< Updated upstream
+=======
+                assert pane != null;
+>>>>>>> Stashed changes
                 stage.setScene(new Scene(pane));
                 stage.initModality(Modality.APPLICATION_MODAL);
                 stage.showAndWait();

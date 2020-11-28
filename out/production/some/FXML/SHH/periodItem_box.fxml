@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.text.Font?>
+
+<HBox alignment="CENTER" minWidth="-Infinity" prefHeight="50.0" spacing="10.0" style="-fx-background-color: #f1f6f9;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.SHH.PeriodItem_Box">
+   <children>
+      <Label fx:id="period_name" text="Period Name" textFill="#14274e">
+         <font>
+            <Font name="Bell MT" size="20.0" />
+         </font>
+      </Label>
+      <TextField fx:id="f_hour" alignment="CENTER" prefHeight="25.0" prefWidth="58.0" promptText="00">
+         <font>
+            <Font name="Bell MT" size="20.0" />
+         </font>
+      </TextField>
+      <Label layoutX="371.0" layoutY="23.0" text=":" textFill="#14274e">
+         <font>
+            <Font name="Bell MT" size="20.0" />
+         </font>
+         <HBox.margin>
+            <Insets left="-10.0" right="-10.0" />
+         </HBox.margin>
+      </Label>
+      <TextField fx:id="f_min" alignment="CENTER" layoutX="332.0" layoutY="16.0" prefHeight="25.0" prefWidth="58.0" promptText="00">
+         <font>
+            <Font name="Bell MT" size="20.0" />
+         </font>
+      </TextField>
+      <Label layoutX="44.0" layoutY="23.0" text="to" textFill="#14274e">
+         <font>
+            <Font name="Bell MT" size="20.0" />
+         </font>
+      </Label>
+      <TextField fx:id="t_hour" alignment="CENTER" layoutX="401.0" layoutY="16.0" prefHeight="25.0" prefWidth="58.0" promptText="00">
+         <font>
+            <Font name="Bell MT" size="20.0" />
+         </font>
+      </TextField>
+      <Label layoutX="284.0" layoutY="23.0" text=":" textFill="#14274e">
+         <font>
+            <Font name="Bell MT" size="20.0" />
+         </font>
+         <HBox.margin>
+            <Insets left="-10.0" right="-10.0" />
+         </HBox.margin>
+      </Label>
+      <TextField fx:id="t_min" alignment="CENTER" layoutX="229.0" layoutY="16.0" prefHeight="25.0" prefWidth="58.0" promptText="00">
+         <font>
+            <Font name="Bell MT" size="20.0" />
+         </font>
+      </TextField>
+      <Label layoutX="274.0" layoutY="23.0" prefHeight="25.0" prefWidth="47.0" text="temp" textFill="#14274e">
+         <font>
+            <Font name="Bell MT" size="20.0" />
+         </font>
+         <HBox.margin>
+            <Insets right="-35.0" />
+         </HBox.margin>
+      </Label>
+      <TextField fx:id="period_temp" alignment="CENTER" layoutX="297.0" layoutY="16.0" prefHeight="25.0" prefWidth="58.0" promptText="00.0">
+         <font>
+            <Font name="Bell MT" size="20.0" />
+         </font>
+         <HBox.margin>
+            <Insets left="20.0" />
+         </HBox.margin>
+      </TextField>
+      <JFXButton layoutX="536.0" layoutY="18.0" onAction="#update" style="-fx-background-color: #14274e;" text="save" textFill="#f1f6f9">
+         <font>
+            <Font name="Rockwell" size="18.0" />
+         </font>
+      </JFXButton>
+      <JFXButton onAction="#remove" style="-fx-background-color: #14274e;" text="remove" textFill="#f1f6f9">
+         <font>
+            <Font name="Rockwell" size="18.0" />
+         </font>
+      </JFXButton>
+   </children>
+</HBox>

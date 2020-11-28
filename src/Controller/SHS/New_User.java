@@ -43,9 +43,16 @@ public class New_User {
 
         newUser.setPassword(pass_textField.getText());
         newUser.setUserPermission(
+<<<<<<< Updated upstream
                 (permissions.getValue().equals("full")? User.permissions.full :
                         (permissions.getValue().equals("partial")? User.permissions.partial: User.permissions.none))
         );
+=======
+                (permissions.getValue().equals("parent")? User.permissions.parent :
+                        (permissions.getValue().equals("child")? User.permissions.child :
+                                (permissions.getValue().equals("guest")? User.permissions.guest : User.permissions.stranger))
+        ));
+>>>>>>> Stashed changes
         main.user_list.add(newUser);
         Stage stage =  (Stage)msg_label.getScene().getWindow();
         stage.close();
@@ -55,8 +62,9 @@ public class New_User {
      * This method serves to get the permissions and add them in the box
      */
     private void setPermissions() {
-        permissions.getItems().add("full");
-        permissions.getItems().add("partial");
-        permissions.getItems().add("none");
+        permissions.getItems().add("parent");
+        permissions.getItems().add("child");
+        permissions.getItems().add("guest");
+        permissions.getItems().add("stranger");
     }
 }

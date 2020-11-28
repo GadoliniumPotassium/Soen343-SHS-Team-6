@@ -3,6 +3,11 @@ package main;
 import Model.*;
 import com.google.gson.Gson;
 import com.google.gson.stream.JsonReader;
+<<<<<<< Updated upstream
+=======
+import javafx.fxml.FXMLLoader;
+import javafx.scene.layout.VBox;
+>>>>>>> Stashed changes
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -26,13 +31,24 @@ public class Main {
 
 //    public ArrayList<SmartModule> securities = new ArrayList<>();
 
+<<<<<<< Updated upstream
     public User active_user;
 
+=======
+    public ArrayList<SmartZone> zones = new ArrayList<>();
+
+    public User active_user;
+
+>>>>>>> Stashed changes
     public boolean house_loaded = false;
 
     public boolean isSimulationRunning;
     public boolean away_mode;
     public boolean automatic_lights;
+<<<<<<< Updated upstream
+=======
+    public boolean havc_system;
+>>>>>>> Stashed changes
 
     public Settings settings;
 
@@ -96,6 +112,7 @@ public class Main {
             e.printStackTrace();
         }
     }
+
     public void readTimeAndDate(){
         String path = "src/resource/settings.json";
         File json = new File(path);
@@ -345,6 +362,10 @@ public class Main {
     }
 
     /**
+<<<<<<< Updated upstream
+=======
+     * In case there is no layout. we write custom layout
+>>>>>>> Stashed changes
      * This method serves to write a json file for the house layout
      */
     void write(){

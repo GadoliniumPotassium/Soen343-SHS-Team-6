@@ -12,7 +12,7 @@ import main.App;
 public class User_Details {
     public TextField user_textField;
     public PasswordField pass_textField;
-    public ChoiceBox permissions;
+    public ChoiceBox<String> permissions;
     public Label msg_label;
 
     private User user;
@@ -37,8 +37,9 @@ public class User_Details {
         this.user.setPassword(pass_textField.getText());
         App.log(this.user.getUsername()+" password is changed");
         this.user.setUserPermission(
-                (permissions.getValue().equals("full")? User.permissions.full :
-                        (permissions.getValue().equals("partial")? User.permissions.partial: User.permissions.none))
+                (permissions.getValue().equals("parent")? User.permissions.parent :
+                        (permissions.getValue().equals("guest")? User.permissions.guest:
+                                permissions.getValue().equals("child") ? User.permissions.child : User.permissions.stranger))
         );
         App.log(this.user.getUsername()+" permissions is changed to "+user.getUserPermission().name());
 
@@ -63,9 +64,10 @@ public class User_Details {
     private void setPermissions() {
         permissions.getSelectionModel().select(user.getUserPermission().name());
 
-        permissions.getItems().add("full");
-        permissions.getItems().add("partial");
-        permissions.getItems().add("none");
+        permissions.getItems().add("parent");
+        permissions.getItems().add("child");
+        permissions.getItems().add("guest");
+        permissions.getItems().add("stranger");
     }
 
     /**

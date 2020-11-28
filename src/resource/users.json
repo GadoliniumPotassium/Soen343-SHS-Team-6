@@ -1,6 +1,7 @@
 [
  {
   "password": "pass",
+<<<<<<< Updated upstream
   "userPermission": "full",
   "isLoggedIn": true,
   "location": "Bed Room",
@@ -25,6 +26,32 @@
   "userPermission": "none",
   "isLoggedIn": false,
   "location": "Backyard",
+=======
+  "userPermission": "parent",
+  "isLoggedIn": true,
+  "location": "Backyard",
+  "username": "Amneet"
+ },
+ {
+  "password": "sup123",
+  "userPermission": "child",
+  "isLoggedIn": false,
+  "location": "Bed Room",
+  "username": "jhon"
+ },
+ {
+  "password": "pogo",
+  "userPermission": "guest",
+  "isLoggedIn": false,
+  "location": "Backyard",
+  "username": "lololop"
+ },
+ {
+  "password": "mama",
+  "userPermission": "parent",
+  "isLoggedIn": false,
+  "location": "Enterance",
+>>>>>>> Stashed changes
   "username": "Maid"
  }
 ]

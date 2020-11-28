@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<VBox alignment="TOP_CENTER" style="-fx-background-color: #f1f6f9;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.HouseViewController">
+    <ImageView fitHeight="165.0" fitWidth="210.0" pickOnBounds="true" preserveRatio="true">
+       <image>
+          <Image url="@Images/Layout.png" />
+       </image>
+    </ImageView>
+    <Label layoutX="490.0" layoutY="188.0" text="House View" textFill="#394867">
+      <font>
+         <Font name="Bell MT" size="18.0" />
+      </font></Label>
+</VBox>
