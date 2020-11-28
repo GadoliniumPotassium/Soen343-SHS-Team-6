@@ -161,6 +161,7 @@ public class User_box {
                 controller.setup(user.getLocation(),"Alert: Smart house Security Detect someone in this room waiting for your response.");
 
                 Stage stage = new Stage();
+                assert pane != null;
                 stage.setScene(new Scene(pane));
                 stage.initModality(Modality.APPLICATION_MODAL);
                 stage.showAndWait();

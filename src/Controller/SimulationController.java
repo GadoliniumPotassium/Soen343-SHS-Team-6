@@ -5,7 +5,9 @@
  */
 package Controller;
 
+import Model.Room;
 import Model.SmartLight;
+import Model.SmartZone;
 import Model.User;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXToggleButton;
@@ -76,11 +78,18 @@ public class SimulationController {
                 main.settings.getTime());
     }
     private int sec = 0;
+    private int ms = 0;
     public void Timer(){
         timeline = new Timeline();
         timeline.setCycleCount(Timeline.INDEFINITE);
-        KeyFrame keyFrame = new KeyFrame(Duration.seconds(1), e->{
-            sec++;
+        KeyFrame keyFrame = new KeyFrame(Duration.millis(1), e->{
+
+            ms++;
+            if(ms >= 999){
+                sec++;
+                ms = 0;
+            }
+
             String[] t = main.settings.getTime().split(":");
             int hour = Integer.parseInt(t[0]);
             int minute = Integer.parseInt(t[1]);
@@ -98,7 +107,7 @@ public class SimulationController {
                     sec = 0;
                 }
             }
-
+            // below code is for away code
             if(main.away_mode){
                 int finalHour = hour;
                 int finalMinute = minute;
@@ -110,6 +119,41 @@ public class SimulationController {
                     check_awayMode_lights((SmartLight)smartLight,finalHour,finalMinute);
                 });
 
+            }
+            // HAVC System.
+            if(main.havc_system) {
+                int finalHour1 = hour;
+                int finalMinute1 = minute;
+
+                main.zones.forEach(zone -> {
+                    for (SmartZone.Period period : zone.periods) {
+
+                        LocalTime current = LocalTime.of(finalHour1,finalMinute1);
+                        LocalTime f_time = LocalTime.of(period.getF_hour(),period.getF_min());
+                        LocalTime t_time = LocalTime.of(period.getT_hour(),period.getT_min());
+
+                        if (current.isAfter(f_time) && current.isBefore(t_time)) {
+                            for (Room room : zone.rooms) {
+                                // comparing room temperature to period if it not equal add or minus 0.1 per milli sec to make them equal.
+                                if (room.getTemperature() != period.getTemperature()) {
+                                    if(period.getTemperature() <= room.getTemperature()){
+                                        room.setTemperature((float) (room.getTemperature()-0.1));
+                                    }else{
+                                        room.setTemperature((float) (room.getTemperature()+0.1));
+                                    }
+                                }
+                            }
+
+                        }
+                    }
+                });
+            }else{
+                // increase or decrease rooms temperature to match the temperature outside. by value 0.05
+                main.rooms_list.forEach(room -> {
+                    if(room.getTemperature() != main.settings.getTemperature()){
+                        room.setTemperature((float) (room.getTemperature() >= main.settings.getTemperature() ? (room.getTemperature()-0.05) : (room.getTemperature()+0.05)));
+                    }
+                });
             }
 
             main.settings.setTime((hour < 10 ? "0"+hour:hour)+":"+(minute < 10 ? "0"+minute:minute));

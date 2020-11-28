@@ -12,7 +12,7 @@ public class User {
     	location = "";
     }
 
-    public static enum permissions{full,partial,none};
+    public static enum permissions{parent,child,guest,stranger}; // partial , full and none
     private permissions userPermission;
 
     public String defaultLocation;

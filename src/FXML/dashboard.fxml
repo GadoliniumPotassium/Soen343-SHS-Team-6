@@ -239,6 +239,30 @@
                </ScrollPane>
             </content>
          </Tab>
+         <Tab onSelectionChanged="#shh_selection" text="SHH">
+            <content>
+               <ScrollPane prefHeight="200.0" prefWidth="200.0">
+                  <content>
+                     <Pane style="-fx-background-color: #616575;">
+                        <children>
+                           <JFXButton layoutX="417.0" layoutY="19.0" onAction="#add_zone" style="-fx-background-color: #14274e;" text="Add Zone" textFill="#f1f6f9" />
+                           <JFXToggleButton fx:id="havc" onAction="#havc_system" prefHeight="62.0" prefWidth="233.0" text="HAVC system" textFill="#f1f6f9">
+                              <font>
+                                 <Font name="Bell MT" size="18.0" />
+                              </font>
+                           </JFXToggleButton>
+                           <VBox fx:id="vbox" layoutY="50.0" prefHeight="200.0" prefWidth="514.0" style="-fx-background-color: #616575;" />
+                           <Label fx:id="season_name" layoutX="251.0" layoutY="23.0" prefHeight="17.0" prefWidth="113.0" text="season" textFill="#f1f6f9">
+                              <font>
+                                 <Font name="Bell MT" size="18.0" />
+                              </font>
+                           </Label>
+                        </children>
+                     </Pane>
+                  </content>
+               </ScrollPane>
+            </content>
+         </Tab>
       </tabs>
    </TabPane>
 </VBox>

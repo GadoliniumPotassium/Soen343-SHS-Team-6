@@ -6,6 +6,7 @@
 package Controller;
 
 import Controller.SHC.*;
+import Controller.SHH.Zone_HBox;
 import Controller.SHP.Light_box;
 import Controller.SHS.User_box;
 import Model.*;
@@ -15,6 +16,7 @@ import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
@@ -43,6 +45,13 @@ public class DashboardController {
 
 
     public JFXToggleButton automatic_lights;
+
+    //SHS variables
+    public VBox vbox;
+    public JFXToggleButton havc;
+    public Label season_name;
+
+
     // SHC
     @FXML private VBox listView;
 
@@ -103,6 +112,14 @@ public class DashboardController {
         alert_time.getItems().add("1 Minutes");
 
         alert_time.setValue("2 Minutes");
+
+        //making first zone.
+        SmartZone zone = new SmartZone();
+        // adding all the rooms in zone A
+        for (Room room : main.rooms_list) {
+            zone.rooms.add(room);
+        }
+        main.zones.add(zone);
     }
 
     private void load_SHS(){
@@ -140,19 +157,21 @@ public class DashboardController {
         listView.getChildren().clear();
         for(Room e : main.rooms_list){
 
-            if(main.active_user.getUserPermission().name().equals("full")) {
+            if(main.active_user.getUserPermission().name().equals("parent")) {
 
                 listView.getChildren().add(room_item(e));
-            } else if(main.active_user.getUserPermission().name().equals("partial")){
+            } else if(main.active_user.getUserPermission().name().equals("guest") ||
+                    main.active_user.getUserPermission().name().equals("child")){
                 int user_location = main.user_location_room(main.active_user.getLocation());
                 if(user_location == -1) continue;
                 if(e.getName().equals(main.rooms_list.get(user_location).getName())){
                     listView.getChildren().add(room_item(e));
                 }
             }else{
-                Label msg = new Label("Stranger has no Permission");
-                msg.setFont(Font.font("Bell MT",35));
+                Label msg = new Label("Non identified users have no permissions no matter where they are located");
+                msg.setFont(Font.font("Bell MT",28));
                 msg.setTextFill(Color.web("#14274e"));
+                msg.setWrapText(true);
                 HBox msg_box = new HBox();
                 msg_box.setAlignment(Pos.CENTER);
                 msg_box.getChildren().add(msg);
@@ -431,9 +450,14 @@ public class DashboardController {
             App.log("Simulation is not running");
             return;
         }
-        if(main.active_user.getUserPermission() == User.permissions.none){
+        if(main.active_user.getUserPermission() == User.permissions.stranger){
             away_mode.selectedProperty().setValue(false);
-            App.log("Sorry you don't have any authority.");
+            App.log("Non identified users have no permissions to set away mode on/off");
+            return;
+        }
+        if(main.active_user.getUserPermission() == User.permissions.guest){
+            away_mode.selectedProperty().setValue(false);
+            App.log("Guest do not have permissions to set awa mode on/off");
             return;
         }
         if(main.windows_inside.stream().filter(window -> ((SmartWindow)window).isObstructed()).count() > 0){
@@ -542,5 +566,95 @@ public class DashboardController {
             });
             App.log("Automatic Lights Smart System is on.");
         }
+    }
+
+    // SHH system here..
+    /**
+     * When ever the SHH tab will be selected this method will be called to refresh all the GUI components
+     * @param event
+     */
+    public void shh_selection(Event event) {
+        shh_setup();
+    }
+
+    /**
+     * this method is to setup shh module system.
+     */
+    public void shh_setup(){
+        this.vbox.getChildren().clear();
+        for(SmartZone zone : main.zones){
+            this.vbox.getChildren().add(newZone(zone));
+        }
+        season_name.setText(getSeason());
+    }
+    public String getSeason(){
+        int month = Integer.parseInt(main.settings.getDate().split("/")[0]);
+
+        String season = "";
+        if(month >= 4 && month <= 9) season = "Summer";
+        else season = "Winter";
+        return season;
+    }
+
+
+    /**
+     * load FXML and Controller of Zone GUI
+     */
+    public VBox newZone(SmartZone zone){
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("../FXML/SHH/zone_hbox.fxml"));
+        VBox container = null;
+        try{
+            container = loader.load();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        Zone_HBox controller = loader.getController();
+        controller.setVbox(this.vbox);
+        controller.setZone(zone);
+        controller.setup();
+        return container;
+    }
+
+    /**
+     * to add new zone
+     * @param actionEvent
+     */
+    public void add_zone(ActionEvent actionEvent) {
+        if(!main.isIsSimulationRunning()){
+            App.log("Simulation is not running");
+            return;
+        }
+        SmartZone zone = new SmartZone();
+        main.zones.add(zone);
+
+        vbox.getChildren().add(newZone(zone));
+        App.log(zone.getName()+" is added to SHH");
+    }
+
+    /**
+     * HAVC Maintaining Temperature Mode set on or off
+     * @param actionEvent
+     */
+    public void havc_system(ActionEvent actionEvent) {
+        if(!main.isIsSimulationRunning()){
+            App.log("Simulation is not running");
+            havc.selectedProperty().set(false);
+            return;
+        }
+        if(main.active_user.getUserPermission() == User.permissions.child){
+            havc.selectedProperty().setValue(false);
+            App.log("No permissions granted");
+            return;
+        }
+        if(main.active_user.getUserPermission() == User.permissions.stranger){
+            havc.selectedProperty().setValue(false);
+            App.log("Non identified users have no permissions at all");
+            return;
+        }
+
+        boolean cond = havc.selectedProperty().get();
+        main.havc_system = cond;
+        App.log("HAVC Temperature Mode is "+ cond);
+
     }
 }

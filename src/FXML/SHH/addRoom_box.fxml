@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.text.Font?>
+
+<HBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="50.0" prefWidth="515.0" spacing="200.0" style="-fx-background-color: #14274e;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.SHH.AddRoom_Box">
+   <children>
+      <Label text="Rooms" textFill="#f1f6f9">
+         <font>
+            <Font name="Bell MT" size="20.0" />
+         </font>
+      </Label>
+      <JFXButton onAction="#add_room" style="-fx-background-color: #f1f6f9;" text="Add Room" textFill="#14274e" />
+   </children>
+</HBox>

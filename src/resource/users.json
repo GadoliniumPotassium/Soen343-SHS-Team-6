@@ -1,28 +1,28 @@
 [
  {
   "password": "pass",
-  "userPermission": "full",
+  "userPermission": "parent",
   "isLoggedIn": true,
   "location": "Backyard",
   "username": "Amneet"
  },
  {
   "password": "sup123",
-  "userPermission": "full",
+  "userPermission": "child",
   "isLoggedIn": false,
-  "location": "Enterance",
+  "location": "Bed Room",
   "username": "jhon"
  },
  {
   "password": "pogo",
-  "userPermission": "full",
+  "userPermission": "guest",
   "isLoggedIn": false,
   "location": "Backyard",
   "username": "lololop"
  },
  {
   "password": "mama",
-  "userPermission": "partial",
+  "userPermission": "parent",
   "isLoggedIn": false,
   "location": "Enterance",
   "username": "Maid"
