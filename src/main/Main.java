@@ -1,11 +1,8 @@
 package main;
 
-import Controller.DashboardController;
 import Model.*;
 import com.google.gson.Gson;
 import com.google.gson.stream.JsonReader;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.layout.VBox;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -30,6 +27,7 @@ public class Main {
 //    public ArrayList<SmartModule> securities = new ArrayList<>();
 
     public ArrayList<SmartZone> zones = new ArrayList<>();
+    public ArrayList<Summer> summers = new ArrayList<>();
 
     public User active_user;
 

@@ -20,14 +20,6 @@ public class SmartWindow extends SmartModule {
         this.isObstructed = isObstructed;
     }
 
-    @Override
-    public void togglePower() {
-        if (!isObstructed)
-            setOpen(!isOpen);
-        else
-            System.out.println("Could not toggle the window, it is obstructed");
-    }
-
     /**
      * returns if window is open
      *

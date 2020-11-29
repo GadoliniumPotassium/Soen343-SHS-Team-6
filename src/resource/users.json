@@ -3,21 +3,21 @@
   "password": "pass",
   "userPermission": "parent",
   "isLoggedIn": true,
-  "location": "Backyard",
+  "location": "Enterance",
   "username": "Amneet"
  },
  {
   "password": "sup123",
   "userPermission": "child",
   "isLoggedIn": false,
-  "location": "Bed Room",
+  "location": "Enterance",
   "username": "jhon"
  },
  {
   "password": "pogo",
   "userPermission": "guest",
   "isLoggedIn": false,
-  "location": "Backyard",
+  "location": "Enterance",
   "username": "lololop"
  },
  {

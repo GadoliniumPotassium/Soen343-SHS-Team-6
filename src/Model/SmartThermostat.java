@@ -19,11 +19,6 @@ public class SmartThermostat extends SmartModule {
         this.isOn = isOn;
     }
 
-    @Override
-    public void togglePower() {
-        setOn(!isOn);
-    }
-
     /**
      * Returns minimum temp of the thermostat
      *

@@ -10,11 +10,6 @@ public class SmartLock extends SmartModule {
         this.isLocked = false;
     }
 
-    @Override
-    public void togglePower() {
-        setLocked(!isLocked);
-    }
-
     /**
      * Returns if lock is closed or open
      *

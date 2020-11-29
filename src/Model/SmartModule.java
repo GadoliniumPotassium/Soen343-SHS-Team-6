@@ -53,7 +53,6 @@ public abstract class SmartModule {
     /**
      * The purpose of this method is to toggle the state of the module.
      */
-    public abstract void togglePower();
 
     @Override
     public String toString() {

@@ -49,7 +49,8 @@ public class DashboardController {
     //SHS variables
     public VBox vbox;
     public JFXToggleButton havc;
-    public Label season_name;
+    public TextField winter_tf;
+    public TextField summer_tf;
 
 
     // SHC
@@ -103,6 +104,9 @@ public class DashboardController {
         numFieldFX.numField(temp_input);
         numFieldFX.numField(temp_input);
 
+        numFieldFX.numField(summer_tf);
+        numFieldFX.numField(winter_tf);
+
         load_SHC();
         load_SHS();
 
@@ -120,6 +124,14 @@ public class DashboardController {
             zone.rooms.add(room);
         }
         main.zones.add(zone);
+        for (Summer summer : main.summers) {
+            if(summer.getName().equals("Winter")) {
+                winter_tf.setText(summer.getTemperature()+"");
+            }
+            if(summer.getName().equals("Summer")){
+                summer_tf.setText(summer.getTemperature()+"");
+            }
+        }
     }
 
     private void load_SHS(){
@@ -480,6 +492,13 @@ public class DashboardController {
             main.away_mode = false;
         }else{
             // send command to SHC to close all doors and windows and lock them.
+            main.settings.setTemperature(Float.parseFloat(getSeason().equals("Winter") ? winter_tf.getText() : summer_tf.getText()));
+            App.log("Applying Season temperature to default temperature.");
+            main.zones.forEach(zone ->{
+                zone.periods.forEach(period -> {
+                    period.setTemperature(Double.parseDouble(getSeason().equals("Winter") ? winter_tf.getText() : summer_tf.getText()));
+                });
+            });
             main.doors_inside.forEach(door -> {
                 ((SmartWindow)door).setOpen(false);
                 ((SmartWindow)door).setLocked(true);
@@ -585,7 +604,15 @@ public class DashboardController {
         for(SmartZone zone : main.zones){
             this.vbox.getChildren().add(newZone(zone));
         }
-        season_name.setText(getSeason());
+        for (Summer summer : main.summers) {
+            if(summer.getName().equals("Winter")) {
+                winter_tf.setText(summer.getTemperature()+"");
+            }
+            if(summer.getName().equals("Summer")){
+                summer_tf.setText(summer.getTemperature()+"");
+            }
+        }
+
     }
     public String getSeason(){
         int month = Integer.parseInt(main.settings.getDate().split("/")[0]);
@@ -595,7 +622,6 @@ public class DashboardController {
         else season = "Winter";
         return season;
     }
-
 
     /**
      * load FXML and Controller of Zone GUI
@@ -622,6 +648,10 @@ public class DashboardController {
     public void add_zone(ActionEvent actionEvent) {
         if(!main.isIsSimulationRunning()){
             App.log("Simulation is not running");
+            return;
+        }
+        if(main.zones.size() >=5){
+            App.log("Max Zone");
             return;
         }
         SmartZone zone = new SmartZone();
@@ -656,5 +686,20 @@ public class DashboardController {
         main.havc_system = cond;
         App.log("HAVC Temperature Mode is "+ cond);
 
+    }
+
+    public void save_summer_Temperature(ActionEvent actionEvent) {
+        for (Summer summer : main.summers) {
+            if(summer.getName().equals("Winter")){
+                if(!winter_tf.getText().isEmpty()){
+                    summer.setTemperature(Double.parseDouble(winter_tf.getText()));
+                }
+            }
+            if(summer.getName().equals("Summer")){
+                if(!summer_tf.getText().isEmpty()){
+                    summer.setTemperature(Double.parseDouble(summer_tf.getText()));
+                }
+            }
+        }
     }
 }

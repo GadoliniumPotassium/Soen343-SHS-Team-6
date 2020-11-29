@@ -26,11 +26,6 @@ public class SmartLight extends SmartModule {
         setAwayModeTiming("00:00,00:00");
     }
 
-    @Override
-    public void togglePower() {
-        setOn(!isOn);
-    }
-
     /**
      * Returns if this light is dimmable
      *

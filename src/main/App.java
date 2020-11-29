@@ -1,6 +1,7 @@
 package main;
 
 import Controller.OutputConsoleController;
+import Model.Summer;
 import com.sun.javafx.geom.AreaOp;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -29,12 +30,12 @@ public class App extends Application {
     @Override
     public void start(Stage stage) throws IOException {
         // load the main window scene here
+
         scene = new Scene(loadFXML("mami"));
         
         stage.setScene(scene);
         stage.show();
     }
-
 
     private static Parent loadFXML(String fxml) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("../FXML/"+fxml + ".fxml"));

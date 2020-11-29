@@ -1,31 +1,48 @@
 package Controller.SHC;
 
 import Model.*;
-import com.jfoenix.controls.JFXToggleButton;
 import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import javafx.scene.paint.Color;
-import javafx.scene.text.Font;
-import main.App;
 import main.Main;
 
 import java.io.IOException;
 
 public class Room_details {
     public Label room_name;
-    public ListView users_in_room;
-    public ListView doors_in_room;
-    public ListView windows_in_room;
-    public ListView lights_in_room;
+    public ListView<HBox> users_in_room;
+    public ListView<VBox> doors_in_room;
+    public ListView<VBox> windows_in_room;
+    public ListView<VBox> lights_in_room;
     public TextField temp_value;
+    public ImageView ac;
+    public ImageView heater;
     private Room room;
 
-    private Main main = Main.getInstance();
+    private final Main main = Main.getInstance();
+
+    private Image ac_on;
+    private Image ac_off;
+
+    private Image heater_on;
+    private Image heater_off;
+
+    @FXML
+    void initialize(){
+        ac_on = new Image("FXML/Images/AC_off.png");
+        ac_off = new Image("FXML/Images/AC_on.png");
+
+        heater_on = new Image("FXML/Images/heater_on.png");
+        heater_off = new Image("FXML/Images/heater.png");
+
+    }
 
     /**
      * This method changes the temperature in a room
@@ -45,6 +62,14 @@ public class Room_details {
         this.room = _room;
         room_name.setText(room.getName());
         temp_value.setText(room.getTemperature()+"");
+
+        if(room.isHeater_ac()){
+            ac.setImage(ac_on);
+            heater.setImage(heater_off);
+        }else{
+            heater.setImage(heater_on);
+            ac.setImage(ac_off);
+        }
 
         //list of users in room
         update_user_list();

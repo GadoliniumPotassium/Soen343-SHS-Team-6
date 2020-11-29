@@ -16,11 +16,6 @@ public class SmartSecurity extends SmartModule {
         this.isSomeoneThere = false;
     }
 
-    @Override
-    public void togglePower() {
-        setInAwayMode(!isInAwayMode());
-    }
-
     /**
      * Returns if the security system is in away mode
      *

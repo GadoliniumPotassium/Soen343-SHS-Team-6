@@ -5,10 +5,7 @@
  */
 package Controller;
 
-import Model.Room;
-import Model.SmartLight;
-import Model.SmartZone;
-import Model.User;
+import Model.*;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXToggleButton;
 import javafx.animation.KeyFrame;
@@ -49,6 +46,8 @@ public class SimulationController {
         x2,
         x4,
         x8,
+        x16,
+        x32,
     }
     Time_states t_s = Time_states.normal;
 
@@ -82,13 +81,9 @@ public class SimulationController {
     public void Timer(){
         timeline = new Timeline();
         timeline.setCycleCount(Timeline.INDEFINITE);
-        KeyFrame keyFrame = new KeyFrame(Duration.millis(1), e->{
+        KeyFrame keyFrame = new KeyFrame(Duration.seconds(1), e->{
 
-            ms++;
-            if(ms >= 999){
-                sec++;
-                ms = 0;
-            }
+          sec++;
 
             String[] t = main.settings.getTime().split(":");
             int hour = Integer.parseInt(t[0]);
@@ -121,40 +116,7 @@ public class SimulationController {
 
             }
             // HAVC System.
-            if(main.havc_system) {
-                int finalHour1 = hour;
-                int finalMinute1 = minute;
-
-                main.zones.forEach(zone -> {
-                    for (SmartZone.Period period : zone.periods) {
-
-                        LocalTime current = LocalTime.of(finalHour1,finalMinute1);
-                        LocalTime f_time = LocalTime.of(period.getF_hour(),period.getF_min());
-                        LocalTime t_time = LocalTime.of(period.getT_hour(),period.getT_min());
-
-                        if (current.isAfter(f_time) && current.isBefore(t_time)) {
-                            for (Room room : zone.rooms) {
-                                // comparing room temperature to period if it not equal add or minus 0.1 per milli sec to make them equal.
-                                if (room.getTemperature() != period.getTemperature()) {
-                                    if(period.getTemperature() <= room.getTemperature()){
-                                        room.setTemperature((float) (room.getTemperature()-0.1));
-                                    }else{
-                                        room.setTemperature((float) (room.getTemperature()+0.1));
-                                    }
-                                }
-                            }
-
-                        }
-                    }
-                });
-            }else{
-                // increase or decrease rooms temperature to match the temperature outside. by value 0.05
-                main.rooms_list.forEach(room -> {
-                    if(room.getTemperature() != main.settings.getTemperature()){
-                        room.setTemperature((float) (room.getTemperature() >= main.settings.getTemperature() ? (room.getTemperature()-0.05) : (room.getTemperature()+0.05)));
-                    }
-                });
-            }
+            havc_system(hour, minute);
 
             main.settings.setTime((hour < 10 ? "0"+hour:hour)+":"+(minute < 10 ? "0"+minute:minute));
             date_time.setText(main.settings.getDate()+" "+
@@ -165,6 +127,77 @@ public class SimulationController {
         timeline.setRate(timeline.getRate());
         if(main.isIsSimulationRunning())
             timeline.play();
+    }
+
+    private void havc_system(int hour, int minute) {
+        if(main.havc_system) {
+            int finalHour1 = hour;
+            int finalMinute1 = minute;
+
+            main.zones.forEach(zone -> {
+                for (SmartZone.Period period : zone.periods) {
+
+                    LocalTime current = LocalTime.of(finalHour1,finalMinute1);
+                    LocalTime f_time = LocalTime.of(period.getF_hour(),period.getF_min());
+                    LocalTime t_time = LocalTime.of(period.getT_hour(),period.getT_min());
+
+                    if (current.isAfter(f_time) && current.isBefore(t_time)) {
+                        for (Room room : zone.rooms) {
+                            // comparing room temperature to period if it not equal add or minus 0.1 per milli sec to make them equal.
+                            if (room.getTemperature() != period.getTemperature()) {
+                                tempAlert(room);
+                                if(period.getTemperature() <= room.getTemperature()){
+                                    if(!main.away_mode)
+                                        OpenWindows(room);
+                                    room.setTemperature((float) (room.getTemperature()-0.1));
+                                    room.setHeater_ac(true);
+                                }else{
+                                    room.setTemperature((float) (room.getTemperature()+0.1));
+                                    room.setHeater_ac(false);
+                                }
+                            }
+                        }
+
+                    }
+                }
+            });
+        }else{
+            // increase or decrease rooms temperature to match the temperature outside. by value 0.05
+            main.rooms_list.forEach(room -> {
+                if(room.getTemperature() != main.settings.getTemperature()){
+                    tempAlert(room);
+                    if (room.getTemperature() >= main.settings.getTemperature()) {
+                        if(!main.away_mode)
+                            OpenWindows(room);
+                        room.setTemperature((float) (room.getTemperature() - 0.05));
+                        room.setHeater_ac(true);
+                    } else {
+                        room.setTemperature((float) (room.getTemperature() + 0.05));
+                        room.setHeater_ac(false);
+                    }
+                }
+            });
+        }
+    }
+
+    private void OpenWindows(Room room) {
+        main.windows_inside.forEach(window ->{
+            if(window.getLocation().equals(room.getName())){
+                if(((SmartWindow)window).isObstructed()){
+                    App.log("[SHH] Alert: Window is Blocked by an Object.");
+                }else {
+                    ((SmartWindow) window).setOpen(true);
+                }
+            }
+        });
+    }
+
+    private void tempAlert(Room r){
+        if(main.away_mode){
+            if(r.getTemperature() <= 0){
+                App.log(r.getName()+"WARNING! Temperature is Below 0 pipes can burst");
+            }
+        }
     }
 
     /**
@@ -243,8 +276,20 @@ public class SimulationController {
             case x8 :{
                 timerSpeed.setText("8x");
                 timeline.setRate(8);
-                t_s = Time_states.normal;
+                t_s = Time_states.x16;
                 App.log("Simulation Time speed change to 8x");
+                break;
+            }case x16 :{
+                timerSpeed.setText("16x");
+                timeline.setRate(16);
+                t_s = Time_states.x32;
+                App.log("Simulation Time speed change to 16x");
+                break;
+            }case x32 :{
+                timerSpeed.setText("32x");
+                timeline.setRate(32);
+                t_s = Time_states.normal;
+                App.log("Simulation Time speed change to 32x");
                 break;
             }
         }

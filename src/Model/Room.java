@@ -11,6 +11,7 @@ public class Room extends House {
      */
 
     private MotionDetector motionDetector;
+    private boolean heater_ac; // false to on heater and true to on ac.
 
     public Room(){
         motionDetector = new MotionDetector(this);
@@ -55,5 +56,13 @@ public class Room extends House {
                 ", lights=" + getLights() +
                 ", temperature=" + temperature +
                 '}';
+    }
+
+    public boolean isHeater_ac() {
+        return heater_ac;
+    }
+
+    public void setHeater_ac(boolean heater_ac) {
+        this.heater_ac = heater_ac;
     }
 }

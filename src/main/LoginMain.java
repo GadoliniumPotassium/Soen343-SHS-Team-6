@@ -1,5 +1,6 @@
 package main;
 
+import Model.Summer;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Rectangle2D;
@@ -26,6 +27,7 @@ public class LoginMain extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception{
         main_root = new BorderPane();
+        setSummers();
         try {
             main.loadData();
 
@@ -51,6 +53,10 @@ public class LoginMain extends Application {
         }catch(Exception e){
             e.printStackTrace();
         }
+    }
+    private void setSummers(){
+        Main.getInstance().summers.add(new Summer("Winter",25));
+        Main.getInstance().summers.add(new Summer("Summer",60));
     }
 
     /**
