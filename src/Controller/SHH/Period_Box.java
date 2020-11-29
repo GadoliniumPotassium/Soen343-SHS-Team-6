@@ -27,7 +27,10 @@ public class Period_Box {
             App.log("Simulation is not running.");
             return;
         }
-
+        if(zone.periods.size() >= 3){
+            App.log("Max Period");
+            return;
+        }
         p_box.setSpacing(15);
         zone.addPeriod();
         p_box.getChildren().add(getItem(zone.periods.size()-1,zone.periods.get(zone.periods.size()-1)));
