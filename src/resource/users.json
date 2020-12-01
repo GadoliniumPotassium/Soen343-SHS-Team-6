@@ -2,15 +2,15 @@
  {
   "password": "pass",
   "userPermission": "parent",
-  "isLoggedIn": true,
-  "location": "Enterance",
+  "isLoggedIn": false,
+  "location": "Backyard",
   "username": "Amneet"
  },
  {
   "password": "sup123",
   "userPermission": "child",
   "isLoggedIn": false,
-  "location": "Enterance",
+  "location": "Backyard",
   "username": "jhon"
  },
  {

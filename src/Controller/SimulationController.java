@@ -197,8 +197,8 @@ public class SimulationController {
                         }else {
                             windows(room, false);
                             room.setTemperature((float) (room.getTemperature() + room.smartAC.getCooling_temp())); //0.1
-                            room.smartAC.setOn(true);
-                            room.thermostat.setOn(false);
+                            room.smartAC.setOn(false);
+                            room.thermostat.setOn(true);
                             System.out.println("room < outside > period");
                         }
                     }
@@ -254,10 +254,10 @@ public class SimulationController {
      * @param r
      */
     private void tempAlert(Room r){
-        if(main.away_mode){
+
             if(r.getTemperature() <= 0){
                 App.log(r.getName()+"WARNING! Temperature is Below 0 pipes can burst");
-            }
+            
         }
     }
 

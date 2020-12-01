@@ -601,9 +601,10 @@ public class DashboardController {
      */
     public void shh_setup(){
         this.vbox.getChildren().clear();
+        if(main.active_user.getUserPermission() == User.permissions.parent){
         for(SmartZone zone : main.zones){
             this.vbox.getChildren().add(newZone(zone));
-        }
+        }}
         for (Summer summer : main.summers) {
             if(summer.getName().equals("Winter")) {
                 winter_tf.setText(summer.getTemperature()+"");
@@ -671,14 +672,9 @@ public class DashboardController {
             havc.selectedProperty().set(false);
             return;
         }
-        if(main.active_user.getUserPermission() == User.permissions.child){
+        if(main.active_user.getUserPermission() != User.permissions.parent){
             havc.selectedProperty().setValue(false);
             App.log("No permissions granted");
-            return;
-        }
-        if(main.active_user.getUserPermission() == User.permissions.stranger){
-            havc.selectedProperty().setValue(false);
-            App.log("Non identified users have no permissions at all");
             return;
         }
 
