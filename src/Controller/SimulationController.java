@@ -21,8 +21,7 @@ import java.time.LocalTime;
 import java.util.concurrent.atomic.AtomicReference;
 
 /**
- *
- * @author Vladislav
+ *this class is the controlling the simulation
  */
 public class SimulationController {
 
@@ -139,7 +138,7 @@ public class SimulationController {
             timeline.play();
     }
 
- 
+
 
     private void maintainTemperature_off() {
         main.rooms_list.forEach(room -> {
