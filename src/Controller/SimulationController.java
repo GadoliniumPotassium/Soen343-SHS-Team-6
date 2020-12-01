@@ -112,7 +112,21 @@ public class SimulationController {
 
             }
             // HAVC System.
-            havc_system(hour, minute);
+            if(main.havc_system) {
+
+                main.zones.forEach(zone -> {
+                    for (SmartZone.Period period : zone.periods) {
+
+                        LocalTime current = LocalTime.of(hour, minute);
+                        LocalTime f_time = LocalTime.of(period.getF_hour(),period.getF_min());
+                        LocalTime t_time = LocalTime.of(period.getT_hour(),period.getT_min());
+
+                        maintainTemperature_on(zone, period, current, f_time, t_time);
+                    }
+                });
+            }else{
+                maintainTemperature_off();
+            }
 
             main.settings.setTime((hour < 10 ? "0"+hour:hour)+":"+(minute < 10 ? "0"+minute:minute));
             date_time.setText(main.settings.getDate()+" "+
@@ -125,23 +139,7 @@ public class SimulationController {
             timeline.play();
     }
 
-    private void havc_system(int hour, int minute) {
-        if(main.havc_system) {
-
-            main.zones.forEach(zone -> {
-                for (SmartZone.Period period : zone.periods) {
-
-                    LocalTime current = LocalTime.of(hour, minute);
-                    LocalTime f_time = LocalTime.of(period.getF_hour(),period.getF_min());
-                    LocalTime t_time = LocalTime.of(period.getT_hour(),period.getT_min());
-
-                    maintainTemperature_on(zone, period, current, f_time, t_time);
-                }
-            });
-        }else{
-            maintainTemperature_off();
-        }
-    }
+ 
 
     private void maintainTemperature_off() {
         main.rooms_list.forEach(room -> {
