@@ -38,8 +38,7 @@ import java.util.Random;
 import java.util.concurrent.atomic.AtomicInteger;
 
 /**
- *
- * @author Vladislav
+ * class to manipulate the dashboard
  */
 public class DashboardController {
 
@@ -134,6 +133,9 @@ public class DashboardController {
         }
     }
 
+    /**
+     * load the shs
+     */
     private void load_SHS(){
         users_listView.getItems().clear();
 

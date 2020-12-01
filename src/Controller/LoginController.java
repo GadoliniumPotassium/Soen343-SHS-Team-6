@@ -11,6 +11,9 @@ import javafx.stage.Stage;
 import main.LoginMain;
 import main.Main;
 
+/**
+ * class for the login information
+ */
 public class LoginController {
     @FXML
     private Label lblStatus;

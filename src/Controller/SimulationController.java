@@ -25,8 +25,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 /**
- *
- * @author Vladislav
+ * class to control the simulation
  */
 public class SimulationController {
 

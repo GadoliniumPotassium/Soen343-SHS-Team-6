@@ -12,6 +12,9 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.concurrent.atomic.AtomicInteger;
 
+/**
+ * the main class
+ */
 public class Main {
     public ArrayList<User> user_list = new ArrayList<>();
     public ArrayList<Room> rooms_list = new ArrayList<>();

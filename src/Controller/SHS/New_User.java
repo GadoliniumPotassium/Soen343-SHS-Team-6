@@ -10,6 +10,9 @@ import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import main.Main;
 
+/**
+ * class to create users
+ */
 public class New_User {
 
     public TextField user_textField;
