@@ -18,6 +18,9 @@ import main.Main;
 
 import java.io.IOException;
 
+/**
+ * this class is used for ouside detail
+ */
 public class OutSide_Details {
     public Label name;
     public ListView users;
@@ -27,6 +30,10 @@ public class OutSide_Details {
     private House outside;
 
     private Main main;
+
+    /**
+     * constructor
+     */
     @FXML void initialize(){
         main = Main.getInstance();
     }
@@ -96,7 +103,11 @@ public class OutSide_Details {
         }
     }
 
-
+    /**
+     * get door info
+     * @param _door
+     * @return
+     */
     public VBox getDoorBox(SmartWindow _door){
         FXMLLoader loader = new FXMLLoader(getClass().getResource("../../FXML/SHC/Door_Status.fxml"));
         VBox vBox = null;
@@ -110,6 +121,11 @@ public class OutSide_Details {
         return vBox;
     }
 
+    /**
+     * get light info
+     * @param _light
+     * @return
+     */
     public VBox getLightBox(SmartLight _light){
         FXMLLoader loader = new FXMLLoader(getClass().getResource("../../FXML/SHC/Light_Status.fxml"));
         VBox vBox = null;

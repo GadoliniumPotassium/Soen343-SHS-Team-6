@@ -5,14 +5,9 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.text.Font?>
 
-<HBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="50.0" prefWidth="515.0" spacing="75.0" style="-fx-background-color: #f1f6f9;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.SHH.RoomItem_Box">
+<HBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="50.0" prefWidth="515.0" spacing="250.0" style="-fx-background-color: #f1f6f9;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.SHH.RoomItem_Box">
    <children>
-      <Label fx:id="room_name" prefHeight="50.0" prefWidth="152.0" text="Room Name" textFill="#14274e">
-         <font>
-            <Font name="Bell MT" size="20.0" />
-         </font>
-      </Label>
-      <Label fx:id="temp" prefHeight="52.0" prefWidth="86.0" text="00" textFill="#14274e">
+      <Label fx:id="room_name" prefHeight="50.0" prefWidth="226.0" text="Room Name" textFill="#14274e">
          <font>
             <Font name="Bell MT" size="20.0" />
          </font>

@@ -2,8 +2,6 @@ package Controller.SHH;
 
 import Model.Room;
 import Model.SmartZone;
-import javafx.application.Platform;
-import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Label;
@@ -16,7 +14,6 @@ import java.io.IOException;
 
 public class RoomItem_Box {
     public Label room_name;
-    public Label temp;
 
     private Room room;
     private SmartZone zone;
@@ -26,18 +23,6 @@ public class RoomItem_Box {
         this.room = room;
 
         room_name.setText(room.getName());
-        Task<Void> task = new Task<>() {
-            @Override
-            protected Void call() throws Exception {
-                while (true) {
-                    Thread.sleep(30);
-                    Platform.runLater(() -> {
-                        temp.setText(room.getTemperature()+"");
-                    });
-                }
-            }
-        };
-        new Thread(task).start();
     }
 
     public void setZone(SmartZone zone) {

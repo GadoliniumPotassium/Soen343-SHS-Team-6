@@ -4,7 +4,6 @@ public class SmartAC extends SmartModule {
     public static final int MAX_TEMP = 24;
     public static final int MIN_TEMP = 17;
     private double current_temp_AC;
-    private double cooling_temp;
     private boolean isOn;
     private static int idNum=0;
 
@@ -76,13 +75,5 @@ public class SmartAC extends SmartModule {
                 ", name='" + name + '\'' +
                 ", location='" + location + '\'' +
                 '}';
-    }
-
-    public double getCooling_temp() {
-        return cooling_temp;
-    }
-
-    public void setCooling_temp(double cooling_temp) {
-        this.cooling_temp = cooling_temp;
     }
 }
