@@ -110,11 +110,6 @@ public class Zone_HBox {
         });
     }
 
-    /**
-     * create zone in FE
-     * @param zone
-     * @return
-     */
     public VBox zoneBox(SmartZone zone){
         FXMLLoader loader = new FXMLLoader(getClass().getResource("../../FXML/SHH/zone_hbox.fxml"));
         VBox container = null;

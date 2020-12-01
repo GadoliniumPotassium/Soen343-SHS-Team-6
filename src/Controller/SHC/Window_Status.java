@@ -9,9 +9,6 @@ import javafx.scene.image.ImageView;
 import main.App;
 import main.Main;
 
-/**
- * class to create smart windows
- */
 public class Window_Status {
 
     public Label window_name;

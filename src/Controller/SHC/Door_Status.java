@@ -9,9 +9,6 @@ import javafx.scene.image.ImageView;
 import main.App;
 import main.Main;
 
-/**
- * class provide state of the doors
- */
 public class Door_Status {
 
     public ImageView door_status;
@@ -67,10 +64,6 @@ public class Door_Status {
         return this.door.getName();
     }
 
-    /**
-     * mothod change the state of the doors
-     * @param actionEvent
-     */
     public void door_open_close(ActionEvent actionEvent) {
         if(main.away_mode){
             App.log("You can not open the door in away mode active");

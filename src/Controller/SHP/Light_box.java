@@ -8,9 +8,6 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import main.NumFieldFX;
 
-/**
- * class to create light in FE
- */
 public class Light_box {
     public Label loc;
     public Label name;

@@ -12,9 +12,6 @@ import main.Main;
 
 import java.io.IOException;
 
-/**
- * class that has the info for the user in room
- */
 public class User_In_Room {
     public Label userName;
     private User user;

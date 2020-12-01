@@ -4,9 +4,6 @@ import Model.House;
 import javafx.scene.control.Label;
 import main.Main;
 
-/**
- * this class is used for the location outside the house
- */
 public class Home_OutSide {
 
     public Label name;

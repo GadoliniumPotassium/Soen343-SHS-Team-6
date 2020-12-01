@@ -12,9 +12,6 @@ import main.Main;
 
 import java.util.concurrent.atomic.AtomicInteger;
 
-/**
- * class to notify the user
- */
 public class User_Notify {
 
     @FXML public Label room_name;

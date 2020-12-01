@@ -11,9 +11,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 
-/**
- * class to create login for teh application
- */
+
 public class LoginMain extends Application {
 
 

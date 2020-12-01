@@ -10,9 +10,6 @@ import main.Main;
 
 import java.io.IOException;
 
-/**
- * class to create period
- */
 public class Period_Box {
 
 
@@ -25,10 +22,6 @@ public class Period_Box {
     private Main main = Main.getInstance();
     private SmartZone zone;
 
-    /**
-     * add period on the FE
-     * @param actionEvent
-     */
     public void add_period(ActionEvent actionEvent) {
         if(!main.isIsSimulationRunning()) {
             App.log("Simulation is not running.");
@@ -44,20 +37,10 @@ public class Period_Box {
         App.log("Added New Period");
     }
 
-    /**
-     * assign the period to a zone
-     * @param zone
-     */
     public void setZone(SmartZone zone) {
         this.zone = zone;
     }
 
-    /**
-     * get the index from the period
-     * @param index
-     * @param period
-     * @return
-     */
     public HBox getItem(int index, SmartZone.Period period){
         FXMLLoader loader = new FXMLLoader(getClass().getResource("../../FXML/SHH/periodItem_box.fxml"));
         HBox box = null;

@@ -16,7 +16,8 @@ import main.App;
 import main.Main;
 
 /**
- *class to output the information
+ *
+ * @author Vladislav
  */
 public class OutputConsoleController {
 

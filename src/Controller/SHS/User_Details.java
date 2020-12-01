@@ -9,9 +9,6 @@ import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import main.App;
 
-/**
- * class for user details
- */
 public class User_Details {
     public TextField user_textField;
     public PasswordField pass_textField;

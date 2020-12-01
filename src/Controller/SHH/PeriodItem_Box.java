@@ -13,9 +13,6 @@ import java.io.IOException;
 import java.time.LocalTime;
 import java.util.concurrent.atomic.AtomicInteger;
 
-/**
- * class to create periodbox in FE
- */
 public class PeriodItem_Box {
     public Label period_name;
     public TextField f_hour;
@@ -63,41 +60,22 @@ public class PeriodItem_Box {
         this.period_name.setText(period_name);
     }
 
-    /**
-     * set hour for the period hour
-     * @param _hour
-     */
     public void setF_hour(String _hour){
         f_hour.setText(_hour);
     }
-
-    /**
-     * set minute for the period
-     * @param _min
-     */
     public void setF_min(String _min){
         f_min.setText(_min);
     }
-
     public void setT_hour(String _hour){
         t_hour.setText(_hour);
     }
     public void setT_min(String _min){
         t_min.setText(_min);
     }
-
-    /**
-     * set period temperature
-     * @param _temp
-     */
     public void setPeriod_temp(String _temp){
         period_temp.setText(_temp);
     }
 
-    /**
-     * method to remove period
-     * @param actionEvent
-     */
     public void remove(ActionEvent actionEvent) {
         if(zone.periods.size() == 1){
             App.log("-Can not remove- Zone Must Have a single Period");
@@ -115,10 +93,7 @@ public class PeriodItem_Box {
 
     }
 
-    /**
-     * method update the period
-     * @param actionEvent
-     */
+
     public void update(ActionEvent actionEvent) {
         period.setF_hour(Integer.parseInt(f_hour.getText()));
         period.setF_min(Integer.parseInt(f_min.getText()));
@@ -142,10 +117,6 @@ public class PeriodItem_Box {
             }
         });
     }
-
-    /**
-     * method to reset time
-     */
     private void reset(){
         period.setF_hour(0);
         period.setF_min(0);

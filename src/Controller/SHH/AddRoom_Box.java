@@ -19,9 +19,6 @@ import java.io.IOException;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicReference;
 
-/**
- * class to create room in FE
- */
 public class AddRoom_Box {
 
     private VBox r_box = new VBox();
@@ -30,10 +27,7 @@ public class AddRoom_Box {
 
     private SmartZone zone;
 
-    /**
-     * set FE
-     * @param vBox
-     */
+
     public void setVBox(VBox vBox) {
         this.vBox = vBox;
     }
@@ -42,10 +36,6 @@ public class AddRoom_Box {
         this.vBox.getChildren().add(r_box);
         r_box.setSpacing(15);
     }
-
-    /**
-     * load rooms FE
-     */
     public void loadRooms(){
         r_box.getChildren().clear();
         zone.rooms.forEach(room -> {
@@ -53,18 +43,10 @@ public class AddRoom_Box {
         });
     }
 
-    /**
-     * set the zone
-     * @param zone
-     */
     public void setZone(SmartZone zone) {
         this.zone = zone;
     }
 
-    /**
-     * add a room in the zone
-     * @param actionEvent
-     */
     public void add_room(ActionEvent actionEvent) {
         if(!Main.getInstance().isIsSimulationRunning()) {
             App.log("Simulation is not running.");
@@ -99,11 +81,6 @@ public class AddRoom_Box {
         return cond.get();
     }
 
-    /**
-     * get the items in room
-     * @param room
-     * @return
-     */
     public HBox getRoomItem(Room room){
         FXMLLoader loader = new FXMLLoader(getClass().getResource("../../FXML/SHH/roomItem_box.fxml"));
         HBox box = null;
@@ -119,10 +96,6 @@ public class AddRoom_Box {
         return box;
     }
 
-    /**
-     * get the sected room
-     * @return
-     */
     public Room getSelectedRoom(){
         ListView<Room> rooms_list = new ListView<>();
         Main.getInstance().rooms_list.forEach(e->{
