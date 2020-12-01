@@ -5,7 +5,9 @@
  */
 package Controller;
 
-import Controller.SHC.*;
+import Controller.SHC.Home_OutSide;
+import Controller.SHC.OutSide_Details;
+import Controller.SHC.Room_Item;
 import Controller.SHH.Zone_HBox;
 import Controller.SHP.Light_box;
 import Controller.SHS.User_box;
@@ -16,7 +18,6 @@ import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
@@ -38,8 +39,7 @@ import java.util.Random;
 import java.util.concurrent.atomic.AtomicInteger;
 
 /**
- *
- * @author Vladislav
+ *FE for the dashboard
  */
 public class DashboardController {
 

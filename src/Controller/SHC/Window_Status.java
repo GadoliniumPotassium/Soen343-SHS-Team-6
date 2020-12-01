@@ -8,7 +8,9 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import main.App;
 import main.Main;
-
+/**
+ * class to provide window status
+ */
 public class Window_Status {
 
     public Label window_name;

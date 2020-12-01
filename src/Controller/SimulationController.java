@@ -18,11 +18,9 @@ import main.App;
 import main.Main;
 
 import java.time.LocalTime;
-import java.util.concurrent.atomic.AtomicReference;
 
 /**
- *
- * @author Vladislav
+ *class to create simulation controoler
  */
 public class SimulationController {
 
@@ -125,6 +123,11 @@ public class SimulationController {
             timeline.play();
     }
 
+    /**
+     * method for the HAVC sys
+     * @param hour
+     * @param minute
+     */
     private void havc_system(int hour, int minute) {
         if(main.havc_system) {
 
@@ -143,6 +146,9 @@ public class SimulationController {
         }
     }
 
+    /**
+     * method to maintain temp
+     */
     private void maintainTemperature_off() {
         main.rooms_list.forEach(room -> {
             tempAlert(room);
@@ -154,6 +160,14 @@ public class SimulationController {
         });
     }
 
+    /**
+     * method to change temp
+     * @param zone
+     * @param period
+     * @param current
+     * @param f_time
+     * @param t_time
+     */
     private void maintainTemperature_on(SmartZone zone, SmartZone.Period period, LocalTime current, LocalTime f_time, LocalTime t_time) {
         if (current.isAfter(f_time) && current.isBefore(t_time)) {
             for (Room room : zone.rooms) {
@@ -210,6 +224,10 @@ public class SimulationController {
         }
     }
 
+    /**
+     * get the season
+     * @return season
+     */
     public String getSeason(){
         int month = Integer.parseInt(main.settings.getDate().split("/")[0]);
 
@@ -231,6 +249,10 @@ public class SimulationController {
         });
     }
 
+    /**
+     * user notification in case to cold
+     * @param r
+     */
     private void tempAlert(Room r){
         if(main.away_mode){
             if(r.getTemperature() <= 0){

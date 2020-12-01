@@ -5,19 +5,8 @@
  */
 package Controller;
 
-import com.jfoenix.controls.JFXButton;
-import javafx.application.Platform;
-import javafx.event.ActionEvent;
-import javafx.stage.FileChooser;
-import javafx.stage.Stage;
-
-import java.io.File;
-import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.ExecutionException;
-
 /**
- *
- * @author Vladislav
+ * house view controller in FE
  */
 public class HouseViewController {
 

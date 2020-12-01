@@ -3,7 +3,9 @@ package Controller.SHC;
 import Model.House;
 import javafx.scene.control.Label;
 import main.Main;
-
+/**
+ * class to provide info of outside home
+ */
 public class Home_OutSide {
 
     public Label name;

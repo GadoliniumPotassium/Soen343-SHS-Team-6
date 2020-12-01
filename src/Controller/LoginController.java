@@ -10,7 +10,9 @@ import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import main.LoginMain;
 import main.Main;
-
+/**
+ * class to create longin page
+ */
 public class LoginController {
     @FXML
     private Label lblStatus;

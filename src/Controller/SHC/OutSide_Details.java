@@ -18,6 +18,9 @@ import main.Main;
 
 import java.io.IOException;
 
+/**
+ * class to provide outside details
+ */
 public class OutSide_Details {
     public Label name;
     public ListView users;

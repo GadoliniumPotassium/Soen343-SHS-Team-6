@@ -1,6 +1,5 @@
 package Controller.SHC;
 
-import Model.House;
 import Model.Room;
 import Model.User;
 import javafx.event.ActionEvent;
@@ -11,7 +10,9 @@ import javafx.scene.layout.HBox;
 import main.Main;
 
 import java.io.IOException;
-
+/**
+ * class to provide info about user in room
+ */
 public class User_In_Room {
     public Label userName;
     private User user;

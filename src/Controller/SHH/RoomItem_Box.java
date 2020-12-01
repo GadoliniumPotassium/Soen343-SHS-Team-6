@@ -13,7 +13,9 @@ import main.App;
 import main.Main;
 
 import java.io.IOException;
-
+/**
+ * class for room box
+ */
 public class RoomItem_Box {
     public Label room_name;
     public Label temp;
@@ -22,6 +24,10 @@ public class RoomItem_Box {
     private SmartZone zone;
     private VBox box;
 
+    /**
+     * mothod to set room
+     * @param room
+     */
     public void setRoom(Room room) {
         this.room = room;
 
@@ -40,6 +46,10 @@ public class RoomItem_Box {
         new Thread(task).start();
     }
 
+    /**
+     * 
+     * @param zone
+     */
     public void setZone(SmartZone zone) {
         this.zone = zone;
     }
@@ -48,6 +58,10 @@ public class RoomItem_Box {
         this.box = box;
     }
 
+    /**
+     * method to remove room
+     * @param actionEvent
+     */
     public void remove_room(ActionEvent actionEvent) {
         if(!Main.getInstance().isIsSimulationRunning()){
             App.log("Simulation is not Running");
@@ -63,6 +77,11 @@ public class RoomItem_Box {
         });
     }
 
+    /**
+     * method to get room item inFE
+     * @param room
+     * @return
+     */
     public HBox getRoomItem(Room room){
         FXMLLoader loader = new FXMLLoader(getClass().getResource("../../FXML/SHH/roomItem_box.fxml"));
         HBox box = null;

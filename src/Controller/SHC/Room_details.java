@@ -16,7 +16,9 @@ import javafx.scene.layout.VBox;
 import main.Main;
 
 import java.io.IOException;
-
+/**
+ * class to provide room details
+ */
 public class Room_details {
     public Label room_name;
     public ListView<HBox> users_in_room;
@@ -36,6 +38,9 @@ public class Room_details {
     private Image heater_on;
     private Image heater_off;
 
+    /**
+     * initialise room details
+     */
     @FXML
     void initialize(){
         ac_on = new Image("FXML/Images/AC_off.png");

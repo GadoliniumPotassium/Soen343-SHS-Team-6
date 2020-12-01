@@ -9,6 +9,9 @@ import javafx.scene.image.ImageView;
 import main.App;
 import main.Main;
 
+/**
+ * class to provide door status
+ */
 public class Door_Status {
 
     public ImageView door_status;

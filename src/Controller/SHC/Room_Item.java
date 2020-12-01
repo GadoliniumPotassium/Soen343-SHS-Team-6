@@ -1,8 +1,6 @@
 package Controller.SHC;
 
-import Model.House;
 import Model.Room;
-import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -15,7 +13,9 @@ import main.App;
 import main.Main;
 
 import java.io.IOException;
-
+/**
+ * class to provide smart device in room
+ */
 public class Room_Item {
 
     @FXML public Label room_name_label;

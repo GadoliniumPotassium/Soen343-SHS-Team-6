@@ -10,7 +10,9 @@ import main.App;
 import main.Main;
 
 import java.io.IOException;
-
+/**
+ * class for the zone box
+ */
 public class Zone_HBox {
     public Label zone_name;
     public VBox vbox;

@@ -8,6 +8,9 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import main.App;
 
+/**
+ * class to provide smart light status
+ */
 public class Light_Status {
     public Label light_name;
     public ImageView light_state;

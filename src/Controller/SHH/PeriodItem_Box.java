@@ -12,7 +12,9 @@ import main.App;
 import java.io.IOException;
 import java.time.LocalTime;
 import java.util.concurrent.atomic.AtomicInteger;
-
+/**
+ * class to provide create period box in FE
+ */
 public class PeriodItem_Box {
     public Label period_name;
     public TextField f_hour;
@@ -59,10 +61,17 @@ public class PeriodItem_Box {
     public void setPeriod_name(String period_name){
         this.period_name.setText(period_name);
     }
-
+    /**
+     * set Period hour
+     * @param _hour
+     */
     public void setF_hour(String _hour){
         f_hour.setText(_hour);
     }
+    /**
+     * set Period min
+     * @param _min
+     */
     public void setF_min(String _min){
         f_min.setText(_min);
     }
@@ -76,6 +85,10 @@ public class PeriodItem_Box {
         period_temp.setText(_temp);
     }
 
+    /**
+     * method to remove the period
+     * @param actionEvent
+     */
     public void remove(ActionEvent actionEvent) {
         if(zone.periods.size() == 1){
             App.log("-Can not remove- Zone Must Have a single Period");
@@ -93,7 +106,10 @@ public class PeriodItem_Box {
 
     }
 
-
+    /**
+     * method to update period
+     * @param actionEvent
+     */
     public void update(ActionEvent actionEvent) {
         period.setF_hour(Integer.parseInt(f_hour.getText()));
         period.setF_min(Integer.parseInt(f_min.getText()));
@@ -117,6 +133,10 @@ public class PeriodItem_Box {
             }
         });
     }
+
+    /**
+     * mehtod to reset the period
+     */
     private void reset(){
         period.setF_hour(0);
         period.setF_min(0);
@@ -125,6 +145,12 @@ public class PeriodItem_Box {
         period.setTemperature(0);
     }
 
+    /**
+     * method to get item from FE
+     * @param index
+     * @param period
+     * @return
+     */
     public HBox getItem(int index, SmartZone.Period period){
         FXMLLoader loader = new FXMLLoader(getClass().getResource("../../FXML/SHH/periodItem_box.fxml"));
         HBox box = null;

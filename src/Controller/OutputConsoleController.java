@@ -5,19 +5,14 @@
  */
 package Controller;
 
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-
 import com.jfoenix.controls.JFXTextArea;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.TextField;
 import main.App;
 import main.Main;
 
 /**
- *
- * @author Vladislav
+ * class output in FE
  */
 public class OutputConsoleController {
 
