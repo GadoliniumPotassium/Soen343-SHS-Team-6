@@ -2,6 +2,7 @@ package Controller.SHC;
 
 import Model.House;
 import Model.Room;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -60,7 +61,7 @@ public class Room_Item {
             Stage newStage = new Stage();
             newStage.setScene(new Scene(root));
             newStage.initModality(Modality.APPLICATION_MODAL);
-            //newStage.initStyle(StageStyle.TRANSPARENT);
+//            newStage.initStyle(StageStyle.TRANSPARENT);
             newStage.showAndWait();
             updateValues();
         }else{

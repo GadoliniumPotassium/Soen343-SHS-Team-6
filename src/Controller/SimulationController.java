@@ -17,12 +17,8 @@ import javafx.util.Duration;
 import main.App;
 import main.Main;
 
-import java.sql.Time;
 import java.time.LocalTime;
-import java.time.format.DateTimeFormatter;
-import java.util.Date;
-import java.util.Timer;
-import java.util.TimerTask;
+import java.util.concurrent.atomic.AtomicReference;
 
 /**
  *
@@ -131,62 +127,53 @@ public class SimulationController {
 
     private void havc_system(int hour, int minute) {
         if(main.havc_system) {
-            int finalHour1 = hour;
-            int finalMinute1 = minute;
 
             main.zones.forEach(zone -> {
                 for (SmartZone.Period period : zone.periods) {
 
-                    LocalTime current = LocalTime.of(finalHour1,finalMinute1);
+                    LocalTime current = LocalTime.of(hour, minute);
                     LocalTime f_time = LocalTime.of(period.getF_hour(),period.getF_min());
                     LocalTime t_time = LocalTime.of(period.getT_hour(),period.getT_min());
 
-                    if (current.isAfter(f_time) && current.isBefore(t_time)) {
-                        for (Room room : zone.rooms) {
-                            // comparing room temperature to period if it not equal add or minus 0.1 per milli sec to make them equal.
-                            if (room.getTemperature() != period.getTemperature()) {
-                                tempAlert(room);
-                                if(period.getTemperature() <= room.getTemperature()){
-                                    if(!main.away_mode)
-                                        OpenWindows(room);
-                                    room.setTemperature((float) (room.getTemperature()-0.1));
-                                    room.setHeater_ac(true);
-                                }else{
-                                    room.setTemperature((float) (room.getTemperature()+0.1));
-                                    room.setHeater_ac(false);
-                                }
-                            }
-                        }
-
-                    }
+                    maintainTemperature_on(zone, period, current, f_time, t_time);
                 }
             });
         }else{
-            // increase or decrease rooms temperature to match the temperature outside. by value 0.05
-            main.rooms_list.forEach(room -> {
-                if(room.getTemperature() != main.settings.getTemperature()){
-                    tempAlert(room);
-                    if (room.getTemperature() >= main.settings.getTemperature()) {
-                        if(!main.away_mode)
-                            OpenWindows(room);
-                        room.setTemperature((float) (room.getTemperature() - 0.05));
-                        room.setHeater_ac(true);
-                    } else {
-                        room.setTemperature((float) (room.getTemperature() + 0.05));
-                        room.setHeater_ac(false);
-                    }
-                }
-            });
+            maintainTemperature_off();
         }
     }
 
-    private void OpenWindows(Room room) {
+    private void maintainTemperature_off() {
+        main.rooms_list.forEach(room -> {
+            tempAlert(room);
+            if(room.getTemperature() > main.settings.getTemperature()){
+                room.setTemperature((float) (room.getTemperature() - 0.05)); //0.05
+            }else if(room.getTemperature() < main.settings.getTemperature()){
+                room.setTemperature((float) (room.getTemperature() + 0.05));
+            }
+        });
+    }
+
+    private void maintainTemperature_on(SmartZone zone, SmartZone.Period period, LocalTime current, LocalTime f_time, LocalTime t_time) {
+   
+    }
+
+    public String getSeason(){
+        int month = Integer.parseInt(main.settings.getDate().split("/")[0]);
+
+        String season = "";
+        if(month >= 4 && month <= 9) season = "Summer";
+        else season = "Winter";
+        return season;
+    }
+
+    private void windows(Room room,boolean state) {
         main.windows_inside.forEach(window ->{
             if(window.getLocation().equals(room.getName())){
                 if(((SmartWindow)window).isObstructed()){
                     App.log("[SHH] Alert: Window is Blocked by an Object.");
                 }else {
-                    ((SmartWindow) window).setOpen(true);
+                    ((SmartWindow) window).setOpen(state);
                 }
             }
         });

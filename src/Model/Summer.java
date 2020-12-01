@@ -24,4 +24,5 @@ public class Summer {
     public void setTemperature(double temperature) {
         this.temperature = temperature;
     }
+
 }

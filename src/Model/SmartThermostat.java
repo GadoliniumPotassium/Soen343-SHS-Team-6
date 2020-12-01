@@ -4,6 +4,7 @@ public class SmartThermostat extends SmartModule {
     final static int MIN_TEMP = 0;
     final static int MAX_TEMP = 25;
     private double current_temp_heater;
+    private double heating_temp;
     private boolean isOn;
     private static int idNum=0;
 
@@ -81,5 +82,13 @@ public class SmartThermostat extends SmartModule {
                 ", name='" + name + '\'' +
                 ", location='" + location + '\'' +
                 '}';
+    }
+
+    public double getHeating_temp() {
+        return heating_temp;
+    }
+
+    public void setHeating_temp(double heating_temp) {
+        this.heating_temp = heating_temp;
     }
 }

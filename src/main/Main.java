@@ -10,6 +10,7 @@ import org.json.JSONObject;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Objects;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class Main {
@@ -23,8 +24,6 @@ public class Main {
     public ArrayList<SmartModule> doors_inside = new ArrayList<>();
     public ArrayList<SmartModule> windows_inside = new ArrayList<>();
     public ArrayList<SmartModule> lights_inside = new ArrayList<>();
-
-//    public ArrayList<SmartModule> securities = new ArrayList<>();
 
     public ArrayList<SmartZone> zones = new ArrayList<>();
     public ArrayList<Summer> summers = new ArrayList<>();
@@ -168,7 +167,7 @@ public class Main {
     }
 
     /**
-     * This method handles the doors windows and lights in the simulation
+     * This method which adds room details like door windows etc.......
      */
     public void doors_and_windows_and_lights(){
         for (House outSide : outSides) {
@@ -182,18 +181,22 @@ public class Main {
             }
         }
         rooms_list.forEach(room ->{
+            // creating doors objects according to number of doors in rooms.
             for(int i = 0; i<room.getDoors();i++){
                 SmartModule door = ModuleFactory.createModule("SmartWindow",room.getName());
                 doors_inside.add(door);
             }
+            // creating windows objects according to number of window in room.
             for(int i = 0; i<room.getWindows(); i++){
                 SmartModule window = ModuleFactory.createModule("SmartWindow",room.getName());
                 windows_inside.add(window);
             }
+            // creating lights objects according to number of light in room.
             for(int i =0; i<room.getLights(); i++){
                 SmartModule light = ModuleFactory.createModule("SmartLight",room.getName());
                 lights_inside.add(light);
             }
+            // counting users in rooms.
             user_list.forEach(user ->{
                 if(user.getLocation().equals(room.getName())){
                     MotionDetector md = room.getMotionDetector();

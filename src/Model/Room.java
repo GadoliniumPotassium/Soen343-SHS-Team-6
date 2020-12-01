@@ -1,7 +1,5 @@
 package Model;
 
-import java.util.ArrayList;
-
 public class Room extends House {
 
     /**
@@ -11,10 +9,16 @@ public class Room extends House {
      */
 
     private MotionDetector motionDetector;
-    private boolean heater_ac; // false to on heater and true to on ac.
+
+    public SmartThermostat thermostat;
+    public SmartAC smartAC;
 
     public Room(){
         motionDetector = new MotionDetector(this);
+        thermostat = new SmartThermostat(this.getName(),0,false);
+        thermostat.setHeating_temp(0.1);
+        smartAC = new SmartAC(this.getName());
+        smartAC.setCooling_temp(0.1);
     }
 
     private int windows;
@@ -56,13 +60,5 @@ public class Room extends House {
                 ", lights=" + getLights() +
                 ", temperature=" + temperature +
                 '}';
-    }
-
-    public boolean isHeater_ac() {
-        return heater_ac;
-    }
-
-    public void setHeater_ac(boolean heater_ac) {
-        this.heater_ac = heater_ac;
     }
 }

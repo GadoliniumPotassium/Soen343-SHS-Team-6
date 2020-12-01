@@ -1,6 +1,8 @@
 package Controller.SHC;
 
 import Model.*;
+import javafx.application.Platform;
+import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -49,6 +51,7 @@ public class Room_details {
      * @param actionEvent
      */
     public void change_temperature(ActionEvent actionEvent) {
+
         if(temp_value.getText().isEmpty()) return;
         this.room.setTemperature(Float.parseFloat(temp_value.getText()));
     }
@@ -63,14 +66,29 @@ public class Room_details {
         room_name.setText(room.getName());
         temp_value.setText(room.getTemperature()+"");
 
-        if(room.isHeater_ac()){
-            ac.setImage(ac_on);
-            heater.setImage(heater_off);
-        }else{
-            heater.setImage(heater_on);
-            ac.setImage(ac_off);
-        }
-
+        Task<Void> task = new Task<>() {
+            @Override
+            protected Void call() throws Exception {
+                while (true) {
+                    Thread.sleep(500);
+                    Platform.runLater(() -> {
+                        if(!temp_value.focusedProperty().get())
+                            temp_value.setText(room.getTemperature()+"");
+                        if (room.smartAC.isOn()) {
+                            ac.setImage(ac_on);
+                        } else {
+                            ac.setImage(ac_off);
+                        }
+                        if (room.thermostat.isOn()) {
+                            heater.setImage(heater_on);
+                        } else {
+                            heater.setImage(heater_off);
+                        }
+                    });
+                }
+            }
+        };
+        new Thread(task).start();
         //list of users in room
         update_user_list();
 

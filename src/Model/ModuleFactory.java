@@ -23,7 +23,7 @@ public class ModuleFactory {
             case "SmartSecurity":
                 return new SmartSecurity(location);
             case "SmartThermostat":
-                return new SmartThermostat(location,0,false);
+                return new SmartThermostat(location,0.05,false);
             case "SmartWindow":
                 return new SmartWindow(location,false,false);
             default:
