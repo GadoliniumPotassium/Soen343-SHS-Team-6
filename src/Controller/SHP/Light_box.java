@@ -7,6 +7,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import main.NumFieldFX;
+import Exception.TimeInValidException;
 
 public class Light_box {
     public Label loc;
@@ -79,8 +80,23 @@ public class Light_box {
     public void set_time(ActionEvent actionEvent) {
         if(from_hour.getText().isEmpty() && from_min.getText().isEmpty()
         && to_hour.getText().isEmpty() && to_min.getText().isEmpty()){
+
             this.light.setAwayModeTiming("00:00,00:00");
         }else{
+
+            int f_h = Integer.parseInt(from_hour.getText());
+            int f_m = Integer.parseInt(from_min.getText());
+            int t_h = Integer.parseInt(to_hour.getText());
+            int t_m = Integer.parseInt(to_min.getText());
+
+            try{
+                if(f_h < 0 || f_h > 23 || f_m < 1 || f_m > 59 || t_h < 0 || t_h > 23 || t_m < 1 || t_m > 59){
+                    throw new TimeInValidException("Invalid Light Timing to Set");
+                }
+            } catch (TimeInValidException exception) {
+                exception.printStackTrace();
+            }
+
             this.light.setAwayModeTiming(from_hour.getText()+":"+from_min.getText()+","+
                     to_hour.getText()+":"+to_min.getText());
         }

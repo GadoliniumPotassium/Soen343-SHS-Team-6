@@ -10,8 +10,8 @@ import org.json.JSONObject;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Objects;
 import java.util.concurrent.atomic.AtomicInteger;
+import Exception.ImpossibleTimeException;
 
 public class Main {
     public ArrayList<User> user_list = new ArrayList<>();
@@ -76,6 +76,13 @@ public class Main {
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
             }
+            try{
+                if(reader == null){
+                    throw new ImpossibleTimeException("User File didn't Find");
+                }
+            } catch (ImpossibleTimeException exception) {
+                exception.printStackTrace();
+            }
             User[] users = new Gson().fromJson(reader,User[].class);
             Collections.addAll(user_list,users);
         }
@@ -110,6 +117,13 @@ public class Main {
                 reader = new JsonReader(new FileReader(json));
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
+            }
+            try{
+                if(reader == null){
+                    throw new ImpossibleTimeException("Settings File didn't Find");
+                }
+            } catch (ImpossibleTimeException exception) {
+                exception.printStackTrace();
             }
             Settings[] set = new Gson().fromJson(reader,Settings[].class);
             settings = set[0];
@@ -159,6 +173,13 @@ public class Main {
                 reader = new JsonReader(new FileReader(json));
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
+            }
+            try{
+                if(reader == null){
+                    throw new ImpossibleTimeException("HouseOutSide Layout File didn't Find");
+                }
+            } catch (ImpossibleTimeException exception) {
+                exception.printStackTrace();
             }
             House[] houses = new Gson().fromJson(reader,House[].class);
 //            System.out.println(houses.toString());
@@ -220,6 +241,13 @@ public class Main {
                 reader = new JsonReader(new FileReader(json));
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
+            }
+            try{
+                if(reader == null){
+                    throw new ImpossibleTimeException("House Layout File didn't Find");
+                }
+            } catch (ImpossibleTimeException exception) {
+                exception.printStackTrace();
             }
             Room[] houses = new Gson().fromJson(reader,Room[].class);
             Collections.addAll(rooms_list,houses);
@@ -302,9 +330,7 @@ public class Main {
             fileWriter.write(student.toString(1));
             fileWriter.flush();
             System.out.println("Student File Upgraded");
-        } catch (JSONException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
+        } catch (JSONException | IOException e) {
             e.printStackTrace();
         }
     }
@@ -331,9 +357,7 @@ public class Main {
             fileWriter.write(rooms.toString(1));
             fileWriter.flush();
             System.out.println("room file upgraded");
-        } catch (JSONException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
+        } catch (JSONException | IOException e) {
             e.printStackTrace();
         }
 
@@ -355,7 +379,7 @@ public class Main {
     /**
      * In case there is no layout. we write custom layout
      * This method serves to write a json file for the house layout
-     */
+     *//*
     void write(){
          try {
             JSONObject roomDetails = new JSONObject();
@@ -412,5 +436,5 @@ public class Main {
         }catch (JSONException | IOException e) {
             e.printStackTrace();
         }
-    }
+    }*/
 }

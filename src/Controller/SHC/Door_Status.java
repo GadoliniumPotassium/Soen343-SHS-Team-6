@@ -8,6 +8,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import main.App;
 import main.Main;
+import Exception.ImpossibleTimeException;
 
 /**
  * class to provide door status
@@ -17,7 +18,6 @@ public class Door_Status {
     public ImageView door_status;
     public ImageView door_lock;
     public Label door_name;
-    public ImageView door_obstruct;
 
     private Image door_open;
     private Image door_close;
@@ -26,17 +26,24 @@ public class Door_Status {
 
     private SmartWindow door;
 
-    private Main main = Main.getInstance();
+    private final Main main = Main.getInstance();
 
     /**
      * This method initializes the door
      */
     @FXML
     void initialize(){
-        door_open = new Image("FXML/Images/door_open.png");
-        door_close = new Image("FXML/Images/door_close.png");
-        door_locked = new Image("FXML/Images/lock.png");
-        door_unlock = new Image("FXML/Images/unlock.png");
+        try {
+            door_open = new Image("FXML/Images/door_open.png");
+            door_close = new Image("FXML/Images/door_close.png");
+            door_locked = new Image("FXML/Images/lock.png");
+            door_unlock = new Image("FXML/Images/unlock.png");
+            if(door_open == null || door_close == null || door_lock == null || door_unlock == null){
+                throw new ImpossibleTimeException("Door Images did not loaded. Path Issue");
+            }
+        }catch(ImpossibleTimeException exception){
+
+        }
 
     }
 
@@ -45,6 +52,13 @@ public class Door_Status {
      * @param door
      */
     public void setDoor(SmartWindow door) {
+        try{
+            if(door == null){
+                throw new ImpossibleTimeException("Door Object is Null");
+            }
+        } catch (ImpossibleTimeException exception) {
+            exception.printStackTrace();
+        }
         this.door = door;
         door_name.setText(door.getName());
 

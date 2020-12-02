@@ -2,35 +2,35 @@
  {
   "doors": 2,
   "name": "Bed Room",
-  "temperature": -0.5800818204879761,
+  "temperature": 33.769691467285156,
   "windows": 2,
   "lights": 4
  },
  {
   "doors": 1,
   "name": "kitchen",
-  "temperature": 9.99476432800293,
+  "temperature": 44.344356536865234,
   "windows": 1,
   "lights": 2
  },
  {
   "doors": 2,
   "name": "Garage",
-  "temperature": 9.994810104370117,
+  "temperature": 44.34440231323242,
   "windows": 2,
   "lights": 3
  },
  {
   "doors": 0,
   "name": "Master Room",
-  "temperature": 9.994756698608398,
+  "temperature": 44.3443489074707,
   "windows": 3,
   "lights": 5
  },
  {
   "doors": 1,
   "name": "Amneet Room",
-  "temperature": 9.994802474975586,
+  "temperature": 44.34439468383789,
   "windows": 3,
   "lights": 6
  }

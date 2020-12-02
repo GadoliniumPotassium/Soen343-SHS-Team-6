@@ -71,7 +71,6 @@ public class SimulationController {
                 main.settings.getTime());
     }
     private int sec = 0;
-    private int ms = 0;
     public void Timer(){
         timeline = new Timeline();
         timeline.setCycleCount(Timeline.INDEFINITE);
@@ -101,11 +100,49 @@ public class SimulationController {
                 int finalHour = hour;
                 int finalMinute = minute;
                 main.lights_outside.forEach(smartLight -> {
-                    check_awayMode_lights((SmartLight)smartLight,finalHour,finalMinute);
+                    if(!((SmartLight)smartLight).getAwayModeTiming().equals("00:00,00:00")){
+                        String[] timing = ((SmartLight)smartLight).getAwayModeTiming().split(",");
+                        String[] from = timing[0].split(":");
+                        String[] to = timing [1].split(":");
+
+                        int f_hour = Integer.parseInt(from[0]);
+                        int f_min = Integer.parseInt(from[1])-1;
+                        int t_hour = Integer.parseInt(to[0]);
+                        int t_min = Integer.parseInt(to[1]);
+
+                        LocalTime current = LocalTime.of(finalHour,finalMinute);
+                        LocalTime f_light = LocalTime.of(f_hour,f_min);
+                        LocalTime t_light = LocalTime.of(t_hour,t_min);
+
+                        if(current.isAfter(f_light) && current.isBefore(t_light)){
+                            ((SmartLight)smartLight).setOn(true);
+                        }else{
+                            ((SmartLight)smartLight).setOn(false);
+                        }
+                    }
                 });
 
                 main.lights_inside.forEach(smartLight -> {
-                    check_awayMode_lights((SmartLight)smartLight,finalHour,finalMinute);
+                    if(!((SmartLight)smartLight).getAwayModeTiming().equals("00:00,00:00")){
+                        String[] timing = ((SmartLight)smartLight).getAwayModeTiming().split(",");
+                        String[] from = timing[0].split(":");
+                        String[] to = timing [1].split(":");
+
+                        int f_hour = Integer.parseInt(from[0]);
+                        int f_min = Integer.parseInt(from[1])-1;
+                        int t_hour = Integer.parseInt(to[0]);
+                        int t_min = Integer.parseInt(to[1]);
+
+                        LocalTime current = LocalTime.of(finalHour,finalMinute);
+                        LocalTime f_light = LocalTime.of(f_hour,f_min);
+                        LocalTime t_light = LocalTime.of(t_hour,t_min);
+
+                        if(current.isAfter(f_light) && current.isBefore(t_light)){
+                            ((SmartLight)smartLight).setOn(true);
+                        }else{
+                            ((SmartLight)smartLight).setOn(false);
+                        }
+                    }
                 });
 
             }
@@ -138,96 +175,73 @@ public class SimulationController {
                     LocalTime f_time = LocalTime.of(period.getF_hour(),period.getF_min());
                     LocalTime t_time = LocalTime.of(period.getT_hour(),period.getT_min());
 
-                    maintainTemperature_on(zone, period, current, f_time, t_time);
+                    if (current.isAfter(f_time) && current.isBefore(t_time)) {
+                        for (Room room : zone.rooms) {
+                            tempAlert(room);
+                            if(getSeason().equals("Summer")){
+                                if(room.getTemperature() > period.getTemperature()){
+                                    if(main.settings.getTemperature() < room.getTemperature() && !main.away_mode){
+                                        windows(room,true);
+                                        room.smartAC.setOn(false);
+                                        room.thermostat.setOn(false);
+                                        room.setTemperature((float) (room.getTemperature() - 0.05));
+                                        System.out.println("cooling with outside temperature when room temperature is greater then period temp");
+                                    }else {
+                                        windows(room, false);
+                                        room.setTemperature((float) (room.getTemperature() - room.smartAC.getCooling_temp())); //0.1
+                                        room.smartAC.setOn(true);
+                                        room.thermostat.setOn(false);
+                                        System.out.println("room > outside < period");
+                                    }
+                                }else if(room.getTemperature() < period.getTemperature()){
+                                    if(main.settings.getTemperature() > room.getTemperature() && !main.away_mode){
+                                        windows(room,true);
+                                        room.smartAC.setOn(false);
+                                        room.thermostat.setOn(false);
+                                        room.setTemperature((float) (room.getTemperature() + 0.05));
+                                        System.out.println("cooling with outside temperature when room temperature is below period");
+                                    }else {
+                                        windows(room, false);
+                                        room.setTemperature((float) (room.getTemperature() + room.smartAC.getCooling_temp())); //0.1
+                                        room.smartAC.setOn(false);
+                                        room.thermostat.setOn(true);
+                                        System.out.println("room < outside > period");
+                                    }
+                                }
+                            }else{
+                                if(room.getTemperature() > period.getTemperature() && room.getTemperature() - period.getTemperature() > 0.25){
+                                    room.smartAC.setOn(true);
+                                    room.thermostat.setOn(false);
+                                    room.setTemperature((float) (room.getTemperature()- room.smartAC.getCooling_temp())); // 0.1
+                                    System.out.println("room > period");
+                                } else if (room.getTemperature() < period.getTemperature() && room.getTemperature() - period.getTemperature() < -0.25) {
+                                    room.thermostat.setOn(true);
+                                    room.smartAC.setOn(false);
+                                    room.setTemperature((float) (room.getTemperature() + room.thermostat.getHeating_temp())); // 0.1
+                                    System.out.println("room < period");
+                                }else{
+                                    room.thermostat.setOn(false);
+                                    room.smartAC.setOn(false);
+                                    System.out.println("false");
+                                }
+                            }
+                        }
+
+                    }
                 }
             });
         }else{
-            maintainTemperature_off();
-        }
-    }
-
-    /**
-     * method to maintain temp
-     */
-    private void maintainTemperature_off() {
-        main.rooms_list.forEach(room -> {
-            tempAlert(room);
-            if(room.getTemperature() > main.settings.getTemperature()){
-                room.setTemperature((float) (room.getTemperature() - 0.05)); //0.05
-            }else if(room.getTemperature() < main.settings.getTemperature()){
-                room.setTemperature((float) (room.getTemperature() + 0.05));
-            }
-        });
-    }
-
-    /**
-     * method to change temp
-     * @param zone
-     * @param period
-     * @param current
-     * @param f_time
-     * @param t_time
-     */
-    private void maintainTemperature_on(SmartZone zone, SmartZone.Period period, LocalTime current, LocalTime f_time, LocalTime t_time) {
-        if (current.isAfter(f_time) && current.isBefore(t_time)) {
-            for (Room room : zone.rooms) {
+            main.rooms_list.forEach(room -> {
                 tempAlert(room);
-                if(getSeason().equals("Summer")){
-                    if(room.getTemperature() > period.getTemperature()){
-                        if(main.settings.getTemperature() < room.getTemperature() && !main.away_mode){
-                            windows(room,true);
-                            room.smartAC.setOn(false);
-                            room.thermostat.setOn(false);
-                            room.setTemperature((float) (room.getTemperature() - 0.05));
-                            System.out.println("cooling with outside temperature when room temperature is greater then period temp");
-                        }else {
-                            windows(room, false);
-                            room.setTemperature((float) (room.getTemperature() - room.smartAC.getCooling_temp())); //0.1
-                            room.smartAC.setOn(true);
-                            room.thermostat.setOn(false);
-                            System.out.println("room > outside < period");
-                        }
-                    }else if(room.getTemperature() < period.getTemperature()){
-                        if(main.settings.getTemperature() > room.getTemperature() && !main.away_mode){
-                            windows(room,true);
-                            room.smartAC.setOn(false);
-                            room.thermostat.setOn(false);
-                            room.setTemperature((float) (room.getTemperature() + 0.05));
-                            System.out.println("cooling with outside temperature when room temperature is below period");
-                        }else {
-                            windows(room, false);
-                            room.setTemperature((float) (room.getTemperature() + room.smartAC.getCooling_temp())); //0.1
-                            room.smartAC.setOn(false);
-                            room.thermostat.setOn(true);
-                            System.out.println("room < outside > period");
-                        }
-                    }
-                }else{
-                    if(room.getTemperature() > period.getTemperature() && room.getTemperature() - period.getTemperature() > 0.25){
-                        room.smartAC.setOn(true);
-                        room.thermostat.setOn(false);
-                        room.setTemperature((float) (room.getTemperature()- room.smartAC.getCooling_temp())); // 0.1
-                        System.out.println("room > period");
-                    } else if (room.getTemperature() < period.getTemperature() && room.getTemperature() - period.getTemperature() < -0.25) {
-                        room.thermostat.setOn(true);
-                        room.smartAC.setOn(false);
-                        room.setTemperature((float) (room.getTemperature() + room.thermostat.getHeating_temp())); // 0.1
-                        System.out.println("room < period");
-                    }else{
-                        room.thermostat.setOn(false);
-                        room.smartAC.setOn(false);
-                        System.out.println("false");
-                    }
+                if(room.getTemperature() > main.settings.getTemperature()){
+                    room.setTemperature((float) (room.getTemperature() - 0.05)); //0.05
+                }else if(room.getTemperature() < main.settings.getTemperature()){
+                    room.setTemperature((float) (room.getTemperature() + 0.05));
                 }
-            }
-
+            });
         }
     }
 
-    /**
-     * get the season
-     * @return season
-     */
     public String getSeason(){
         int month = Integer.parseInt(main.settings.getDate().split("/")[0]);
 
@@ -258,37 +272,6 @@ public class SimulationController {
             if(r.getTemperature() <= 0){
                 App.log(r.getName()+"WARNING! Temperature is Below 0 pipes can burst");
             
-        }
-    }
-
-    /**
-     * This method serves to check to turn off/on a light after a set amount of time in away mode
-     * @param _smartLight
-     * @param _hour
-     * @param _minute
-     */
-    private void check_awayMode_lights(SmartLight _smartLight, int _hour, int _minute){
-        if(!_smartLight.getAwayModeTiming().equals("00:00,00:00")){
-            String[] timing = _smartLight.getAwayModeTiming().split(",");
-            String[] from = timing[0].split(":");
-            String[] to = timing [1].split(":");
-
-            int f_hour = Integer.parseInt(from[0]);
-            int f_min = Integer.parseInt(from[1])-1;
-            int t_hour = Integer.parseInt(to[0]);
-            int t_min = Integer.parseInt(to[1]);
-
-            LocalTime current = LocalTime.of(_hour,_minute);
-            LocalTime f_light = LocalTime.of(f_hour,f_min);
-            LocalTime t_light = LocalTime.of(t_hour,t_min);
-
-            if(current.isAfter(f_light) && current.isBefore(t_light)){
-                _smartLight.setOn(true);
-            }else{
-                _smartLight.setOn(false);
-            }
-
-
         }
     }
 

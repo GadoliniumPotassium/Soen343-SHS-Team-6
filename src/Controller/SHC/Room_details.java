@@ -14,6 +14,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import main.Main;
+import main.NumFieldFX;
 
 import java.io.IOException;
 /**
@@ -43,6 +44,8 @@ public class Room_details {
      */
     @FXML
     void initialize(){
+        new NumFieldFX().numField(temp_value);
+
         ac_on = new Image("FXML/Images/AC_off.png");
         ac_off = new Image("FXML/Images/AC_on.png");
 

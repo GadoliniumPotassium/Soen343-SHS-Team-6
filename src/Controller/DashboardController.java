@@ -30,6 +30,7 @@ import javafx.stage.Stage;
 import main.App;
 import main.Main;
 import main.NumFieldFX;
+import Exception.ImpossibleTimeException;
 
 import java.io.IOException;
 import java.time.LocalDate;
@@ -167,6 +168,7 @@ public class DashboardController {
      */
     private void load_SHC(){
         listView.getChildren().clear();
+        //Home Inside
         for(Room e : main.rooms_list){
 
             if(main.active_user.getUserPermission().name().equals("parent")) {
@@ -191,13 +193,7 @@ public class DashboardController {
                 break;
             }
         }
-        home_outside();
-    }
-
-    /**
-     * This method does the GUI for the outside home
-     */
-    public void home_outside(){
+        //Home Outside
         home_outside_list.getItems().clear();
         HBox heading = new HBox();
         heading.setAlignment(Pos.CENTER);
@@ -617,6 +613,14 @@ public class DashboardController {
     }
     public String getSeason(){
         int month = Integer.parseInt(main.settings.getDate().split("/")[0]);
+
+        try{
+            if(month < 1 || month > 12){
+                throw new ImpossibleTimeException("Invalid Month");
+            }
+        } catch (ImpossibleTimeException exception) {
+            exception.printStackTrace();
+        }
 
         String season = "";
         if(month >= 4 && month <= 9) season = "Summer";

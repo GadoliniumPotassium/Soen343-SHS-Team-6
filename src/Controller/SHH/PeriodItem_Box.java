@@ -12,6 +12,7 @@ import main.App;
 import java.io.IOException;
 import java.time.LocalTime;
 import java.util.concurrent.atomic.AtomicInteger;
+import Exception.ImpossibleTimeException;
 /**
  * class to provide create period box in FE
  */
@@ -111,10 +112,24 @@ public class PeriodItem_Box {
      * @param actionEvent
      */
     public void update(ActionEvent actionEvent) {
-        period.setF_hour(Integer.parseInt(f_hour.getText()));
-        period.setF_min(Integer.parseInt(f_min.getText()));
-        period.setT_hour(Integer.parseInt(t_hour.getText()));
-        period.setT_min(Integer.parseInt(t_min.getText()));
+
+        int f_h = Integer.parseInt(f_hour.getText());
+        int f_m = Integer.parseInt(f_min.getText());
+        int t_h = Integer.parseInt(t_hour.getText());
+        int t_m = Integer.parseInt(t_min.getText());
+
+        try{
+            if(f_h < 0 || f_h > 23 || f_m < 1 || f_m > 59 || t_h < 0 || t_h > 23 || t_m < 1 || t_m > 59){
+                throw new ImpossibleTimeException("Invalid Period Time to Update");
+            }
+        } catch (ImpossibleTimeException exception) {
+            exception.printStackTrace();
+        }
+
+        period.setF_hour(f_h);
+        period.setF_min(f_m);
+        period.setT_hour(t_h);
+        period.setT_min(t_m);
 
         period.setTemperature(Double.parseDouble(period_temp.getText()));
 

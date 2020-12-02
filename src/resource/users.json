@@ -2,7 +2,7 @@
  {
   "password": "pass",
   "userPermission": "parent",
-  "isLoggedIn": false,
+  "isLoggedIn": true,
   "location": "Backyard",
   "username": "Amneet"
  },

@@ -5,9 +5,12 @@
  */
 package Controller;
 
+import javafx.scene.image.ImageView;
+
 /**
  * house view controller in FE
  */
 public class HouseViewController {
 
+    public ImageView imageView;
 }

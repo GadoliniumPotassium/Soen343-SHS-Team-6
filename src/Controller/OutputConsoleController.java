@@ -41,7 +41,6 @@ public class OutputConsoleController {
      */
     public void clear(ActionEvent actionEvent) {
         textArea.clear();
-        System.out.println("The button was clicked!");
     }
 }
 
