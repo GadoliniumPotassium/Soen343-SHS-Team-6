@@ -134,6 +134,10 @@ public class PeriodItem_Box {
         period.setTemperature(Double.parseDouble(period_temp.getText()));
 
         // checking if the time is not intercepting.
+        isTimeIntercepting();
+    }
+
+    private void isTimeIntercepting() {
         zone.periods.forEach(e->{
             LocalTime current_period_fTime = LocalTime.of(period.getF_hour(),period.getF_min());
             LocalTime current_period_tTime = LocalTime.of(period.getT_hour(),period.getT_min());

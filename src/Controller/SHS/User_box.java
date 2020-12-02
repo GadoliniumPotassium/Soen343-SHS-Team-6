@@ -149,31 +149,35 @@ public class User_box {
 
             if(main.away_mode && usersInRoom() > 0){
                 // open the popup window.
-                FXMLLoader loader = new FXMLLoader(getClass().getResource("../../FXML/SHP/user_notify.fxml"));
-                AnchorPane pane = null;
-                try{
-                    pane = loader.load();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-
-                User_Notify controller = loader.getController();
-                controller.setup(user.getLocation(),"Alert: Smart house Security Detect someone in this room waiting for your response.");
-
-                Stage stage = new Stage();
-                assert pane != null;
-                stage.setScene(new Scene(pane));
-                stage.initModality(Modality.APPLICATION_MODAL);
-                stage.showAndWait();
-                stage.setOnCloseRequest(e->{
-                    App.log("User Ignore: Alerting the authorities by Smart House System");
-                });
+                user_detail();
             }
 
         }else {
             locations.setValue(user.getLocation());
             App.log("Simulation is not Running");
         }
+    }
+
+    private void user_detail() {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("../../FXML/SHP/user_notify.fxml"));
+        AnchorPane pane = null;
+        try{
+            pane = loader.load();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        User_Notify controller = loader.getController();
+        controller.setup(user.getLocation(),"Alert: Smart house Security Detect someone in this room waiting for your response.");
+
+        Stage stage = new Stage();
+        assert pane != null;
+        stage.setScene(new Scene(pane));
+        stage.initModality(Modality.APPLICATION_MODAL);
+        stage.showAndWait();
+        stage.setOnCloseRequest(e->{
+            App.log("User Ignore: Alerting the authorities by Smart House System");
+        });
     }
 
     /**

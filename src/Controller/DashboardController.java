@@ -96,17 +96,7 @@ public class DashboardController {
     @FXML
     public void initialize() {
 
-        numFieldFX.numField(temp_textField);
-        numFieldFX.numField(hour_tf);
-        numFieldFX.numField(minutes_tf);
-        numFieldFX.numField(doors_input);
-        numFieldFX.numField(windows_input);
-        numFieldFX.numField(lights_input);
-        numFieldFX.numField(temp_input);
-        numFieldFX.numField(temp_input);
-
-        numFieldFX.numField(summer_tf);
-        numFieldFX.numField(winter_tf);
+        setTextField_to_NumFied();
 
         load_SHC();
         load_SHS();
@@ -121,9 +111,7 @@ public class DashboardController {
         //making first zone.
         SmartZone zone = new SmartZone();
         // adding all the rooms in zone A
-        for (Room room : main.rooms_list) {
-            zone.rooms.add(room);
-        }
+        zone.rooms.addAll(main.rooms_list);
         main.zones.add(zone);
         for (Summer summer : main.summers) {
             if(summer.getName().equals("Winter")) {
@@ -133,6 +121,20 @@ public class DashboardController {
                 summer_tf.setText(summer.getTemperature()+"");
             }
         }
+    }
+
+    private void setTextField_to_NumFied() {
+        numFieldFX.numField(temp_textField);
+        numFieldFX.numField(hour_tf);
+        numFieldFX.numField(minutes_tf);
+        numFieldFX.numField(doors_input);
+        numFieldFX.numField(windows_input);
+        numFieldFX.numField(lights_input);
+        numFieldFX.numField(temp_input);
+        numFieldFX.numField(temp_input);
+
+        numFieldFX.numField(summer_tf);
+        numFieldFX.numField(winter_tf);
     }
 
     private void load_SHS(){
@@ -169,6 +171,50 @@ public class DashboardController {
     private void load_SHC(){
         listView.getChildren().clear();
         //Home Inside
+        homeInside();
+        //Home Outside
+        homeOutSide();
+    }
+
+    private void homeOutSide() {
+        home_outside_list.getItems().clear();
+        HBox heading = new HBox();
+        heading.setAlignment(Pos.CENTER);
+        heading.setSpacing(40);
+        heading.setStyle("fx-background-color: #f1f6f9");
+
+        Label name = new Label("Name");
+        myFont(name, 18);
+
+        Label door = new Label("Doors");
+        myFont(door, 18);
+
+        Label lights = new Label("Lights");
+        myFont(lights, 18);
+
+        Label users_label = new Label("Users");
+        myFont(users_label, 18);
+
+        heading.getChildren().addAll(name,door,lights,users_label);
+
+        home_outside_list.getItems().add(heading);
+
+        main.outSides.forEach(outSide -> {
+            HBox item = home_outSide_item(outSide);
+            item.setOnMouseClicked(e->{
+                homeOutside_details(outSide);
+            });
+
+            home_outside_list.getItems().add(item);
+        });
+    }
+
+    private void myFont(Label name, int i) {
+        name.setFont(Font.font("Bell MT", i));
+        name.setTextFill(Color.web("#14274e"));
+    }
+
+    private void homeInside() {
         for(Room e : main.rooms_list){
 
             if(main.active_user.getUserPermission().name().equals("parent")) {
@@ -183,8 +229,7 @@ public class DashboardController {
                 }
             }else{
                 Label msg = new Label("Non identified users have no permissions no matter where they are located");
-                msg.setFont(Font.font("Bell MT",28));
-                msg.setTextFill(Color.web("#14274e"));
+                myFont(msg, 28);
                 msg.setWrapText(true);
                 HBox msg_box = new HBox();
                 msg_box.setAlignment(Pos.CENTER);
@@ -193,55 +238,24 @@ public class DashboardController {
                 break;
             }
         }
-        //Home Outside
-        home_outside_list.getItems().clear();
-        HBox heading = new HBox();
-        heading.setAlignment(Pos.CENTER);
-        heading.setSpacing(40);
-        heading.setStyle("fx-background-color: #f1f6f9");
+    }
 
-        Label name = new Label("Name");
-        name.setFont(Font.font("Bell MT",18));
-        name.setTextFill(Color.web("#14274e"));
-
-        Label door = new Label("Doors");
-        door.setFont(Font.font("Bell MT",18));
-        door.setTextFill(Color.web("#14274e"));
-
-        Label lights = new Label("Lights");
-        lights.setFont(Font.font("Bell MT",18));
-        lights.setTextFill(Color.web("#14274e"));
-
-        Label users_label = new Label("Users");
-        users_label.setFont(Font.font("Bell MT",18));
-        users_label.setTextFill(Color.web("#14274e"));
-
-        heading.getChildren().addAll(name,door,lights,users_label);
-
-        home_outside_list.getItems().add(heading);
-
-        main.outSides.forEach(outSide -> {
-            HBox item = home_outSide_item(outSide);
-            item.setOnMouseClicked(e->{
-                FXMLLoader loader = new FXMLLoader(getClass().getResource(
-                        "../FXML/SHC/Home_OutSide_Details.fxml"
-                ));
-                AnchorPane pane = null;
-                try{
-                    pane = loader.load();
-                } catch (IOException ioException) {
-                    ioException.printStackTrace();
-                }
-                OutSide_Details controller = loader.getController();
-                controller.setOutside(outSide);
-                Stage pop = new Stage();
-                pop.setScene(new Scene(pane));
-                pop.initModality(Modality.APPLICATION_MODAL);
-                pop.showAndWait();
-            });
-
-            home_outside_list.getItems().add(item);
-        });
+    private void homeOutside_details(House outSide) {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource(
+                "../FXML/SHC/Home_OutSide_Details.fxml"
+        ));
+        AnchorPane pane = null;
+        try{
+            pane = loader.load();
+        } catch (IOException ioException) {
+            ioException.printStackTrace();
+        }
+        OutSide_Details controller = loader.getController();
+        controller.setOutside(outSide);
+        Stage pop = new Stage();
+        pop.setScene(new Scene(pane));
+        pop.initModality(Modality.APPLICATION_MODAL);
+        pop.showAndWait();
     }
 
     /**

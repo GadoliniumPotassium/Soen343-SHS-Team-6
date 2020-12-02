@@ -13,7 +13,7 @@ import main.Main;
 public class New_User {
 
     public TextField user_textField;
-    public ChoiceBox permissions;
+    public ChoiceBox<String> permissions;
     public PasswordField pass_textField;
     public Label msg_label;
 
