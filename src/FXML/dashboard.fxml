@@ -130,7 +130,7 @@
                                  <Font name="Bell MT" size="18.0" />
                               </font>
                            </JFXButton>
-                           <DatePicker fx:id="datepicker" layoutX="165.0" layoutY="371.0" />
+                           <DatePicker fx:id="datepicker" layoutX="165.0" layoutY="371.0" prefHeight="25.0" prefWidth="153.0" />
                            <TextField fx:id="hour_tf" layoutX="165.0" layoutY="443.0" prefHeight="30.0" prefWidth="40.0" promptText="HH" />
                            <TextField fx:id="minutes_tf" layoutX="224.0" layoutY="443.0" prefHeight="30.0" prefWidth="40.0" promptText="MM" />
                            <Label layoutX="211.0" layoutY="443.0" text=":" textFill="#14274e">
@@ -185,6 +185,13 @@
                                  <Font name="Bell MT" size="18.0" />
                               </font>
                            </JFXButton>
+                           <DatePicker layoutX="58.0" layoutY="528.0" prefHeight="25.0" prefWidth="116.0" />
+                           <DatePicker layoutX="204.0" layoutY="528.0" prefHeight="25.0" prefWidth="116.0" />
+                           <Label layoutX="56.0" layoutY="493.0" text="Winter:" textFill="#14274e">
+                              <font>
+                                 <Font name="Bell MT" size="21.0" />
+                              </font>
+                           </Label>
                         </children>
                      </AnchorPane>
                   </content>
